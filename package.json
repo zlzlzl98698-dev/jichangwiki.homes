@@ -12,13 +12,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.22.0",
-      "onFail": "download"
-    }
-  },
+  "packageManager": "pnpm@11.28.13",
   "type": "module",
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
