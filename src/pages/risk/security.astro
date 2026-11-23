@@ -1,0 +1,325 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "隐私安全与数字足迹防护指南：端到端加密、防监听与零信任翻墙实战";
+const description = "全面讲解科学上网环境下的数字隐私安全防线。剖析机场管理员能否窃听 HTTPS 密码、运营商日志审计机理、WebRTC 真实 IP 泄漏，以及零信任数字足迹消除方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"风险与替代","url":"/risk/"},{"name":"security","url":"/risk/security/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/risk/security/","url":"https://jichangwiki.homes/risk/security/","name":"隐私安全与数字足迹防护指南：端到端加密、防监听与零信任翻墙实战","description":"全面讲解科学上网环境下的数字隐私安全防线。剖析机场管理员能否窃听 HTTPS 密码、运营商日志审计机理、WebRTC 真实 IP 泄漏，以及零信任数字足迹消除方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"风险与替代","item":"https://jichangwiki.homes/risk/"},{"@type":"ListItem","position":3,"name":"隐私安全与数字足迹防护指南：端到端加密、防监听与零信任翻墙实战","item":"https://jichangwiki.homes/risk/security/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"我翻墙访问境外网站，机场管理员能看到我在网页里输入的密码吗？","acceptedAnswer":{"@type":"Answer","text":"绝对看不到！前提是您访问的是标准的 HTTPS 网站。在 HTTPS 机制下，您的电脑与目标网站之间使用的是由全球顶级权威 CA（如 DigiCert、Let's Encrypt）签发的不对称加密密钥，这个加密隧道是在您的电脑与目标网站之间端到端建立的。机场服务器仅仅充当了“搬运加密密文”的快递员，根本没有解密密钥，看到的全部是一堆毫无意义的乱码随机字符。"}},{"@type":"Question","name":"如果国内宽带运营商查我，他们能知道我上了什么网吗？","acceptedAnswer":{"@type":"Answer","text":"运营商只能看到您的电脑向机场的国内入口机房 IP 发送了大量的加密数据包，能知道您在消耗带宽。但因为数据包全程经过了 AES-256 或 ChaCha20 等高强度算法加密，运营商的技术设备无法解密数据包内容，因此根本无法知道您具体访问了哪个海外网站，更无法看到网页内容。"}},{"@type":"Question","name":"为什么必须警惕“安装系统根证书”？","acceptedAnswer":{"@type":"Answer","text":"因为现代操作系统的安全基石就是根证书。只要您信任了一个恶意根证书，攻击者就可以针对任何网站（包括 Google、网银）动态签发虚假的合法证书，您的浏览器不再会弹出任何警告，整个 HTTPS 端到端加密防线将瞬间土崩瓦解。记住：正规代理软件绝对不会要求用户安装根证书！"}},{"@type":"Question","name":"无痕模式（Incognito Mode）能防止我被机场或网站追踪吗？","acceptedAnswer":{"@type":"Answer","text":"无痕模式的作用仅仅是“不把浏览记录、Cookie 保存在您本地的电脑硬盘上”，它对网络传输没有任何加密作用。要实现网络维度的隐私隔离，必须结合代理软件的加密传输与 DNS 防泄漏机制。"}},{"@type":"Question","name":"光速云是如何捍卫用户的个人隐私数据的？","acceptedAnswer":{"@type":"Answer","text":"光速云践行国际通行的“零日志（Zero-Log）”隐私准则。节点服务器运行在无盘内存环境中，不落盘记录用户的具体访问域名与连接流向日志；同时全线采用纯物理 IEPL 二层专线传输，物理阻断了任何公网嗅探硬件的接触可能。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"我翻墙访问境外网站，机场管理员能看到我在网页里输入的密码吗？","a":"绝对看不到！前提是您访问的是标准的 HTTPS 网站。在 HTTPS 机制下，您的电脑与目标网站之间使用的是由全球顶级权威 CA（如 DigiCert、Let's Encrypt）签发的不对称加密密钥，这个加密隧道是在您的电脑与目标网站之间端到端建立的。机场服务器仅仅充当了“搬运加密密文”的快递员，根本没有解密密钥，看到的全部是一堆毫无意义的乱码随机字符。"},{"q":"如果国内宽带运营商查我，他们能知道我上了什么网吗？","a":"运营商只能看到您的电脑向机场的国内入口机房 IP 发送了大量的加密数据包，能知道您在消耗带宽。但因为数据包全程经过了 AES-256 或 ChaCha20 等高强度算法加密，运营商的技术设备无法解密数据包内容，因此根本无法知道您具体访问了哪个海外网站，更无法看到网页内容。"},{"q":"为什么必须警惕“安装系统根证书”？","a":"因为现代操作系统的安全基石就是根证书。只要您信任了一个恶意根证书，攻击者就可以针对任何网站（包括 Google、网银）动态签发虚假的合法证书，您的浏览器不再会弹出任何警告，整个 HTTPS 端到端加密防线将瞬间土崩瓦解。记住：正规代理软件绝对不会要求用户安装根证书！"},{"q":"无痕模式（Incognito Mode）能防止我被机场或网站追踪吗？","a":"无痕模式的作用仅仅是“不把浏览记录、Cookie 保存在您本地的电脑硬盘上”，它对网络传输没有任何加密作用。要实现网络维度的隐私隔离，必须结合代理软件的加密传输与 DNS 防泄漏机制。"},{"q":"光速云是如何捍卫用户的个人隐私数据的？","a":"光速云践行国际通行的“零日志（Zero-Log）”隐私准则。节点服务器运行在无盘内存环境中，不落盘记录用户的具体访问域名与连接流向日志；同时全线采用纯物理 IEPL 二层专线传输，物理阻断了任何公网嗅探硬件的接触可能。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>数字隐私防护 · 零信任安全实战</span>
+        <span>·</span>
+        <span>上级主题: <a href="/risk/" class="underline hover:text-blue-800">风险与替代总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        隐私安全与数字足迹防护指南：防监听与零信任翻墙完全实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        开了代理翻墙，机场老板能看到我的网银密码和聊天记录吗？运营商会记录我的上网足迹吗？深入剖析网络协议底层的隐私边界与防护军规。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>隐私安全核心直接结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>只要目标网站严格采用 HTTPS / TLS 加密（浏览器地址栏带锁头），机场服务商在技术底层上完全无法窃听或篡改您的银行密码、支付信息和具体聊天文字</strong>！他们唯一能看到的是您访问的“目标域名与连接发生的时间戳”。要实现极致的隐私防护，请务必<strong>坚决拒绝向操作系统安装任何代理软件提供的根 CA 证书</strong>，配合 <strong>Fake-IP 模式</strong> 与 <strong>禁用 WebRTC</strong>，彻底斩断任何真实 IP 泄漏链条。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 代理环境下的数字足迹与隐私暴露风险解密
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在日常科学上网过程中，您的网络数据在物理链路上需要途经多个主体。理清各主体到底能看到什么、看不到什么，是告别网络焦虑与防范真正风险的前提：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【全链路数据透明度与可见范围对照】</div>
+  <div>[用户终端] ===(本地宽带)===> [国内宽带运营商 (电信/联通/移动)]</div>
+  <div>  │  ★ 运营商能看到的：仅能看到您正在与机场国内入口 PoP 点（一个国内 IP）建立加密连接；</div>
+  <div>  │     完全看不到您访问的海外真实网站名称与任何内容（被代理协议强加密包裹）。</div>
+  <div>  ▼</div>
+  <div>[跨境传输段] ===(IEPL专线)===> [机场落地机房]</div>
+  <div>  │  ★ 机场节点能看到的：能看到解密后的目标访问域名（如 google.com）和数据包大小；</div>
+  <div>  │  ★ 机场节点绝对看不到的：由于现代网站 100% 开启端到端 TLS 加密，机场无法看到任何密码与内容！</div>
+  <div>  ▼</div>
+  <div>[海外目标网站] (如 Google / OpenAI / 境外网银)</div>
+  <div>  │  ★ 目标网站能看到的：仅能看到机场海外节点的出口 IP，完全看不到您的国内真实 IP 和真实位置。</div>
+</div>
+<p>真正的安全死穴只有两个：一是被诱骗在系统内安装了<strong>恶意自签名根证书（导致 HTTPS 端到端加密被破）</strong>；二是浏览器存在 <strong>WebRTC 漏洞</strong> 导致局域网真实公网 IP 旁路泄漏。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 打造端到端零信任隐私防护体系五步实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>遵循网络安全领域的“零信任（Zero Trust）”原则，通过以下五步技术加固，将您的网络隐私提升至专业级防护：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：严格核验浏览器地址栏安全锁：</strong> 访问任何需要输入个人信息、密码或支付的网站时，确认浏览器地址栏左侧必须有“安全锁”图标（HTTPS 协议）。如果浏览器提示“证书无效”或“连接不安全”，必须立即关闭网页，切勿强行继续访问；</li>
+  <li><strong>第二步：坚决拒绝安装任何自定义根证书（CA 证书）：</strong> 任何要求向系统信任区（Windows 受信任根证书颁发机构 / iOS 描述文件证书信任设置）导入证书的代理软件，均存在中间人劫持监听意图，必须立即卸载；</li>
+  <li><strong>第三步：开启 Fake-IP 与加密 DNS 架构：</strong> 在客户端中使用 <code>fake-ip</code> 模式，并将境外解析完全托管在代理远端，彻底阻断国内运营商对境外 DNS 查询的日志记录与审查；</li>
+  <li><strong>第四步：彻底切断浏览器 WebRTC 旁路泄漏：</strong> 浏览器在发起实时音频通信时容易绕过代理直连公网。在 Chrome / Edge 中安装 <code>WebRTC Control</code> 扩展，或直接在客户端开启系统级 TUN 虚拟网卡模式，底层全面拦截 STUN 探测；</li>
+  <li><strong>第五步：敏感操作配合“无痕模式 + 独立浏览器环境”：</strong> 进行敏感外贸金融操作时，使用独立的干净浏览器配置（Profile），不登录任何国内社交账号，彻底隔绝 Cookie 跨站追踪指纹。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            网络通信各环节潜在威胁与安全防护策略对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        安全威胁、风险等级与应对措施：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">潜在安全威胁</th><th class="py-3 px-4">数据泄露范围</th><th class="py-3 px-4">威胁发生环节</th><th class="py-3 px-4">硬核防御技术对策</th><th class="py-3 px-4">防护有效等级</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">恶意根证书中间人劫持</td><td class="py-3 px-4 ">HTTPS 密码、聊天内容全被解密</td><td class="py-3 px-4 ">本地操作系统层</td><td class="py-3 px-4 ">坚决不导入任何非官方 CA 根证书</td><td class="py-3 px-4 ">100% 根治 (绝对关键)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">WebRTC 真实 IP 泄漏</td><td class="py-3 px-4 ">国内真实公网 IP 被目标网站获取</td><td class="py-3 px-4 ">浏览器应用层</td><td class="py-3 px-4 ">禁用 WebRTC 或开启 TUN 虚拟网卡接管</td><td class="py-3 px-4 ">100% 根治</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">国内运营商 DNS 审计日志</td><td class="py-3 px-4 ">记录访问了哪些境外域名的清单</td><td class="py-3 px-4 ">本地 DNS 递归层</td><td class="py-3 px-4 ">使用 Fake-IP 与 DoH 加密 DNS 拓扑</td><td class="py-3 px-4 ">99% 免疫</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">机场日志记录出口去向</td><td class="py-3 px-4 ">记录何时访问了哪个海外域名</td><td class="py-3 px-4 ">海外落地机房层</td><td class="py-3 px-4 ">选用不保留日志的知名大品牌 (光速云)</td><td class="py-3 px-4 ">极高</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">公共 WiFi 局域网窃听</td><td class="py-3 px-4 ">未加密 HTTP 明文数据被嗅探</td><td class="py-3 px-4 ">物理无线连接层</td><td class="py-3 px-4 ">全天候开启代理加密隧道或 TUN 模式</td><td class="py-3 px-4 ">100% 防护</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        恪守无日志隐私准则、全链路企业级加密的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        隐私安全场景加固决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">外贸金融与数字货币</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>操作跨国大额转账、管理海外冷钱包：</strong> 安全第一！必须采用官方 GitHub 原生客户端，锁定独享原生 IP 专线，禁用 WebRTC 并开启二次硬件验证。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">学术与海外舆情调研</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>长期检索海外专业智库、高校学术报告：</strong> 配置精细化分流规则，科研流量走海外加密专线，日常微信直连，实现工作与生活彻底物理隔离。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">日常社交追剧娱乐</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>看 Netflix、刷 Twitter/X 与看 YouTube：</strong> 保持默认的端到端 HTTPS 加密即可，无需过度恐慌，正规专线足以提供安全无忧的日常防护。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">数字隐私防护五大铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>绝对不要在操作系统中安装导入任何由第三方代理软件分发的根 CA 证书；</li><li>定期访问 <code>browserleaks.com/webrtc</code> 检查自己的真实公网 IP 是否发生泄漏；</li><li>在公共场所（咖啡厅、机场 WiFi）上网时，务必全程开启代理隧道以抵御局域网中间人嗅探；</li><li>所有涉及账号密码的网页必须核对绿色锁头 HTTPS 签名，切勿在 HTTP 明文页面输入密码；</li><li>选择具备严格隐私承诺、不记录用户访问行为日志的正规企业级服务商（如光速云）。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        隐私安全高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 隐私与网络安全进阶长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/risk/avoid-scams/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">安全防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              翻墙防坑避雷完全手册：识别一分钱钓鱼、假冒官网与恶意木马客户端 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              看清网络黑产盗号与木马劫持手法。
+            </p>
+          </a>
+        
+          <a href="/troubleshooting/dns-error/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">DNS防漏</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              DNS 泄漏与解析失败排查指南：运营商劫持、Fake-IP 优化与纯净拓扑搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              实战搭建防止真实 IP 泄漏的纯净 DNS 拓扑。
+            </p>
+          </a>
+        
+          <a href="/network/iepl/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">物理专线</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              解密二层企业内网物理隔离的终极安全性。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

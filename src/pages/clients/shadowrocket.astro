@@ -1,0 +1,280 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "Shadowrocket (小火箭) 完整指南：iOS 最强代理客户端评测与使用说明";
+const description = "全面解读 iOS/iPadOS 平台常青树 Shadowrocket（小火箭）。从正规美区 Apple ID 获取、一键扫码导入、规则集分流配置到按需连接（On Demand）全天候自动节电黑科技。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"客户端软件","url":"/clients/"},{"name":"Shadowrocket","url":"/clients/shadowrocket/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/clients/shadowrocket/","url":"https://jichangwiki.homes/clients/shadowrocket/","name":"Shadowrocket (小火箭) 完整指南：iOS 最强代理客户端评测与使用说明","description":"全面解读 iOS/iPadOS 平台常青树 Shadowrocket（小火箭）。从正规美区 Apple ID 获取、一键扫码导入、规则集分流配置到按需连接（On Demand）全天候自动节电黑科技。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"客户端软件","item":"https://jichangwiki.homes/clients/"},{"@type":"ListItem","position":3,"name":"Shadowrocket 客户端指南","item":"https://jichangwiki.homes/clients/shadowrocket/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"小火箭售价多少？购买后可以几台设备使用？","acceptedAnswer":{"@type":"Answer","text":"Shadowrocket 在美区 App Store 售价为 2.99 美元。购买一次后，只要登录同一个 Apple ID，可以在您个人的所有 iPhone、iPad 乃至搭载 M 芯片的 Mac 电脑上免费无限次下载。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"小火箭售价多少？购买后可以几台设备使用？","a":"Shadowrocket 在美区 App Store 售价为 2.99 美元。购买一次后，只要登录同一个 Apple ID，可以在您个人的所有 iPhone、iPad 乃至搭载 M 芯片的 Mac 电脑上免费无限次下载。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>iOS 生态霸主 · 小火箭实战手册</span>
+        <span>·</span>
+        <span>上级主题: <a href="/clients/" class="underline hover:text-blue-800">客户端软件总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        Shadowrocket 小火箭 iOS 终极指南与高阶技巧
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        在苹果生态中，小火箭凭借无可匹敌的协议兼容性与极佳的电量控制稳坐第一宝座。本文教您正规获取与全天候无感使用的全套秘笈。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>Shadowrocket 核心速查结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>Shadowrocket（俗称小火箭）是所有 iPhone 与 iPad 用户科学上网的不二之选</strong>。它完美兼容所有主流协议与订阅格式，且对 iOS 系统的电量优化极佳。配合其内置的<strong>按需连接（On Demand）</strong>功能，能够实现“出门用流量自动连代理、回家连 Wi-Fi 自动断开”，全天候无感运行且彻底杜绝后台发热耗电。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 正规美区 Apple ID 获取与防被锁机避坑警示
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>由于国内 App Store 的监管政策，Shadowrocket 仅在海外区域（如美区、日区、港区）的 App Store 上架。新手在获取过程中必须严防安全陷阱：</p>
+<div class="bg-rose-50 border border-rose-200 rounded-xl p-4 my-3 text-xs sm:text-sm text-rose-950">
+  <span class="font-bold">⚠️ 生死警告：绝对不要在系统“设置”中登录公开账号！</span>
+  部分电商平台或贴吧售卖的共享 Apple ID，一旦您误在 iPhone 的【系统设置】（iCloud）中登录，不法分子会立刻在云端远程锁定您的手机开启“丢失模式”，勒索巨额赎金！<strong>正规操作：仅且只能在【App Store】商店右上方点击头像登录切换账号！</strong>
+</div>
+<p class="text-xs sm:text-sm text-slate-700">
+  <strong>最推荐的正规方案：</strong> 使用正规国内双币信用卡或在苹果官网购买正规的美区礼品卡（Apple Gift Card），自行注册属于自己的终身美区 ID，安全可靠永不翻车。
+</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 按需连接 (On Demand) 黑科技：iPhone 全天候无感续航
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>很多 iPhone 用户日常使用代理最大的痛点就是：出门连了 Wi-Fi 忘记开代理，回家连了家里网络又忘记关，导致电池发热严重、掉电如流水。Shadowrocket 内置的<strong>按需连接（On Demand）</strong>功能彻底解决了这一难题：</p>
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2 text-xs sm:text-sm text-slate-700">
+  <p><strong>实操配置：</strong> 进入小火箭“设置 -> 按需连接”，开启总开关：</p>
+  <ul class="list-disc pl-5 space-y-1 text-xs">
+    <li><strong>蜂窝网络连接：</strong> 开启（当使用 4G/5G 数据流量时自动拉起代理）；</li>
+    <li><strong>指定 Wi-Fi 白名单直连：</strong> 在 Wi-Fi 规则中添加自己家里的无线网络名称（SSID），设置为“Disconnect (断开)”。回到家自动休眠 VPN，彻底杜绝后台多余耗电！</li>
+  </ul>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            iOS 平台主流网络代理客户端横向对比表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        Shadowrocket、Quantumult X、Stash、Loon 四大神器横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">客户端名称</th><th class="py-3 px-4">上手难度</th><th class="py-3 px-4">协议兼容度</th><th class="py-3 px-4">规则丰富度</th><th class="py-3 px-4">推荐评级</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Shadowrocket (小火箭)</td><td class="py-3 px-4 ">★☆☆☆☆ (极度友好)</td><td class="py-3 px-4 ">全协议完全覆盖 (最强)</td><td class="py-3 px-4 ">极高 (支持远程规则集)</td><td class="py-3 px-4 ">★★★★★ (大众首选王座)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Stash (Clash for iOS)</td><td class="py-3 px-4 ">★★☆☆☆ (良好)</td><td class="py-3 px-4 ">支持 Clash Meta 协议</td><td class="py-3 px-4 ">极高 (兼容 Clash 配置)</td><td class="py-3 px-4 ">★★★★☆ (Clash重度党首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Quantumult X (圈X)</td><td class="py-3 px-4 ">★★★★☆ (较复杂)</td><td class="py-3 px-4 ">主流协议覆盖良好</td><td class="py-3 px-4 ">极高 (强大脚本/重写)</td><td class="py-3 px-4 ">★★★★☆ (极客首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Loon</td><td class="py-3 px-4 ">★★★☆☆ (中等)</td><td class="py-3 px-4 ">支持新协议良好</td><td class="py-3 px-4 ">优秀 (插件生态活跃)</td><td class="py-3 px-4 ">★★★★☆ (高颜值利器)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        Shadowrocket 原生完美适配专线服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        iOS 选型决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新手与日常主力</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>iPhone/iPad 日常翻墙与追剧：</strong> 毫不犹豫首选 Shadowrocket，一键导入光速云订阅，稳定省电无折腾。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">小火箭使用五大黄金法则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>仅在 App Store 商店内切换美区账号，严禁登录设置 iCloud；</li><li>全局路由保持在“配置 (Config)”模式，勿选代理全局；</li><li>定期在“配置”中点击更新规则集，确保国内直连名单最新；</li><li>开启“按需连接”享受自动化断连与智能节电。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        Shadowrocket 常见问题解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 iOS 进阶技术指南
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-51/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">深度实操</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Shadowrocket 小火箭 iOS 终极指南：美区 ID 获取与按需连接配置 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              图文手把手玩转小火箭全部高级功能。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

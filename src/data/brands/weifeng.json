@@ -1,0 +1,135 @@
+{
+  "id": "weifeng",
+  "slug": "weifeng",
+  "name": "微风网络",
+  "aliases": [
+    "BreezeNet",
+    "微风云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 4,
+  "establishedYear": 2022,
+  "affiliateURL": "https://edp01.breezenetaff.com/#/?code=t3huofyI",
+  "couponCodes": [
+    {
+      "code": "flat888",
+      "discount": "9折优惠码",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Trojan",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "国内多线BGP中转",
+    "隧道专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "45+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥7/月 (折扣后约¥6.3)",
+  "minMonthlyPrice": 6.3,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "微风微量档",
+      "billing": "月付",
+      "price": 7,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 7,
+      "notes": "9折后约¥6.3"
+    },
+    {
+      "name": "微风日常档",
+      "billing": "月付",
+      "price": 16,
+      "traffic": "160GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 16,
+      "notes": "中转提速"
+    },
+    {
+      "name": "微风尊享档",
+      "billing": "月付",
+      "price": 32,
+      "traffic": "360GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 32,
+      "notes": "全节点多线程"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 中转",
+      "latency": "40ms",
+      "download": "160Mbps",
+      "upload": "30Mbps",
+      "date": "2026-08-20",
+      "status": "vendor_data",
+      "isPeak": false
+    },
+    {
+      "region": "日本 节点",
+      "latency": "75ms",
+      "download": "110Mbps",
+      "upload": "28Mbps",
+      "date": "2026-08-20",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "7元档亲民入门",
+    "9折常驻优惠",
+    "多线中转路由优化"
+  ],
+  "verifiedFeatures": [
+    "起步价格门槛低",
+    "月付无需绑定长期套餐"
+  ],
+  "strengths": [
+    "平民化定价，7元起步亲民",
+    "协议配置简洁，Shadowrocket扫码即连"
+  ],
+  "limitations": [
+    "高峰期个别节点偶发延迟上升",
+    "不提供独立客户端，依赖第三方软件"
+  ],
+  "riskNotes": "平价中转机场，建议按月购买并保持关注订阅更新。",
+  "suitableFor": "预算5-10元/月，查资料、刷推、看视频的日常轻度用户。",
+  "unsuitableFor": "高频跨国电竞赛事加速或对毫秒级抖动敏感的专业玩家。",
+  "sources": [
+    "微风网络官方文档",
+    "32家清单整理"
+  ],
+  "verifiedAt": "2026-08-20",
+  "updatedAt": "2026-11-12",
+  "logo": "/images/logos/bee_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

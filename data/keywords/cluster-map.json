@@ -1,0 +1,1154 @@
+[
+  {
+    "domainId": "airport",
+    "domainName": "机场推荐",
+    "pillarUrl": "/airport/",
+    "subHubs": [
+      {
+        "hubSlug": "recommend",
+        "hubName": "机场推荐",
+        "hubUrl": "/airport/recommend/",
+        "coreIntent": "Commercial Investigation",
+        "articles": [
+          {
+            "id": 1,
+            "title": "2026年新手翻墙科学上网终极防坑指南：从零认识代理与机场",
+            "targetUrl": "/articles/article-1/",
+            "priority": "P0"
+          },
+          {
+            "id": 6,
+            "title": "企业跨境远程办公网络指南：Zoom、Teams 与飞书海外会议保畅通",
+            "targetUrl": "/articles/article-6/",
+            "priority": "P0"
+          },
+          {
+            "id": 11,
+            "title": "移动、联通、电信三大运营商在晚高峰跨境出口网络质量客观实测",
+            "targetUrl": "/articles/article-11/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "ranking",
+        "hubName": "机场排行",
+        "hubUrl": "/airport/ranking/",
+        "coreIntent": "Comparative Evaluation",
+        "articles": [
+          {
+            "id": 2,
+            "title": "深圳与上海两大核心 BGP 专线入口机场深度横向测速对比",
+            "targetUrl": "/articles/article-2/",
+            "priority": "P0"
+          },
+          {
+            "id": 7,
+            "title": "极客与开发者翻墙配置：GitHub、Docker 与海外服务器 SSH 极速直连",
+            "targetUrl": "/articles/article-7/",
+            "priority": "P0"
+          },
+          {
+            "id": 12,
+            "title": "多设备同时在线家庭套餐机场甄选：如何打破设备数并发限制？",
+            "targetUrl": "/articles/article-12/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "reliable",
+        "hubName": "靠谱机场",
+        "hubUrl": "/airport/reliable/",
+        "coreIntent": "Risk Aversion",
+        "articles": [
+          {
+            "id": 3,
+            "title": "敏感时期不失联：全 IEPL 物理专线机场稳定性实测评测",
+            "targetUrl": "/articles/article-3/",
+            "priority": "P0"
+          },
+          {
+            "id": 8,
+            "title": "外贸跨境电商运营网络合规与防关联选线策略",
+            "targetUrl": "/articles/article-8/",
+            "priority": "P0"
+          },
+          {
+            "id": 13,
+            "title": "按量计费不限时小包机场测评：谁是最佳备用逃生通道？",
+            "targetUrl": "/articles/article-13/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "stable",
+        "hubName": "稳定机场",
+        "hubUrl": "/airport/stable/",
+        "coreIntent": "High-Availability",
+        "articles": [
+          {
+            "id": 4,
+            "title": "2026 亚太晚高峰 1000M 宽带测速天梯榜：谁是真正的带宽之王？",
+            "targetUrl": "/articles/article-4/",
+            "priority": "P0"
+          },
+          {
+            "id": 9,
+            "title": "家庭软路由透明网关全屋翻墙选配指南：OpenWrt 与 Mihomo 部署",
+            "targetUrl": "/articles/article-9/",
+            "priority": "P0"
+          },
+          {
+            "id": 14,
+            "title": "高端 IPLC 金融专线机场实测：到底值不值每月上百元高昂月费？",
+            "targetUrl": "/articles/article-14/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "best",
+        "hubName": "好用的机场",
+        "hubUrl": "/airport/best/",
+        "coreIntent": "High-End Intent",
+        "articles": [
+          {
+            "id": 5,
+            "title": "老牌机场长效生存史：运营五年以上的优质专线品牌深度调查",
+            "targetUrl": "/articles/article-5/",
+            "priority": "P0"
+          },
+          {
+            "id": 10,
+            "title": "留学生与海外回国人员双向加速代理配置指南",
+            "targetUrl": "/articles/article-10/",
+            "priority": "P0"
+          },
+          {
+            "id": 15,
+            "title": "年度读者口碑调查：百位资深翻墙用户真实机场使用体验长卷",
+            "targetUrl": "/articles/article-15/",
+            "priority": "P0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "pricing",
+    "domainName": "价格与套餐",
+    "pillarUrl": "/pricing/",
+    "subHubs": [
+      {
+        "hubSlug": "cheap",
+        "hubName": "便宜机场",
+        "hubUrl": "/pricing/cheap/",
+        "coreIntent": "Transactional (Budget)",
+        "articles": [
+          {
+            "id": 19,
+            "title": "为什么说月付是最好的防跑路护甲？月付机场综合实测精选",
+            "targetUrl": "/articles/article-19/",
+            "priority": "P0"
+          },
+          {
+            "id": 25,
+            "title": "大流量重度影音套餐推荐：每月 500GB 以上的高清影视专用机场",
+            "targetUrl": "/articles/article-25/",
+            "priority": "P0"
+          },
+          {
+            "id": 31,
+            "title": "虚拟货币 USDT 支付与支付宝快捷发卡优劣势全景分析",
+            "targetUrl": "/articles/article-31/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "one-yuan",
+        "hubName": "一元机场",
+        "hubUrl": "/pricing/one-yuan/",
+        "coreIntent": "Curiosity & Scam Check",
+        "articles": [
+          {
+            "id": 20,
+            "title": "按量计费（Pay As You Go）不限时机场完全购买指南与算账对照",
+            "targetUrl": "/articles/article-20/",
+            "priority": "P0"
+          },
+          {
+            "id": 26,
+            "title": "单人轻量套餐推荐：每月 50GB 以下学生党学术科研优选",
+            "targetUrl": "/articles/article-26/",
+            "priority": "P0"
+          },
+          {
+            "id": 32,
+            "title": "一分钱机场恶意脚本注入案例深度代码复盘",
+            "targetUrl": "/articles/article-32/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "one-cent",
+        "hubName": "一分机场",
+        "hubUrl": "/pricing/one-cent/",
+        "coreIntent": "Free Trial Scam Check",
+        "articles": [
+          {
+            "id": 21,
+            "title": "20元档位高性价比机场巅峰对决：速度、流量与稳定全维度横评",
+            "targetUrl": "/articles/article-21/",
+            "priority": "P0"
+          },
+          {
+            "id": 27,
+            "title": "不同机场续费规则对比：重置日、到期日与流量清零逻辑剖析",
+            "targetUrl": "/articles/article-27/",
+            "priority": "P0"
+          },
+          {
+            "id": 33,
+            "title": "高性价比机场长周期续费安全策略：如何优雅地按季付费？",
+            "targetUrl": "/articles/article-33/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "monthly",
+        "hubName": "月付机场",
+        "hubUrl": "/pricing/monthly/",
+        "coreIntent": "Transactional (Monthly)",
+        "articles": [
+          {
+            "id": 16,
+            "title": "5元至15元平价机场真实可用性调查：便宜真的有好货吗？",
+            "targetUrl": "/articles/article-16/",
+            "priority": "P0"
+          },
+          {
+            "id": 22,
+            "title": "年付打折套现跑路套路全解：如何识别非正常低价骨折促销？",
+            "targetUrl": "/articles/article-22/",
+            "priority": "P0"
+          },
+          {
+            "id": 28,
+            "title": "学生特惠与教育网用户翻墙指南：突破校园网 IPv6 与端口限制",
+            "targetUrl": "/articles/article-28/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "lifetime",
+        "hubName": "不限时机场",
+        "hubUrl": "/pricing/lifetime/",
+        "coreIntent": "Pay As You Go",
+        "articles": [
+          {
+            "id": 17,
+            "title": "揭秘“一元机场”背后的公网超售与流量缩水内幕",
+            "targetUrl": "/articles/article-17/",
+            "priority": "P0"
+          },
+          {
+            "id": 23,
+            "title": "机场优惠码（Coupon Code）使用技巧：如何在重大节点省下近半费用？",
+            "targetUrl": "/articles/article-23/",
+            "priority": "P0"
+          },
+          {
+            "id": 29,
+            "title": "企业团购与多用户团队套餐部署：成本分摊与账号权限管理",
+            "targetUrl": "/articles/article-29/",
+            "priority": "P0"
+          }
+        ]
+      },
+      {
+        "hubSlug": "value",
+        "hubName": "性价比机场",
+        "hubUrl": "/pricing/value/",
+        "coreIntent": "Value Optimization",
+        "articles": [
+          {
+            "id": 18,
+            "title": "免费梯子钓鱼陷阱：恶意广告推送与设备沦为肉鸡真相",
+            "targetUrl": "/articles/article-18/",
+            "priority": "P0"
+          },
+          {
+            "id": 24,
+            "title": "小额充值与退款争议：翻墙机场为何普遍不支持无理由退款？",
+            "targetUrl": "/articles/article-24/",
+            "priority": "P0"
+          },
+          {
+            "id": 30,
+            "title": "虚高倍率暗扣流量大曝光：教你用 Python 脚本监测真实消耗",
+            "targetUrl": "/articles/article-30/",
+            "priority": "P0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "brands",
+    "domainName": "机场品牌",
+    "pillarUrl": "/brands/",
+    "subHubs": [
+      {
+        "hubSlug": "directory",
+        "hubName": "品牌数据库",
+        "hubUrl": "/brands/directory/",
+        "coreIntent": "Navigational",
+        "articles": []
+      },
+      {
+        "hubSlug": "reviews",
+        "hubName": "品牌评测",
+        "hubUrl": "/brands/reviews/",
+        "coreIntent": "Commercial Investigation",
+        "articles": []
+      },
+      {
+        "hubSlug": "official",
+        "hubName": "官网识别",
+        "hubUrl": "/brands/official/",
+        "coreIntent": "Security & Verification",
+        "articles": []
+      },
+      {
+        "hubSlug": "prices",
+        "hubName": "品牌套餐",
+        "hubUrl": "/brands/prices/",
+        "coreIntent": "Price Comparison",
+        "articles": []
+      },
+      {
+        "hubSlug": "coupons",
+        "hubName": "品牌优惠码",
+        "hubUrl": "/brands/coupons/",
+        "coreIntent": "Coupon Redemption",
+        "articles": []
+      },
+      {
+        "hubSlug": "alternatives",
+        "hubName": "替代方案",
+        "hubUrl": "/brands/alternatives/",
+        "coreIntent": "Disaster Recovery",
+        "articles": []
+      }
+    ]
+  },
+  {
+    "domainId": "vpn",
+    "domainName": "VPN与加速器",
+    "pillarUrl": "/vpn/",
+    "subHubs": [
+      {
+        "hubSlug": "recommend",
+        "hubName": "VPN推荐",
+        "hubUrl": "/vpn/recommend/",
+        "coreIntent": "Commercial Investigation",
+        "articles": []
+      },
+      {
+        "hubSlug": "free",
+        "hubName": "免费VPN真相",
+        "hubUrl": "/vpn/free/",
+        "coreIntent": "Risk Education",
+        "articles": []
+      },
+      {
+        "hubSlug": "mobile",
+        "hubName": "手机VPN指南",
+        "hubUrl": "/vpn/mobile/",
+        "coreIntent": "Mobile Optimization",
+        "articles": []
+      },
+      {
+        "hubSlug": "android",
+        "hubName": "安卓VPN指南",
+        "hubUrl": "/vpn/android/",
+        "coreIntent": "Platform Specific",
+        "articles": []
+      },
+      {
+        "hubSlug": "gaming",
+        "hubName": "游戏加速指南",
+        "hubUrl": "/vpn/gaming/",
+        "coreIntent": "Low Latency Gaming",
+        "articles": []
+      }
+    ]
+  },
+  {
+    "domainId": "clients",
+    "domainName": "客户端软件",
+    "pillarUrl": "/clients/",
+    "subHubs": [
+      {
+        "hubSlug": "clash-verge",
+        "hubName": "Clash Verge Rev",
+        "hubUrl": "/clients/clash-verge/",
+        "coreIntent": "How-to / Tutorial",
+        "articles": [
+          {
+            "id": 49,
+            "title": "Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式",
+            "targetUrl": "/articles/article-49/",
+            "priority": "P1"
+          },
+          {
+            "id": 55,
+            "title": "macOS 终端环境 proxy 导出与解决 Gatekeeper 隔离报错全解",
+            "targetUrl": "/articles/article-55/",
+            "priority": "P1"
+          },
+          {
+            "id": 61,
+            "title": "Fake-IP 原理解析：它是如何消除本地 DNS 往返延迟实现秒开的？",
+            "targetUrl": "/articles/article-61/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "clash-meta",
+        "hubName": "Clash Meta (Mihomo)",
+        "hubUrl": "/clients/clash-meta/",
+        "coreIntent": "Technical Analysis",
+        "articles": [
+          {
+            "id": 50,
+            "title": "Mihomo 内核革命：为什么它能彻底取代原版 Clash Premium？",
+            "targetUrl": "/articles/article-50/",
+            "priority": "P1"
+          },
+          {
+            "id": 56,
+            "title": "Android 手机后台保活与耗电治理：防止系统误杀代理进程攻略",
+            "targetUrl": "/articles/article-56/",
+            "priority": "P1"
+          },
+          {
+            "id": 62,
+            "title": "全锥形 NAT (Full Cone NAT) 与外服游戏联机延迟极限优化",
+            "targetUrl": "/articles/article-62/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "v2rayn",
+        "hubName": "v2rayN",
+        "hubUrl": "/clients/v2rayn/",
+        "coreIntent": "How-to / Windows",
+        "articles": [
+          {
+            "id": 51,
+            "title": "Shadowrocket 小火箭 iOS 终极指南：美区 ID 获取与按需连接配置",
+            "targetUrl": "/articles/article-51/",
+            "priority": "P1"
+          },
+          {
+            "id": 57,
+            "title": "iOS 平台四大代理工具横向横评：小火箭、Stash、Loon、Surge",
+            "targetUrl": "/articles/article-57/",
+            "priority": "P1"
+          },
+          {
+            "id": 63,
+            "title": "Shadowsocks-2022 协议技术白皮书：现代密码学防主动探测原理",
+            "targetUrl": "/articles/article-63/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "shadowrocket",
+        "hubName": "Shadowrocket (小火箭)",
+        "hubUrl": "/clients/shadowrocket/",
+        "coreIntent": "How-to / iOS",
+        "articles": [
+          {
+            "id": 52,
+            "title": "v2rayN 进阶使用：Xray 核心调试、真连接测速与路由自定义",
+            "targetUrl": "/articles/article-52/",
+            "priority": "P1"
+          },
+          {
+            "id": 58,
+            "title": "软路由 OpenClash 与 PassWall 性能调优：低配 CPU 跑满千兆网络秘诀",
+            "targetUrl": "/articles/article-58/",
+            "priority": "P1"
+          },
+          {
+            "id": 64,
+            "title": "VLESS Reality 架构解密：借用真实海外大厂证书的终极伪装艺术",
+            "targetUrl": "/articles/article-64/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "mihomo",
+        "hubName": "Mihomo 核心",
+        "hubUrl": "/clients/mihomo/",
+        "coreIntent": "Technical Deep Dive",
+        "articles": [
+          {
+            "id": 53,
+            "title": "sing-box 模块化入门：极简 JSON 配置与高性能二进制规则集实战",
+            "targetUrl": "/articles/article-53/",
+            "priority": "P1"
+          },
+          {
+            "id": 59,
+            "title": "Subconverter 本地 Docker 搭建指南：彻底告别在线转换隐私泄露",
+            "targetUrl": "/articles/article-59/",
+            "priority": "P1"
+          },
+          {
+            "id": 65,
+            "title": "Hysteria 2 与 TUIC 协议对比：UDP 弱网高速回弹协议在恶劣网络下的表现",
+            "targetUrl": "/articles/article-65/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "sing-box",
+        "hubName": "sing-box",
+        "hubUrl": "/clients/sing-box/",
+        "coreIntent": "How-to / Platform",
+        "articles": [
+          {
+            "id": 54,
+            "title": "Windows 终端 Git / Docker / PowerShell 走代理的五种终极方案",
+            "targetUrl": "/articles/article-54/",
+            "priority": "P1"
+          },
+          {
+            "id": 60,
+            "title": "Clash 配置文件 Merge 扩展脚本：如何不改动订阅无痛注入自定义规则？",
+            "targetUrl": "/articles/article-60/",
+            "priority": "P1"
+          },
+          {
+            "id": 66,
+            "title": "各大主流客户端内存与 CPU 资源消耗深度横向跑分测试",
+            "targetUrl": "/articles/article-66/",
+            "priority": "P1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "streaming-ai",
+    "domainName": "AI与流媒体",
+    "pillarUrl": "/streaming-ai/",
+    "subHubs": [
+      {
+        "hubSlug": "chatgpt",
+        "hubName": "ChatGPT 解锁指南",
+        "hubUrl": "/streaming-ai/chatgpt/",
+        "coreIntent": "Troubleshooting & Unblock",
+        "articles": [
+          {
+            "id": 36,
+            "title": "Anthropic Claude 3.5 严苛风控破解：实体 SIM 卡接码与环境隔离秘笈",
+            "targetUrl": "/articles/article-36/",
+            "priority": "P1"
+          },
+          {
+            "id": 41,
+            "title": "Spotify 跨区家庭组与锁区 14 天旅行限制无感自动登录配置",
+            "targetUrl": "/articles/article-41/",
+            "priority": "P1"
+          },
+          {
+            "id": 46,
+            "title": "家庭客厅电视 TV 端（Apple TV、Google TV）流媒体软路由最佳实践",
+            "targetUrl": "/articles/article-46/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "claude",
+        "hubName": "Claude 防封指南",
+        "hubUrl": "/streaming-ai/claude/",
+        "coreIntent": "Account Risk & Setup",
+        "articles": [
+          {
+            "id": 37,
+            "title": "Google Gemini 地区不可用突破：台湾与日本合规节点精准分流设置",
+            "targetUrl": "/articles/article-37/",
+            "priority": "P1"
+          },
+          {
+            "id": 42,
+            "title": "海外学术 AI 工具加速：Perplexity AI、Cursor 与 Copilot 低延迟配置",
+            "targetUrl": "/articles/article-42/",
+            "priority": "P1"
+          },
+          {
+            "id": 47,
+            "title": "Netflix 密码共享与同住者限制风控的底层判定逻辑与应对技巧",
+            "targetUrl": "/articles/article-47/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "gemini",
+        "hubName": "Google Gemini 指南",
+        "hubUrl": "/streaming-ai/gemini/",
+        "coreIntent": "Geo-restriction Bypass",
+        "articles": [
+          {
+            "id": 38,
+            "title": "Netflix 只能看自制剧真相揭秘：原生住宅 IP 与机房 IP 数据库识别机理",
+            "targetUrl": "/articles/article-38/",
+            "priority": "P1"
+          },
+          {
+            "id": 43,
+            "title": "Midjourney 与 Discord 实时生成图片网络加速及无感直连技巧",
+            "targetUrl": "/articles/article-43/",
+            "priority": "P1"
+          },
+          {
+            "id": 48,
+            "title": "跨区低价开通 YouTube Premium 全流程：尼日利亚与乌克兰实测指南",
+            "targetUrl": "/articles/article-48/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "netflix",
+        "hubName": "Netflix 4K 解锁",
+        "hubUrl": "/streaming-ai/netflix/",
+        "coreIntent": "Streaming Unblock",
+        "articles": [
+          {
+            "id": 34,
+            "title": "OpenAI Cloudflare 1020 报错彻底修复手册：从 IP 纯净度到浏览器指纹",
+            "targetUrl": "/articles/article-34/",
+            "priority": "P0"
+          },
+          {
+            "id": 39,
+            "title": "YouTube 4K 60fps 晚高峰极速拖拽：详细统计信息各参数深度解密",
+            "targetUrl": "/articles/article-39/",
+            "priority": "P1"
+          },
+          {
+            "id": 44,
+            "title": "Sora 视频生成网络环境要求与高带宽上传通道实测",
+            "targetUrl": "/articles/article-44/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "youtube",
+        "hubName": "YouTube 4K 流畅指南",
+        "hubUrl": "/streaming-ai/youtube/",
+        "coreIntent": "Bandwidth & Premium",
+        "articles": [
+          {
+            "id": 35,
+            "title": "国内顺利开通 ChatGPT Plus 实战教程：虚拟信用卡与美区 Apple ID 避坑",
+            "targetUrl": "/articles/article-35/",
+            "priority": "P0"
+          },
+          {
+            "id": 40,
+            "title": "Disney+ 报错 73 地区错误排查与全套漫威 4K 串流方案",
+            "targetUrl": "/articles/article-40/",
+            "priority": "P1"
+          },
+          {
+            "id": 45,
+            "title": "全球流媒体版权片库对比：港区、日区、美区、台区片库优势大盘点",
+            "targetUrl": "/articles/article-45/",
+            "priority": "P1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "network",
+    "domainName": "线路与节点",
+    "pillarUrl": "/network/",
+    "subHubs": [
+      {
+        "hubSlug": "iepl",
+        "hubName": "IEPL 专线解析",
+        "hubUrl": "/network/iepl/",
+        "coreIntent": "Technical Architecture",
+        "articles": [
+          {
+            "id": 85,
+            "title": "为什么香港节点无法使用 ChatGPT？海外科技巨头的地理合规围栏真相",
+            "targetUrl": "/articles/article-85/",
+            "priority": "P1"
+          },
+          {
+            "id": 91,
+            "title": "虚标专线大打假：教你用 mtr 和 traceroute 识破公网假冒专线",
+            "targetUrl": "/articles/article-91/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "iplc",
+        "hubName": "IPLC 专线解析",
+        "hubUrl": "/network/iplc/",
+        "coreIntent": "Enterprise Latency",
+        "articles": [
+          {
+            "id": 86,
+            "title": "日本专线六边形全能优势实测：低延迟与 AI 影音全覆盖的最佳平衡",
+            "targetUrl": "/articles/article-86/",
+            "priority": "P1"
+          },
+          {
+            "id": 92,
+            "title": "全球海底光缆分布图解：亚美海缆（AAG/NCP）故障对翻墙的影响",
+            "targetUrl": "/articles/article-92/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "hong-kong",
+        "hubName": "香港节点评测",
+        "hubUrl": "/network/hong-kong/",
+        "coreIntent": "Regional Analysis",
+        "articles": [
+          {
+            "id": 87,
+            "title": "北方宽带（北京/山东/东北）翻墙选线技巧：为什么日本比香港快得多？",
+            "targetUrl": "/articles/article-87/",
+            "priority": "P1"
+          },
+          {
+            "id": 93,
+            "title": "IDC 机房托管 IP 与住宅宽带（Residential ISP）数据库判定标准",
+            "targetUrl": "/articles/article-93/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "japan",
+        "hubName": "日本节点指南",
+        "hubUrl": "/network/japan/",
+        "coreIntent": "Regional Analysis",
+        "articles": [
+          {
+            "id": 82,
+            "title": "IEPL 国际以太网专线物理层拓扑大揭秘：二层物理光缆是如何过境的？",
+            "targetUrl": "/articles/article-82/",
+            "priority": "P1"
+          },
+          {
+            "id": 88,
+            "title": "光速物理极限与网络延迟：光纤在玻璃中传播的速度账本",
+            "targetUrl": "/articles/article-88/",
+            "priority": "P1"
+          },
+          {
+            "id": 94,
+            "title": "TCP 拥塞控制算法大比拼：BBRv1 vs BBRv3 在高丢包链路下的吞吐实测",
+            "targetUrl": "/articles/article-94/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "low-latency",
+        "hubName": "低延迟专线指南",
+        "hubUrl": "/network/low-latency/",
+        "coreIntent": "Performance Tuning",
+        "articles": [
+          {
+            "id": 83,
+            "title": "IPLC 点对点私有专线与普通公网中转的晚高峰抖动客观对比",
+            "targetUrl": "/articles/article-83/",
+            "priority": "P1"
+          },
+          {
+            "id": 89,
+            "title": "BGP 多线动态调度原理解析：如何让移动、联通、电信都跑在最优链路？",
+            "targetUrl": "/articles/article-89/",
+            "priority": "P1"
+          },
+          {
+            "id": 95,
+            "title": "IPv6 穿透与境外双栈网络配置：IPv6 到底能不能提升翻墙速度？",
+            "targetUrl": "/articles/article-95/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "traffic-ratio",
+        "hubName": "倍率机制解析",
+        "hubUrl": "/network/traffic-ratio/",
+        "coreIntent": "Cost Calculation",
+        "articles": [
+          {
+            "id": 84,
+            "title": "深港专线 vs 沪日专线：不同地理区位用户该如何科学选择专线节点？",
+            "targetUrl": "/articles/article-84/",
+            "priority": "P1"
+          },
+          {
+            "id": 90,
+            "title": "节点倍率计算公式详解：大文件下载如何利用 0.2x 节点省流？",
+            "targetUrl": "/articles/article-90/",
+            "priority": "P1"
+          },
+          {
+            "id": 96,
+            "title": "专线带宽超售率（Overselling Ratio）对晚高峰流畅度的致命影响",
+            "targetUrl": "/articles/article-96/",
+            "priority": "P2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "tutorials",
+    "domainName": "使用教程",
+    "pillarUrl": "/tutorials/",
+    "subHubs": [
+      {
+        "hubSlug": "subscription",
+        "hubName": "订阅管理指南",
+        "hubUrl": "/tutorials/subscription/",
+        "coreIntent": "How-to / Management",
+        "articles": []
+      },
+      {
+        "hubSlug": "clash-configuration",
+        "hubName": "Clash 进阶配置",
+        "hubUrl": "/tutorials/clash-configuration/",
+        "coreIntent": "Configuration / YAML",
+        "articles": []
+      },
+      {
+        "hubSlug": "routing-rules",
+        "hubName": "路由规则实操",
+        "hubUrl": "/tutorials/routing-rules/",
+        "coreIntent": "Routing & Split",
+        "articles": []
+      },
+      {
+        "hubSlug": "tun-mode",
+        "hubName": "TUN模式配置指南",
+        "hubUrl": "/tutorials/tun-mode/",
+        "coreIntent": "Global Proxy",
+        "articles": []
+      },
+      {
+        "hubSlug": "client-installation",
+        "hubName": "客户端安装指南",
+        "hubUrl": "/tutorials/client-installation/",
+        "coreIntent": "Installation",
+        "articles": []
+      }
+    ]
+  },
+  {
+    "domainId": "troubleshooting",
+    "domainName": "故障排查",
+    "pillarUrl": "/troubleshooting/",
+    "subHubs": [
+      {
+        "hubSlug": "timeout",
+        "hubName": "节点超时排查",
+        "hubUrl": "/troubleshooting/timeout/",
+        "coreIntent": "Troubleshooting / Clock",
+        "articles": [
+          {
+            "id": 71,
+            "title": "DNS 污染与劫持攻击实录：如何用 DoH 加密彻底守卫域名解析安全",
+            "targetUrl": "/articles/article-71/",
+            "priority": "P1"
+          },
+          {
+            "id": 76,
+            "title": "手机公共 Wi-Fi Web 认证页面无法弹出？DNS 拦截与代理暂停技巧",
+            "targetUrl": "/articles/article-76/",
+            "priority": "P1"
+          },
+          {
+            "id": 81,
+            "title": "网络重置命令全集：一条命令恢复 Windows 干净纯粹的网络协议栈",
+            "targetUrl": "/articles/article-81/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "subscription-failed",
+        "hubName": "订阅更新失败",
+        "hubUrl": "/troubleshooting/subscription-failed/",
+        "coreIntent": "Troubleshooting / Cert",
+        "articles": [
+          {
+            "id": 67,
+            "title": "节点测速全红全超时？电脑系统时间同步与防重放机制急救排查",
+            "targetUrl": "/articles/article-67/",
+            "priority": "P1"
+          },
+          {
+            "id": 72,
+            "title": "客户端启动报 Port 7890 occupied：彻底排查并强杀冲突后台进程",
+            "targetUrl": "/articles/article-72/",
+            "priority": "P1"
+          },
+          {
+            "id": 77,
+            "title": "外服游戏跳 Ping 与严重回弹丢包的网络排障三步法",
+            "targetUrl": "/articles/article-77/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "connection-failed",
+        "hubName": "连接故障排查",
+        "hubUrl": "/troubleshooting/connection-failed/",
+        "coreIntent": "Troubleshooting / Proxy",
+        "articles": [
+          {
+            "id": 68,
+            "title": "订阅更新报 x509 证书错误：杀毒软件劫持与本地根证书修复全解",
+            "targetUrl": "/articles/article-68/",
+            "priority": "P1"
+          },
+          {
+            "id": 73,
+            "title": "精简版 Windows 缺失 WebView2 导致客户端双击闪退修复指南",
+            "targetUrl": "/articles/article-73/",
+            "priority": "P1"
+          },
+          {
+            "id": 78,
+            "title": "海外网银与金融 App 提示“处于代理环境”风控拦截的白名单配置",
+            "targetUrl": "/articles/article-78/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "dns-error",
+        "hubName": "DNS错误排查",
+        "hubUrl": "/troubleshooting/dns-error/",
+        "coreIntent": "Troubleshooting / DNS",
+        "articles": [
+          {
+            "id": 69,
+            "title": "假连接排查：连上代理但打不开任何网页的五大系统级诱因",
+            "targetUrl": "/articles/article-69/",
+            "priority": "P1"
+          },
+          {
+            "id": 74,
+            "title": "macOS 提示“应用程序已损坏”：一行终端代码搞定 Apple 安全隔离",
+            "targetUrl": "/articles/article-74/",
+            "priority": "P1"
+          },
+          {
+            "id": 79,
+            "title": "Telegram 连接一直转圈处于 Connecting 的专属代理分流修复",
+            "targetUrl": "/articles/article-79/",
+            "priority": "P1"
+          }
+        ]
+      },
+      {
+        "hubSlug": "client-startup",
+        "hubName": "启动故障排查",
+        "hubUrl": "/troubleshooting/client-startup/",
+        "coreIntent": "Troubleshooting / Port",
+        "articles": [
+          {
+            "id": 70,
+            "title": "退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本",
+            "targetUrl": "/articles/article-70/",
+            "priority": "P1"
+          },
+          {
+            "id": 75,
+            "title": "解决浏览器访问提示 ERR_PROXY_CONNECTION_FAILED 深度排障",
+            "targetUrl": "/articles/article-75/",
+            "priority": "P1"
+          },
+          {
+            "id": 80,
+            "title": "客户端日志（Logs）怎么看？教你从日志报错快速定位连接瓶颈",
+            "targetUrl": "/articles/article-80/",
+            "priority": "P1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "domainId": "risk",
+    "domainName": "风险与替代",
+    "pillarUrl": "/risk/",
+    "subHubs": [
+      {
+        "hubSlug": "shutdown",
+        "hubName": "跑路风险防范",
+        "hubUrl": "/risk/shutdown/",
+        "coreIntent": "Risk Aversion",
+        "articles": [
+          {
+            "id": 101,
+            "title": "HTTPS 端到端强加密原理：机场主到底能不能看到我的网页密码？",
+            "targetUrl": "/articles/article-101/",
+            "priority": "P2"
+          },
+          {
+            "id": 106,
+            "title": "代充海外账号（Carding）黑卡封禁危机：为什么必须走正规官方支付？",
+            "targetUrl": "/articles/article-106/",
+            "priority": "P2"
+          },
+          {
+            "id": 111,
+            "title": "遭遇欺诈跑路后的维权与争议申诉指南：证据固定与投诉路径剖析",
+            "targetUrl": "/articles/article-111/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "avoid-scams",
+        "hubName": "避坑防骗指南",
+        "hubUrl": "/risk/avoid-scams/",
+        "coreIntent": "Scam Detection",
+        "articles": [
+          {
+            "id": 97,
+            "title": "机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱",
+            "targetUrl": "/articles/article-97/",
+            "priority": "P2"
+          },
+          {
+            "id": 102,
+            "title": "WebRTC 真实 IP 泄露检测与防御：一分钟关掉浏览器隐秘后门",
+            "targetUrl": "/articles/article-102/",
+            "priority": "P2"
+          },
+          {
+            "id": 107,
+            "title": "从法律与合规视角看翻墙：个人查资料与跨境科研的安全边界",
+            "targetUrl": "/articles/article-107/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "alternatives",
+        "hubName": "多线容灾方案",
+        "hubUrl": "/risk/alternatives/",
+        "coreIntent": "High Availability",
+        "articles": [
+          {
+            "id": 98,
+            "title": "偷跑流量三大暗黑套路深度解剖：如何识破后台倍率篡改代码",
+            "targetUrl": "/articles/article-98/",
+            "priority": "P2"
+          },
+          {
+            "id": 103,
+            "title": "公共商场与酒店 Wi-Fi 防抓包安全守则：专线代理的防窃听价值",
+            "targetUrl": "/articles/article-103/",
+            "priority": "P2"
+          },
+          {
+            "id": 108,
+            "title": "不良机场跑路后用户数据脱库曝光：如何防范密码喷洒与凭证撞库？",
+            "targetUrl": "/articles/article-108/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "refunds",
+        "hubName": "退款与售后政策",
+        "hubUrl": "/risk/refunds/",
+        "coreIntent": "Consumer Rights",
+        "articles": [
+          {
+            "id": 99,
+            "title": "生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建",
+            "targetUrl": "/articles/article-99/",
+            "priority": "P2"
+          },
+          {
+            "id": 104,
+            "title": "翻墙机场的无日志（No-Logs）审查：你的连接记录会被保留多久？",
+            "targetUrl": "/articles/article-104/",
+            "priority": "P2"
+          },
+          {
+            "id": 109,
+            "title": "自建 VPS 翻墙与购买成熟商业专线机场全方位利弊得失客观复盘",
+            "targetUrl": "/articles/article-109/",
+            "priority": "P2"
+          }
+        ]
+      },
+      {
+        "hubSlug": "security",
+        "hubName": "安全与隐私保护",
+        "hubUrl": "/risk/security/",
+        "coreIntent": "Security & Privacy",
+        "articles": [
+          {
+            "id": 100,
+            "title": "科学上网安全红线：为什么绝对不能在手机或电脑安装不明根证书？",
+            "targetUrl": "/articles/article-100/",
+            "priority": "P2"
+          },
+          {
+            "id": 105,
+            "title": "海外发卡网与支付安全：如何保护个人支付宝与微信不受风控？",
+            "targetUrl": "/articles/article-105/",
+            "priority": "P2"
+          },
+          {
+            "id": 110,
+            "title": "虚假测速博客与自导自演带货站鉴别指南：如何看懂真实的评测数据？",
+            "targetUrl": "/articles/article-110/",
+            "priority": "P2"
+          }
+        ]
+      }
+    ]
+  }
+]

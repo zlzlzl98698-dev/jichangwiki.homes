@@ -1,0 +1,111 @@
+{
+  "id": "dalaoyun",
+  "slug": "dalaoyun",
+  "name": "大佬云",
+  "aliases": [
+    "Dalao Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 5,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.dalaoyunaff.com/#/?code=jCPLmoWN",
+  "couponCodes": [
+    {
+      "code": "dly888",
+      "discount": "特惠折扣",
+      "condition": "全站可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "公网隧道中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥5.6/月 (60GB)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "大佬极简版",
+      "billing": "月付",
+      "price": 5.6,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 5.6,
+      "notes": "超低价入门，60GB流量"
+    },
+    {
+      "name": "大佬畅玩版",
+      "billing": "月付",
+      "price": 12.8,
+      "traffic": "180GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 12.8,
+      "notes": "适合日常视频观看"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "48ms",
+      "download": "95Mbps",
+      "upload": "20Mbps",
+      "date": "2026-08-10",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分节点",
+    "claude": "部分节点",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "高清流畅",
+    "tiktok": "部分支持"
+  },
+  "claimedFeatures": [
+    "5.6元/月超低门槛",
+    "60GB月流量日常足够使用"
+  ],
+  "verifiedFeatures": [
+    "5.6元月付真实存在，没有强制年付套路"
+  ],
+  "strengths": [
+    "月付5.6元门槛极低，适合当作备用梯子",
+    "后台界面极简，购买导入步骤少"
+  ],
+  "limitations": [
+    "节点数量相对较少",
+    "无自研客户端，需自行配置Clash等工具"
+  ],
+  "riskNotes": "超廉价月付机场，建议仅作为备选或轻度应急使用。",
+  "suitableFor": "寻找极低月付备用节点、月流量需求在50G以内的用户。",
+  "unsuitableFor": "企业关键业务、大流量下载或对SLA有苛刻要求的场景。",
+  "sources": [
+    "32家品牌清单数据表",
+    "官方套餐记录"
+  ],
+  "verifiedAt": "2026-08-10",
+  "updatedAt": "2026-11-05",
+  "logo": "/images/logos/kuaili_logo.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

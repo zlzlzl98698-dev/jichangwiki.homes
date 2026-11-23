@@ -1,0 +1,140 @@
+{
+  "id": "xingdaomeng",
+  "slug": "xingdaomeng",
+  "name": "星岛梦",
+  "aliases": [
+    "Xingdaomeng",
+    "XDM Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 6,
+  "establishedYear": 2020,
+  "affiliateURL": "https://guangs.xingdaomeng.com/#/?code=1TynBYnR",
+  "couponCodes": [
+    {
+      "code": "nmw888",
+      "discount": "特惠优惠码",
+      "condition": "全场套餐通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "measured_and_vendor",
+  "protocols": [
+    "VLESS",
+    "Trojan",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "IPLC专线",
+    "BGP内网中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "nodeCount": "50+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥15/月 (或不限时套餐)",
+  "minMonthlyPrice": 15,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "星岛月付基础",
+      "billing": "月付",
+      "price": 15,
+      "traffic": "100GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 15,
+      "notes": "专线节点支持"
+    },
+    {
+      "name": "星岛月付进阶",
+      "billing": "月付",
+      "price": 28,
+      "traffic": "240GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 28,
+      "notes": "支持多端并发"
+    },
+    {
+      "name": "星岛不限时流量包",
+      "billing": "一次性付费",
+      "price": 99,
+      "traffic": "200GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "用完为止，无月费"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IPLC",
+      "latency": "28ms",
+      "download": "310Mbps",
+      "upload": "55Mbps",
+      "date": "2026-09-02",
+      "status": "tested",
+      "isPeak": false
+    },
+    {
+      "region": "日本 专线",
+      "latency": "62ms",
+      "download": "180Mbps",
+      "upload": "40Mbps",
+      "date": "2026-09-02",
+      "status": "tested",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "支持",
+    "netflix": "全区",
+    "disney": "全区",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "2020年起持续运营老牌机场",
+    "提供不限时永久有效流量包",
+    "IPLC专线抗封锁能力强"
+  ],
+  "verifiedFeatures": [
+    "不限时套餐真实上线，计费按流量扣减",
+    "香港节点延迟实测30ms以内"
+  ],
+  "strengths": [
+    "2020年老店口碑较稳，跑路风险相对低",
+    "不限时流量包是低频出差/备用用户的神仙套餐",
+    "专线节点晚高峰表现可靠"
+  ],
+  "limitations": [
+    "不限时套餐单价较常规月付略高",
+    "遇大型封锁节点维护需切换"
+  ],
+  "riskNotes": "老牌运营，风险整体可控，注意妥善保管订阅链接。",
+  "suitableFor": "出差较多、平时用量少不想按月交月租的轻度用户，以及追求稳定专线的老手。",
+  "unsuitableFor": "每月几百G下载的重度挂机用户。",
+  "sources": [
+    "星岛梦官方套餐表",
+    "站长测试数据 (2026-09)"
+  ],
+  "verifiedAt": "2026-09-02",
+  "updatedAt": "2026-11-18",
+  "logo": "/images/logos/xdm_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

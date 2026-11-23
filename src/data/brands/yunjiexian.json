@@ -1,0 +1,100 @@
+{
+  "id": "yunjiexian",
+  "slug": "yunjiexian",
+  "name": "云界线",
+  "aliases": [
+    "Yunjiexian"
+  ],
+  "isPrimary": false,
+  "displayOrder": 23,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.yunjiexianaff.com/?code=HBaZ91c6",
+  "couponCodes": [
+    {
+      "code": "yjx888",
+      "discount": "特惠折扣",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "公网优化隧道"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "25+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥5.6/月 (60GB)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "云界极简版",
+      "billing": "月付",
+      "price": 5.6,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 5.6,
+      "notes": "5.6元/月，60GB流量"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "49ms",
+      "download": "80Mbps",
+      "upload": "16Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分",
+    "claude": "部分",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "高清流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "5.6元/月 + 60GB超低入门"
+  ],
+  "verifiedFeatures": [
+    "资费门槛极低，适合备用"
+  ],
+  "strengths": [
+    "价格便宜，月付无心理负担",
+    "可与主干机场形成双冗余备份"
+  ],
+  "limitations": [
+    "资料记录提示推广链接结构存在参数格式特殊性，跳转需注意",
+    "协议细节文档相对简单"
+  ],
+  "riskNotes": "官方链接参数格式略有异常，建议核对网页注册状态；只推荐月付。",
+  "suitableFor": "当作第二套低价备用梯子的用户。",
+  "unsuitableFor": "单一主力依赖且容错率低的工作场景。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/yinyun_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

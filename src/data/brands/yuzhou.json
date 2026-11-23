@@ -1,0 +1,108 @@
+{
+  "id": "yuzhou",
+  "slug": "yuzhou",
+  "name": "宇宙云",
+  "aliases": [
+    "Yuzhou Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 11,
+  "establishedYear": 2022,
+  "affiliateURL": "https://wzjc.yuzoucloud.cc/#/?code=yrThwMP1",
+  "couponCodes": [
+    {
+      "code": "YUZHOU553",
+      "discount": "特惠折扣",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS"
+  ],
+  "networkTypes": [
+    "IEPL专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "官方自研客户端",
+    "Clash Verge Rev",
+    "Shadowrocket"
+  ],
+  "entryPrice": "¥18/月",
+  "minMonthlyPrice": 18,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "宇宙基础版",
+      "billing": "月付",
+      "price": 18,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 18,
+      "notes": "IEPL专线传输"
+    },
+    {
+      "name": "宇宙进阶版",
+      "billing": "月付",
+      "price": 32,
+      "traffic": "260GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 32,
+      "notes": "自研客户端高速连接"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IEPL",
+      "latency": "35ms",
+      "download": "180Mbps",
+      "upload": "30Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "IEPL + VLESS架构",
+    "提供自研客户端支持"
+  ],
+  "verifiedFeatures": [
+    "IEPL专线接入，支持自研与第三方客户端双模式"
+  ],
+  "strengths": [
+    "提供自研客户端，小白免配置一键登录",
+    "IEPL专线晚高峰防波动"
+  ],
+  "limitations": [
+    "节点区域相对基础，主要覆盖主流四地"
+  ],
+  "riskNotes": "常规专线机场，建议按需月付。",
+  "suitableFor": "喜欢自研客户端一键连接的小白用户。",
+  "unsuitableFor": "对特定冷门国家IP有要求的跨境专业用户。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/yuzhou_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

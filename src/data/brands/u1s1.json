@@ -1,0 +1,113 @@
+{
+  "id": "u1s1",
+  "slug": "u1s1",
+  "name": "U1S1",
+  "aliases": [
+    "U1S1 Cloud",
+    "有一说一机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 12,
+  "establishedYear": 2022,
+  "affiliateURL": "https://guangs.vipaff.cc/#/?code=xhX5X22f",
+  "couponCodes": [
+    {
+      "code": "akaka",
+      "discount": "常规优惠码",
+      "condition": "全场套餐可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "中转专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥20/月 (120GB)",
+  "minMonthlyPrice": 20,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "U1S1标准版",
+      "billing": "月付",
+      "price": 20,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "实打实120G月付"
+    },
+    {
+      "name": "U1S1大杯版",
+      "billing": "月付",
+      "price": 36,
+      "traffic": "280GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 36,
+      "notes": "多设备大流量"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 专线",
+      "latency": "36ms",
+      "download": "170Mbps",
+      "upload": "35Mbps",
+      "date": "2026-08-05",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "实事求是定位",
+    "20元120GB标准性价比方案"
+  ],
+  "verifiedFeatures": [
+    "无虚高夸大倍率，套餐扣费真实"
+  ],
+  "strengths": [
+    "命名接地气，资费透明无套路",
+    "主流流媒体与ChatGPT解锁稳定"
+  ],
+  "limitations": [
+    "暂无超大流量TB级套餐",
+    "节点数适中"
+  ],
+  "riskNotes": "口碑平稳，建议常规月付。",
+  "suitableFor": "厌烦虚标倍率、追求真实计费和省心体验的个人用户。",
+  "unsuitableFor": "需要上百个冷门备用节点的玩家。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-05",
+  "updatedAt": "2026-11-05",
+  "logo": "/images/logos/u1s1主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

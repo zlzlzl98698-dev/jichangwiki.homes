@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "2026 机场综合排行榜：基于晚高峰性能、SLA可用率与真实口碑量化大盘点";
+const description = "拒绝虚假商业软文置顶！建立基于晚高峰丢包率、物理专线占比、解锁矩阵支持、客服响应时效及价格透明度的多维度量化排行体系。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"机场推荐","url":"/airport/"},{"name":"ranking","url":"/airport/ranking/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/airport/ranking/","url":"https://jichangwiki.homes/airport/ranking/","name":"2026 机场综合排行榜：基于晚高峰性能、SLA可用率与真实口碑量化大盘点","description":"拒绝虚假商业软文置顶！建立基于晚高峰丢包率、物理专线占比、解锁矩阵支持、客服响应时效及价格透明度的多维度量化排行体系。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"机场推荐","item":"https://jichangwiki.homes/airport/"},{"@type":"ListItem","position":3,"name":"2026 机场综合排行榜：基于晚高峰性能、SLA可用率与真实口碑量化大盘点","item":"https://jichangwiki.homes/airport/ranking/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"排行榜上的第一名是否永远不会卡顿？","acceptedAnswer":{"@type":"Answer","text":"任何网络服务都会遇到不可抗力（如国际海底光缆被渔船刮断）。但第一名的光速云具备多路由双冗余备份，在突发故障时能在数秒内自动切走流量，将断网影响降至最低。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"排行榜上的第一名是否永远不会卡顿？","a":"任何网络服务都会遇到不可抗力（如国际海底光缆被渔船刮断）。但第一名的光速云具备多路由双冗余备份，在突发故障时能在数秒内自动切走流量，将断网影响降至最低。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>客观公正 · 2026 实力天梯榜</span>
+        <span>·</span>
+        <span>上级主题: <a href="/airport/" class="underline hover:text-blue-800">机场推荐总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        2026 机场综合排行榜：量化性能大盘点
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        用真实测试数据说话。我们历时数月对全网 30 余家代表品牌进行晚高峰压力测试，为您呈现剔除广告滤镜后的客观梯队排行。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>天梯榜核心裁决 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>在 2026 年度的综合评级中，<strong>光速云（Guangsu Cloud）</strong>以端到端物理 IEPL 专线、0.2% 晚高峰超低丢包率及全流媒体/AI 原生解锁稳居 <strong>S 级第一梯队旗舰王座</strong>；星岛梦、暮光加速位列 A+ 梯队；二猫云、飞猫云位列高性价比 A 级梯队。建议用户根据自身预算与任务需求对号入座。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 机场综合排行的量化评估体系（拒绝虚假排名）
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>市面上许多所谓的“机场排行榜”，本质上是谁给的佣金高谁排在第一位。为了打破信息不对称，我们建立了<strong>五维量化评分模型</strong>：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>线路物理品质（权重 35%）：</strong> 考察是否具备真实二层 IEPL 专线、双海底光缆冗余倒换机制及入口 PoP 冗余度；</li>
+  <li><strong>晚高峰稳定性（权重 25%）：</strong> 在 20:30 ~ 22:30 网络大拥堵时段进行 1000 次连续 Ping 与丢包率监测；</li>
+  <li><strong>海外服务解锁力（权重 20%）：</strong> 对 ChatGPT、Claude、Gemini、Netflix 非自制剧的全区解锁支持状态；</li>
+  <li><strong>客户服务与运营历史（权重 10%）：</strong> 考察工单响应时间与品牌稳健存续年份（3年以上为及格标准）；</li>
+  <li><strong>价格透明度与性价比（权重 10%）：</strong> 考察是否存在暗改倍率、虚标年付平均月价或隐形附加条款。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 2026 年度梯队全景解读与选型建议
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>基于上述模型综合打分，我们将当前市场主流品牌划分为三大核心梯队：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs sm:text-sm text-emerald-950">
+    <span class="font-bold text-emerald-950 block mb-1">【第一梯队：S 级旗舰专线】代表品牌：光速云</span>
+    全线节点 100% 部署物理 IEPL 内网专线，完全不过 GFW 审查硬件。晚高峰 4K 视频秒开无卡顿，AI 纯净度极高。适合对网络要求极严苛的跨国办公、科研学者与高端生产力用户。
+  </div>
+  <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs sm:text-sm text-blue-950">
+    <span class="font-bold text-blue-950 block mb-1">【第二梯队：A 级品质专线/中转】代表品牌：星岛梦、暮光加速、微风网络</span>
+    具备成熟的 BGP 入口与专线混合调度能力，速度与延迟表现良好，价格适中，适合高频追剧与日常技术浏览。
+  </div>
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">【第三梯队：B+ 级平价走量】代表品牌：二猫云、飞猫云、大佬云</span>
+    主打极致亲民价格（月付 10 元左右），性价比高，适合学生群体、备用应急或轻量学术查资料。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            2026 年度机场梯队排行榜明细汇总
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        多维度量化指标总分对照表：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">综合排名</th><th class="py-3 px-4">品牌名称</th><th class="py-3 px-4">核心网络类型</th><th class="py-3 px-4">晚高峰丢包控制</th><th class="py-3 px-4">AI/流媒体全解锁</th><th class="py-3 px-4">综合总评分</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TOP 1</td><td class="py-3 px-4 ">光速云 (主推)</td><td class="py-3 px-4 ">全线 IEPL 跨境内网专线</td><td class="py-3 px-4 ">< 0.2% (近乎绝对稳定)</td><td class="py-3 px-4 ">100% 全解锁</td><td class="py-3 px-4 ">98.5 (S级卓越)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TOP 2</td><td class="py-3 px-4 ">星岛梦</td><td class="py-3 px-4 ">优质中转 + 专线</td><td class="py-3 px-4 ">< 1.2%</td><td class="py-3 px-4 ">主流解锁</td><td class="py-3 px-4 ">93.0 (A+级)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TOP 3</td><td class="py-3 px-4 ">暮光加速</td><td class="py-3 px-4 ">BGP 入口 + 专线</td><td class="py-3 px-4 ">< 1.5%</td><td class="py-3 px-4 ">主流解锁</td><td class="py-3 px-4 ">91.5 (A+级)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TOP 4</td><td class="py-3 px-4 ">二猫云</td><td class="py-3 px-4 ">国内多线中转</td><td class="py-3 px-4 ">~ 3.0%</td><td class="py-3 px-4 ">部分解锁</td><td class="py-3 px-4 ">86.0 (A级)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TOP 5</td><td class="py-3 px-4 ">飞猫云</td><td class="py-3 px-4 ">专线 + 自研客户端</td><td class="py-3 px-4 ">~ 2.8%</td><td class="py-3 px-4 ">主流解锁</td><td class="py-3 px-4 ">85.5 (A级)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        天梯榜 TOP 1 标杆品牌直达
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        天梯榜按需选型决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">生产力零容忍</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>选择 TOP 1 光速云：</strong> 确保工作视讯会议、大文件推拉与 ChatGPT 访问 100% 顺畅。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">天梯榜使用军规：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>排行榜仅供参考，任何品牌在首次使用时均需小额月付；</li><li>定期查阅排行榜更新，关注各品牌在不同网络时期的表现变化。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        机场排行常见问题 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 核心关联技术手册
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-19/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">深度评测</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              为什么说月付是最好的防跑路护甲？月付机场综合实测精选 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              用量化指标选购靠谱月付专线。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

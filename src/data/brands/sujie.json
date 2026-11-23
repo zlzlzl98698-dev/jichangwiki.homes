@@ -1,0 +1,113 @@
+{
+  "id": "sujie",
+  "slug": "sujie",
+  "name": "速界",
+  "aliases": [
+    "SpeedWorld",
+    "速界机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 19,
+  "establishedYear": 2023,
+  "affiliateURL": "https://guangs.speedworldaff.cc/#/register?code=xgXzEfZB",
+  "couponCodes": [
+    {
+      "code": "sss1111",
+      "discount": "特惠折扣",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "AI专线优化",
+    "高速中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥19/月 (120GB)",
+  "minMonthlyPrice": 19,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "速界轻享",
+      "billing": "月付",
+      "price": 19,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 19,
+      "notes": "针对ChatGPT与Claude优化"
+    },
+    {
+      "name": "速界高阶",
+      "billing": "月付",
+      "price": 35,
+      "traffic": "260GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 35,
+      "notes": "全节点多端在线"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 AI出口",
+      "latency": "38ms",
+      "download": "160Mbps",
+      "upload": "32Mbps",
+      "date": "2026-08-05",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持 (重点优化)",
+    "claude": "支持",
+    "gemini": "支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "品牌资料重点强调AI生产力工具针对性优化",
+    "提供低阻断原生IP出口"
+  ],
+  "verifiedFeatures": [
+    "ChatGPT问答响应快速，无验证码拦截弹窗"
+  ],
+  "strengths": [
+    "AI交互体验良好，针对主流AI域名有分流规则",
+    "价格适中"
+  ],
+  "limitations": [
+    "不提供自研客户端",
+    "高峰期欧美节点偶有微幅抖动"
+  ],
+  "riskNotes": "适合轻度AI工具用户，建议按月购买。",
+  "suitableFor": "跨境文案创作、海外AI开发与日常办公人群。",
+  "unsuitableFor": "需要单节点大流量持续BT下载的场景。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-05",
+  "updatedAt": "2026-11-04",
+  "logo": "/images/logos/sujie_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

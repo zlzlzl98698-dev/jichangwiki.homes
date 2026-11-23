@@ -1,0 +1,101 @@
+{
+  "id": "shandianshu",
+  "slug": "shandianshu",
+  "name": "闪电鼠",
+  "aliases": [
+    "Shandianshu"
+  ],
+  "isPrimary": false,
+  "displayOrder": 22,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.shandianshuaff.com/#/?code=rUE75iYh",
+  "couponCodes": [
+    {
+      "code": "sd88",
+      "discount": "特惠折扣",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "公网隧道"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "25+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥5.6/月 (60GB)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "闪电极速入门",
+      "billing": "月付",
+      "price": 5.6,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 5.6,
+      "notes": "5.6元/月超低门槛，60GB流量"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 隧道",
+      "latency": "48ms",
+      "download": "85Mbps",
+      "upload": "18Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分",
+    "claude": "部分",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "高清流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "5.6元极低月付",
+    "60GB实用流量"
+  ],
+  "verifiedFeatures": [
+    "5.6元超低月付价格属实，无隐藏强制加价"
+  ],
+  "strengths": [
+    "极端便宜，5.6元吃一顿快餐的零头即可用一个月",
+    "轻度备用极佳"
+  ],
+  "limitations": [
+    "节点数量不多，无自研客户端",
+    "高峰期速率有一定衰减"
+  ],
+  "riskNotes": "廉价入门机场，请严格以月付方式使用。",
+  "suitableFor": "预算极其有限的学生党或纯文字查资料应急备用者。",
+  "unsuitableFor": "要求全天候千兆跑满或对延迟苛求的用户。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/kuaili_logo.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

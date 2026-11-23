@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "安卓科学上网加速器完全指南：v2rayNG、FlClash 选型、系统级保活与规避封杀实战";
+const description = "全面解决 Android 平台由于厂商定制系统杀后台、缺少 GMS 谷歌服务、网络权限限制引发的科学上网顽疾。详解小米澎湃、华为鸿蒙、OPPO ColorOS 等系统的深度适配方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"VPN与加速器","url":"/vpn/"},{"name":"android","url":"/vpn/android/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/vpn/android/","url":"https://jichangwiki.homes/vpn/android/","name":"安卓科学上网加速器完全指南：v2rayNG、FlClash 选型、系统级保活与规避封杀实战","description":"全面解决 Android 平台由于厂商定制系统杀后台、缺少 GMS 谷歌服务、网络权限限制引发的科学上网顽疾。详解小米澎湃、华为鸿蒙、OPPO ColorOS 等系统的深度适配方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"VPN与加速器","item":"https://jichangwiki.homes/vpn/"},{"@type":"ListItem","position":3,"name":"安卓科学上网加速器完全指南：v2rayNG、FlClash 选型、系统级保活与规避封杀实战","item":"https://jichangwiki.homes/vpn/android/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"安装 APK 时手机管家弹出“该应用包含高风险代码”，真的有毒吗？","acceptedAnswer":{"@type":"Answer","text":"只要您确认是在官方 GitHub Releases 下载的原版 APK，这 100% 属于国产系统对翻墙工具的通用合规性风险提示。由于此类软件需要申请“创建虚拟专用网络 (VpnService)”权限来接管数据包，系统安全引擎会将其标记为高风险。点击“忽略风险，继续安装”即可安全使用。"}},{"@type":"Question","name":"为什么我打开了代理，Google Play 商店依然打不开？","acceptedAnswer":{"@type":"Answer","text":"很多国产手机默认精简了谷歌服务框架（GMS）。请先在手机应用商店搜索并开启“基础 Google 服务”，或者安装“Go 谷歌安装器”补齐 Google Play 服务与 Google 账号服务，并确保分流规则中将 Google 域名指向可用代理节点。"}},{"@type":"Question","name":"为什么每天早上醒来，手机上的代理都会被自动关闭？","acceptedAnswer":{"@type":"Answer","text":"这是因为手机在深夜电量低于特定阈值时，系统的“夜间超级省电模式”强行清空了所有后台进程。请检查系统设置中的“夜间省电优化”，将代理软件从优化列表中剔除，并确保前台常驻通知图标保持常驻状态。"}},{"@type":"Question","name":"手机开热点给电脑用，电脑能自动翻墙吗？","acceptedAnswer":{"@type":"Answer","text":"默认情况下，手机开出的热点流量不会经过手机上的代理软件。如果您希望电脑通过手机热点共享代理，需在客户端中开启“允许局域网连接 (Allow LAN)”功能，或者在手机端安装支持 VPN 热点共享的增强工具（如 VPN Hotspot）。"}},{"@type":"Question","name":"光速云对安卓手机的使用体验有何优势？","acceptedAnswer":{"@type":"Answer","text":"光速云后台一键提供了针对安卓平台的标准订阅链接（支持 v2rayNG 与 Clash 全协议），下发的数据集经过精简压缩，在安卓设备上解析极快，且节点具备毫秒级探活自愈能力，让安卓用户享受全天候不断连的顺畅体验。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"安装 APK 时手机管家弹出“该应用包含高风险代码”，真的有毒吗？","a":"只要您确认是在官方 GitHub Releases 下载的原版 APK，这 100% 属于国产系统对翻墙工具的通用合规性风险提示。由于此类软件需要申请“创建虚拟专用网络 (VpnService)”权限来接管数据包，系统安全引擎会将其标记为高风险。点击“忽略风险，继续安装”即可安全使用。"},{"q":"为什么我打开了代理，Google Play 商店依然打不开？","a":"很多国产手机默认精简了谷歌服务框架（GMS）。请先在手机应用商店搜索并开启“基础 Google 服务”，或者安装“Go 谷歌安装器”补齐 Google Play 服务与 Google 账号服务，并确保分流规则中将 Google 域名指向可用代理节点。"},{"q":"为什么每天早上醒来，手机上的代理都会被自动关闭？","a":"这是因为手机在深夜电量低于特定阈值时，系统的“夜间超级省电模式”强行清空了所有后台进程。请检查系统设置中的“夜间省电优化”，将代理软件从优化列表中剔除，并确保前台常驻通知图标保持常驻状态。"},{"q":"手机开热点给电脑用，电脑能自动翻墙吗？","a":"默认情况下，手机开出的热点流量不会经过手机上的代理软件。如果您希望电脑通过手机热点共享代理，需在客户端中开启“允许局域网连接 (Allow LAN)”功能，或者在手机端安装支持 VPN 热点共享的增强工具（如 VPN Hotspot）。"},{"q":"光速云对安卓手机的使用体验有何优势？","a":"光速云后台一键提供了针对安卓平台的标准订阅链接（支持 v2rayNG 与 Clash 全协议），下发的数据集经过精简压缩，在安卓设备上解析极快，且节点具备毫秒级探活自愈能力，让安卓用户享受全天候不断连的顺畅体验。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>安卓生态完全手册 · 告别后台强杀</span>
+        <span>·</span>
+        <span>上级主题: <a href="/vpn/" class="underline hover:text-blue-800">VPN与加速器总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        安卓科学上网加速器完全指南：客户端选型与系统保活实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        国内安卓厂商定制 ROM 杀后台太凶猛？锁屏就断网？本文针对国内主流安卓系统，手把手教您搞定客户端深度适配与全天候稳定常驻。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>安卓端核心实战结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>安卓手机科学上网的首选客户端是 v2rayNG（追求极致轻量稳定）或 FlClash（追求现代美观界面）</strong>。为了彻底根治国内厂商系统（小米 HyperOS、华为 HarmonyOS、vivo OriginOS、OPPO ColorOS）激进的“杀后台”特性，<strong>必须依次完成“电池优化设为无限制”、“允许关联启动/自启动”并在“多任务卡片加锁”三大操作</strong>，即可保障 24 小时后台稳定常驻不断流。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 安卓系统碎片化对代理软件的挑战与各大主流客户端生态
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>相比苹果 iOS 统一封闭的生态，安卓阵营具有极其严重的碎片化特性。国内主流手机厂商出于续航和发热指标考核，深度定制了极其激进的系统电池管理机制（如“墓碑机制”与智能冻结）。此外，部分未预装 Google Mobile Services (GMS) 的设备，在访问境外应用时还会面临依赖缺失的问题。</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【安卓主流开源代理客户端生态格局全景】</div>
+  <div>■ 务实稳定之王：v2rayNG (基于 Xray-core)</div>
+  <div>  - 优势：运行占用极低（仅占 30MB 运存），几乎从不闪退，全面兼容各代安卓系统与老旧机型</div>
+  <div>■ 现代审美旗舰：FlClash / Clash Verge Android (基于 Mihomo)</div>
+  <div>  - 优势：Flutter 打造的高颜值现代 UI，完美支持复杂策略组与动态规则分流</div>
+  <div>■ 极客多协议新秀：NekoBox / SagerNet</div>
+  <div>  - 优势：支持 Sing-box 内核，支持链式代理与底层内核自定义，适合深度折腾玩家</div>
+</div>
+<p>认清各客户端的技术特点，结合自身手机的系统型号与使用诉求，才能选出最适合自己的主力工具。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 安卓手机丝滑翻墙配置四步实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>无论您使用的是哪家国产品牌手机，按照以下四个标准步骤进行配置，即可告别断网烦恼：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：通过官方 GitHub Releases 下载正版纯净 APK：</strong> 认准 <code>2dust/v2rayNG</code> 或 <code>chen08209/FlClash</code> 官方仓库。在手机自带浏览器中下载带有 <code>arm64-v8a</code> 架构后缀的安装包，安装时若系统提示风险，选择“已知晓风险，继续安装”；</li>
+  <li><strong>第二步：彻底解除系统后台限制（核心三部曲）：</strong><br/>
+    ① <strong>电池策略：</strong> 长按桌面图标 -> 应用信息 -> 省电策略 -> 选择<strong>“无限制”</strong>；<br/>
+    ② <strong>自启动：</strong> 在应用权限中开启“允许自启动”与“允许被其他应用唤醒”；<br/>
+    ③ <strong>多任务加锁：</strong> 上滑进入多任务后台卡片流，长按该软件卡片，点击“小锁头”图标锁定，防止被清理加速误杀；</li>
+  <li><strong>第三步：开启“绕过局域网及大陆地址 (Bypass LAN & Mainland)”：</strong> 在客户端的分流设置中，务必选择绕过国内 IP 与域名。这样手机上的国内应用（微信、高德地图、网银）将直连本地宽带，既跑满千兆速率，又完全不会消耗套餐流量；</li>
+  <li><strong>第四步：一键导入光速云订阅并设置自动更新：</strong> 复制机场后台的安卓订阅链接，在客户端中添加订阅分组，点击更新拉取节点。将更新周期设置为 1440 分钟（24 小时），系统将全自动保持最新节点状态。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流安卓代理客户端全方位性能与特性对比表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        四大主流安卓科学上网工具核心指标深度横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">客户端名称</th><th class="py-3 px-4">支持核心内核</th><th class="py-3 px-4">分流规则精细度</th><th class="py-3 px-4">系统内存开销</th><th class="py-3 px-4">后台保活稳定性</th><th class="py-3 px-4">界面美观度</th><th class="py-3 px-4">上手推荐度</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">v2rayNG</td><td class="py-3 px-4 ">Xray-core / V2Ray</td><td class="py-3 px-4 ">良好 (支持GeoIP/Domain)</td><td class="py-3 px-4 ">极低 (约 30MB)</td><td class="py-3 px-4 ">极高 (老牌稳定抗造)</td><td class="py-3 px-4 ">简朴实用</td><td class="py-3 px-4 ">★★★★★ (首选力荐)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">FlClash</td><td class="py-3 px-4 ">Mihomo (Clash.Meta)</td><td class="py-3 px-4 ">极佳 (完整策略组支持)</td><td class="py-3 px-4 ">中等 (约 80MB)</td><td class="py-3 px-4 ">良好 (前台保活)</td><td class="py-3 px-4 ">极其现代美观</td><td class="py-3 px-4 ">★★★★★ (颜值首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Clash Meta for Android</td><td class="py-3 px-4 ">Mihomo</td><td class="py-3 px-4 ">极佳</td><td class="py-3 px-4 ">中等 (约 70MB)</td><td class="py-3 px-4 ">良好</td><td class="py-3 px-4 ">经典成熟</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">NekoBox for Android</td><td class="py-3 px-4 ">Sing-box</td><td class="py-3 px-4 ">极高 (灵活链式代理)</td><td class="py-3 px-4 ">低 (约 45MB)</td><td class="py-3 px-4 ">良好</td><td class="py-3 px-4 ">极客硬核风格</td><td class="py-3 px-4 ">★★★★☆ (极客推荐)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Surfboard</td><td class="py-3 px-4 ">定制内核</td><td class="py-3 px-4 ">良好 (Surge 语法规则)</td><td class="py-3 px-4 ">低 (约 50MB)</td><td class="py-3 px-4 ">良好</td><td class="py-3 px-4 ">仿 iOS 风格</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        对安卓各品牌深度优化、订阅导入兼容性极佳的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        安卓机型与使用习惯决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">追求极简与长续航</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>千元备用机或老款安卓机，配置较低：</strong> 果断安装 v2rayNG，内存占用小到可以忽略不计，老旧系统依然能够丝滑常驻运行。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新购安卓旗舰机</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>旗舰处理器，屏幕色彩惊艳，注重界面视觉：</strong> 安装 FlClash，享受丝滑流畅的动效设计与可视化策略组调度，体验比肩 iOS 顶级软件。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">华为鸿蒙纯血 HarmonyOS</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>使用的是纯血鸿蒙新系统或特殊定制版本：</strong> 可利用系统内置的安卓兼容子系统运行，或通过局域网代理共享模式接入家庭软路由网络。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">安卓端使用五大黄金守则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>绝对不要在应用宝等国内应用市场搜索下载所谓的‘一键加速器’；</li><li>定期更新客户端内核版本，以便支持最新的 Reality 与 TLS 1.3 协议；</li><li>开启分流规则（绕过大陆），避免国内 App 大量走海外节点引起发热耗电；</li><li>换新手机时，直接在新设备上导入订阅链接即可，无需任何复杂迁移操作；</li><li>搭配具备低延迟特性的优质专线服务商（如光速云），享受秒开体验。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        安卓端科学上网高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 安卓与客户端进阶推荐长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/clients/clash-verge/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">选型评测</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026主流跨平台客户端横评：Clash Verge Rev vs v2rayN vs Sing-box 谁才是日常主力？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全面对比不同客户端在各大平台的性能与资源占用。
+            </p>
+          </a>
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">终极防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              零基础了解安卓手机科学上网防坑指南。
+            </p>
+          </a>
+        
+          <a href="/vpn/mobile/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">移动优化</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              移动端科学上网加速器选型指南：iOS 与 Android 熄屏保活、功耗控制与基站漫游优化 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              掌握移动端全天候保活省电的系统级调优技巧。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

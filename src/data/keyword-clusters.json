@@ -1,0 +1,146 @@
+[
+  {
+    "clusterId": "airport-recommendation",
+    "name": "机场选购与综合推荐",
+    "parentHub": "/airport/",
+    "subHubs": [
+      "/airport/recommend/",
+      "/airport/ranking/",
+      "/airport/reliable/",
+      "/airport/stable/",
+      "/airport/best/"
+    ],
+    "coreIntent": "Commercial Investigation",
+    "businessValue": "High"
+  },
+  {
+    "clusterId": "pricing-and-budget",
+    "name": "价格模型与预算梯队",
+    "parentHub": "/pricing/",
+    "subHubs": [
+      "/pricing/cheap/",
+      "/pricing/one-yuan/",
+      "/pricing/one-cent/",
+      "/pricing/monthly/",
+      "/pricing/lifetime/",
+      "/pricing/value/"
+    ],
+    "coreIntent": "Commercial Investigation / Transactional",
+    "businessValue": "High"
+  },
+  {
+    "clusterId": "brands-and-reviews",
+    "name": "品牌实体与独立评测",
+    "parentHub": "/brands/",
+    "subHubs": [
+      "/brands/directory/",
+      "/brands/reviews/",
+      "/brands/official/",
+      "/brands/prices/",
+      "/brands/coupons/",
+      "/brands/alternatives/"
+    ],
+    "coreIntent": "Navigational / Commercial Investigation",
+    "businessValue": "High"
+  },
+  {
+    "clusterId": "vpn-and-accelerators",
+    "name": "VPN与网络加速技术差异",
+    "parentHub": "/vpn/",
+    "subHubs": [
+      "/vpn/recommend/",
+      "/vpn/free/",
+      "/vpn/mobile/",
+      "/vpn/android/",
+      "/vpn/gaming/"
+    ],
+    "coreIntent": "Informational / Commercial Investigation",
+    "businessValue": "Medium"
+  },
+  {
+    "clusterId": "clients-and-software",
+    "name": "代理客户端与内核生态",
+    "parentHub": "/clients/",
+    "subHubs": [
+      "/clients/clash-verge/",
+      "/clients/clash-meta/",
+      "/clients/v2rayn/",
+      "/clients/shadowrocket/",
+      "/clients/mihomo/",
+      "/clients/sing-box/"
+    ],
+    "coreIntent": "Informational / Navigational",
+    "businessValue": "High"
+  },
+  {
+    "clusterId": "streaming-and-ai",
+    "name": "AI生产力与流媒体全区解锁",
+    "parentHub": "/streaming-ai/",
+    "subHubs": [
+      "/streaming-ai/chatgpt/",
+      "/streaming-ai/claude/",
+      "/streaming-ai/gemini/",
+      "/streaming-ai/netflix/",
+      "/streaming-ai/youtube/"
+    ],
+    "coreIntent": "Informational / Commercial Investigation",
+    "businessValue": "High"
+  },
+  {
+    "clusterId": "network-and-topology",
+    "name": "专线拓扑与节点质量",
+    "parentHub": "/network/",
+    "subHubs": [
+      "/network/iepl/",
+      "/network/iplc/",
+      "/network/hong-kong/",
+      "/network/japan/",
+      "/network/low-latency/",
+      "/network/traffic-ratio/"
+    ],
+    "coreIntent": "Informational",
+    "businessValue": "Medium"
+  },
+  {
+    "clusterId": "tutorials-and-guides",
+    "name": "新手入门与配置实操",
+    "parentHub": "/tutorials/",
+    "subHubs": [
+      "/tutorials/subscription/",
+      "/tutorials/clash-configuration/",
+      "/tutorials/routing-rules/",
+      "/tutorials/tun-mode/",
+      "/tutorials/client-installation/"
+    ],
+    "coreIntent": "Informational",
+    "businessValue": "Medium"
+  },
+  {
+    "clusterId": "troubleshooting-and-diagnostics",
+    "name": "网络故障诊断与排障自愈",
+    "parentHub": "/troubleshooting/",
+    "subHubs": [
+      "/troubleshooting/timeout/",
+      "/troubleshooting/subscription-failed/",
+      "/troubleshooting/connection-failed/",
+      "/troubleshooting/dns-error/",
+      "/troubleshooting/client-startup/"
+    ],
+    "coreIntent": "Troubleshooting",
+    "businessValue": "Medium"
+  },
+  {
+    "clusterId": "risk-and-alternatives",
+    "name": "服务安全风控与避坑备选",
+    "parentHub": "/risk/",
+    "subHubs": [
+      "/risk/shutdown/",
+      "/risk/avoid-scams/",
+      "/risk/alternatives/",
+      "/risk/refunds/",
+      "/risk/security/"
+    ],
+    "coreIntent": "Informational / Commercial Investigation",
+    "businessValue": "High"
+  }
+]

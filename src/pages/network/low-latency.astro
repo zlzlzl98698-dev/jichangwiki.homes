@@ -1,0 +1,310 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "低延迟节点网络优化指南：网络抖动排查、路由跳数精简与电竞加速实战";
+const description = "深入剖析科学上网中的网络延迟指标：光纤传播时延计算、BGP 路由直连、网络抖动（Jitter）成因、全锥型 FullCone NAT 开启及终端游戏/视讯防丢包调优。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"线路与节点","url":"/network/"},{"name":"low-latency","url":"/network/low-latency/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/network/low-latency/","url":"https://jichangwiki.homes/network/low-latency/","name":"低延迟节点网络优化指南：网络抖动排查、路由跳数精简与电竞加速实战","description":"深入剖析科学上网中的网络延迟指标：光纤传播时延计算、BGP 路由直连、网络抖动（Jitter）成因、全锥型 FullCone NAT 开启及终端游戏/视讯防丢包调优。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"线路与节点","item":"https://jichangwiki.homes/network/"},{"@type":"ListItem","position":3,"name":"低延迟节点网络优化指南：网络抖动排查、路由跳数精简与电竞加速实战","item":"https://jichangwiki.homes/network/low-latency/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么测速软件显示香港延迟只有 5ms，但打开网页还是慢？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为本地 DNS 仍在采用传统的 Redir-Host 模式，浏览器在发送请求前必须等待跨洋 DNS 解析。在客户端设置中将增强模式切换为“Fake-IP”，即可消除这一停顿实现秒开。"}},{"@type":"Question","name":"美国节点能做到 50ms 延迟吗？","acceptedAnswer":{"@type":"Answer","text":"绝对不可能。中国大陆到美国西海岸直线光纤距离超过 10000 公里，按照物理学光速在玻璃中的传播极限，往返单单物理光纤传输就必须耗费 100ms 以上。任何显示 50ms 的美国节点都是把国内中转入口的延迟误判为了出口延迟。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么测速软件显示香港延迟只有 5ms，但打开网页还是慢？","a":"这通常是因为本地 DNS 仍在采用传统的 Redir-Host 模式，浏览器在发送请求前必须等待跨洋 DNS 解析。在客户端设置中将增强模式切换为“Fake-IP”，即可消除这一停顿实现秒开。"},{"q":"美国节点能做到 50ms 延迟吗？","a":"绝对不可能。中国大陆到美国西海岸直线光纤距离超过 10000 公里，按照物理学光速在玻璃中的传播极限，往返单单物理光纤传输就必须耗费 100ms 以上。任何显示 50ms 的美国节点都是把国内中转入口的延迟误判为了出口延迟。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>毫秒级调优 · 极速电竞视讯</span>
+        <span>·</span>
+        <span>上级主题: <a href="/network/" class="underline hover:text-blue-800">线路与节点总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        低延迟节点网络优化指南：告别卡顿与抖动
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        延迟不仅仅是一个 Ping 数字，它决定了跨国会议是否声画同步、外服联机是否顺畅。本文带您深入网络物理层，手把手打造毫秒级低延迟通道。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>低延迟优化结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>网络低延迟的本质由<strong>物理光纤传播距离、网络设备处理时延与路由排队丢包率</strong>三者共同决定。单盲目追求“Ping 值低”毫无意义，真正的丝滑体验取决于<strong>极低的网络抖动（Jitter < 2ms）与 0% 丢包率</strong>。通过搭配近距离 IEPL 内网专线（如深圳-香港 3ms、上海-日本 28ms）并在客户端开启 TUN 模式与 FullCone NAT，可将跨国交互体验优化至极致。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 揭开延迟的物理学本质：光速传播与路由跃点开销
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>许多用户误以为网络数据是“瞬间即达”的，但实际上光信号在石英玻璃光纤中的传播速度约为 <strong>200,000 公里/秒</strong>（约为真空中光速的 2/3）。这意味着光纤中每增加 1000 公里的单程物理传输距离，往返时延（RTT）理论上就会刚性增加约 <strong>10 毫秒</strong>：</p>
+<ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 my-2">
+  <li><strong>深圳至香港（约 50 公里）：</strong> 理论物理光纤延迟仅 0.5ms，加上交换机转发开销，专线实测往返仅需 <strong>3ms ~ 5ms</strong>；</li>
+  <li><strong>上海至日本东京（约 2000 公里海缆）：</strong> 理论光纤往返延迟约 20ms，专线实测约为 <strong>26ms ~ 32ms</strong>；</li>
+  <li><strong>上海至美国西海岸（约 10000 公里跨太海缆）：</strong> 理论物理极限往返延迟至少需要 <strong>100ms</strong>，加上骨干网路由中转，实际最快也需 <strong>120ms ~ 140ms</strong>。</li>
+</ul>
+<p>因此，所谓“美国节点延迟能做到 20ms”纯属虚假宣传或本地客户端欺骗。要想获得极致的毫秒级响应，<strong>物理上必须首选香港、日本、韩国、台湾等近距离亚太节点</strong>。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 消除网络抖动（Jitter）与电竞游戏 FullCone NAT 调优
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在日常高频交互场景（如 CS2、Apex Legends 游戏排位，或者 Google Meet、Zoom 跨国连线）中，危害最大的往往不是基础延迟高，而是<strong>网络抖动与微丢包</strong>：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">1. 什么是网络抖动（Jitter）？</span>
+    如果前一个数据包 30ms 抵达，后一个数据包由于公网拥堵变成了 120ms 抵达，这 90ms 的时差就会导致游戏画面“瞬移（Lag）”、语音通话瞬间机器人电音破音。优质专线通过独立企业带宽隔离，将抖动严格控制在 <strong>1ms ~ 2ms</strong> 极窄范围。
+  </div>
+  <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs sm:text-sm text-blue-950">
+    <span class="font-bold text-blue-950 block mb-1">2. 开启 FullCone NAT 解决联机报错：</span>
+    外服联机和即时语音（Discord）高度依赖 UDP 协议与 P2P 直连。如果代理节点仅支持对称型 NAT（Symmetric NAT），游戏会提示“NAT Type Strict”导致无法加入好友房间。在 Clash Verge Rev 中开启 TUN 模式并配合支持 FullCone 的专线节点（如光速云），可直接解锁 <strong>NAT Type A / Open 开放级</strong>。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            不同国家与地区节点物理延迟与适用场景基准表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        实测基准：国内沿海千兆光纤宽带 + IEPL 优质骨干网：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">节点地区</th><th class="py-3 px-4">典型专线物理延迟</th><th class="py-3 px-4">网络抖动 (Jitter)</th><th class="py-3 px-4">丢包控制</th><th class="py-3 px-4">最佳核心业务场景</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">香港 (Hong Kong)</td><td class="py-3 px-4 ">3ms ~ 8ms (华南直达)</td><td class="py-3 px-4 ">< 1ms (极致恒定)</td><td class="py-3 px-4 ">0% (近乎绝对)</td><td class="py-3 px-4 ">日常网页秒开、外贸邮件、YouTube 4K</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">日本 (Tokyo/Osaka)</td><td class="py-3 px-4 ">28ms ~ 38ms (华东直达)</td><td class="py-3 px-4 ">< 1.5ms (平滑稳定)</td><td class="py-3 px-4 ">0% (极佳)</td><td class="py-3 px-4 ">ChatGPT/Claude、二次元流媒体、Apex 电竞</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">台湾 (Taiwan)</td><td class="py-3 px-4 ">18ms ~ 28ms (东南沿海)</td><td class="py-3 px-4 ">< 2ms (优秀)</td><td class="py-3 px-4 ">0% (极佳)</td><td class="py-3 px-4 ">巴哈姆特动画疯、台服游戏、原生繁中解锁</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">新加坡 (Singapore)</td><td class="py-3 px-4 ">35ms ~ 45ms (华南直达)</td><td class="py-3 px-4 ">< 2ms (优秀)</td><td class="py-3 px-4 ">0%</td><td class="py-3 px-4 ">东南亚跨境电商 (Shopee/Lazada)、国际商务</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">美国西海岸 (US West)</td><td class="py-3 px-4 ">120ms ~ 145ms (跨洋极限)</td><td class="py-3 px-4 ">< 3ms (专线稳定)</td><td class="py-3 px-4 ">0%</td><td class="py-3 px-4 ">OpenAI 根服务器交互、美区专属金融银行</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        低延迟电竞与视讯推荐服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        低延迟优化三步实操流程
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">第一步：选择物理直通专线</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>摒弃公网直连，选用 IEPL 专线：</strong> 从源头上消除公网国际出入口拥堵排队与 GFW 深度包检测造成的计算时延。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">第二步：开启 Fake-IP 模式</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>在客户端启用 Fake-IP 消除 DNS 往返：</strong> 本地 0ms 返回虚拟 IP，彻底消灭浏览器点开链接转圈等待 DNS 解析的 200ms 开销。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">第三步：本地有线千兆连接</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>尽量使用有线网线或 Wi-Fi 6 5GHz 频段：</strong> 避免 2.4GHz 频段无线信道干扰造成的本地 5~10ms 额外抖动。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">低延迟网络运维黄金守则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>不要只看测速软件上的 Ping，更要关注 MTR 测试中的丢包率（Packet Loss）；</li><li>联机游戏必须开启 TUN 模式接管 UDP 流量；</li><li>华东地区用户优先选日本/台湾，华南地区用户优先选香港，根据物理地理位置就近选节点。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        低延迟节点常见疑问 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 核心关联技术手册
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-61/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">DNS黑科技</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Fake-IP 原理解析：它是如何消除本地 DNS 往返延迟实现秒开的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              深入剖析 0ms 闪电响应机理。
+            </p>
+          </a>
+        
+          <a href="/articles/article-82/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">专线架构</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线物理层拓扑大揭秘：二层物理光缆是如何过境的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              超低延迟骨干链路全解构。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

@@ -1,0 +1,347 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析";
+const description = "深入剖析 IEPL（International Ethernet Private Line）跨境专线物理架构：二层以太网链路、VLAN 物理隔离、不过 GFW 审查硬件机理、晚高峰抗抖动测试及假冒专线鉴别方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"线路与节点","url":"/network/"},{"name":"iepl","url":"/network/iepl/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/network/iepl/","url":"https://jichangwiki.homes/network/iepl/","name":"IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析","description":"深入剖析 IEPL（International Ethernet Private Line）跨境专线物理架构：二层以太网链路、VLAN 物理隔离、不过 GFW 审查硬件机理、晚高峰抗抖动测试及假冒专线鉴别方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"线路与节点","item":"https://jichangwiki.homes/network/"},{"@type":"ListItem","position":3,"name":"IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析","item":"https://jichangwiki.homes/network/iepl/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"IEPL 专线真的能做到全年 100% 不受敏感期断网影响吗？","acceptedAnswer":{"@type":"Answer","text":"是的。因为 IEPL 是电信运营商内部搭建的二层专网，数据包物理上根本不经过部署了国家防火墙（GFW）的公网国际出口路由器。只要国内机房到境外机房之间的物理光缆没有发生物理断裂，专线内部的数据流通就永远处于畅通状态。"}},{"@type":"Question","name":"为什么有些小机场标称 IEPL 专线，但晚高峰依然卡顿？","acceptedAnswer":{"@type":"Answer","text":"这通常有两种原因：一是“假专线”，商家实际用的是普通公网 VPS 隧道甚至直连冒充专线；二是“过度超售”，商家只采购了 500Mbps 的专线带宽，却卖给了上万名用户，晚高峰通道被彻底挤爆。选择像光速云这样有信誉、具备充沛带宽储备的品牌至关重要。"}},{"@type":"Question","name":"IEPL 和 IPLC 到底有什么细微区别？日常使用该选谁？","acceptedAnswer":{"@type":"Answer","text":"IPLC 是最早期的物理租用线路，相当于直接租用一层裸光纤中的时隙，点对点固定拓扑，灵活性差；IEPL 是基于现代以太网技术构建的二层专线，具备更灵活的带宽动态扩容和多点调度能力。两者在抗封锁和低延迟上表现一致，但 IEPL 在现代网络调度上更具优势。"}},{"@type":"Question","name":"使用 IEPL 专线会不会导致我的微信、淘宝变成境外访问？","acceptedAnswer":{"@type":"Answer","text":"完全不会。只要您在客户端（如 Clash Verge Rev）中选择“规则 (Rule)”模式，客户端内置的分流规则集会自动识别国内应用与网站，所有国内流量直接走本地宽带直连，只有访问境外受限资源时才会走 IEPL 专线。"}},{"@type":"Question","name":"光速云的 IEPL 专线支持哪些国家和地区？","acceptedAnswer":{"@type":"Answer","text":"光速云的 IEPL 专线网络全面覆盖亚太与欧美核心枢纽，包括香港（延迟 3-5ms）、日本东京/大阪（延迟 28-40ms）、新加坡、台湾、美国洛杉矶/圣何塞等，全线支持 4K 流媒体与主流 AI 平台全解锁。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"IEPL 专线真的能做到全年 100% 不受敏感期断网影响吗？","a":"是的。因为 IEPL 是电信运营商内部搭建的二层专网，数据包物理上根本不经过部署了国家防火墙（GFW）的公网国际出口路由器。只要国内机房到境外机房之间的物理光缆没有发生物理断裂，专线内部的数据流通就永远处于畅通状态。"},{"q":"为什么有些小机场标称 IEPL 专线，但晚高峰依然卡顿？","a":"这通常有两种原因：一是“假专线”，商家实际用的是普通公网 VPS 隧道甚至直连冒充专线；二是“过度超售”，商家只采购了 500Mbps 的专线带宽，却卖给了上万名用户，晚高峰通道被彻底挤爆。选择像光速云这样有信誉、具备充沛带宽储备的品牌至关重要。"},{"q":"IEPL 和 IPLC 到底有什么细微区别？日常使用该选谁？","a":"IPLC 是最早期的物理租用线路，相当于直接租用一层裸光纤中的时隙，点对点固定拓扑，灵活性差；IEPL 是基于现代以太网技术构建的二层专线，具备更灵活的带宽动态扩容和多点调度能力。两者在抗封锁和低延迟上表现一致，但 IEPL 在现代网络调度上更具优势。"},{"q":"使用 IEPL 专线会不会导致我的微信、淘宝变成境外访问？","a":"完全不会。只要您在客户端（如 Clash Verge Rev）中选择“规则 (Rule)”模式，客户端内置的分流规则集会自动识别国内应用与网站，所有国内流量直接走本地宽带直连，只有访问境外受限资源时才会走 IEPL 专线。"},{"q":"光速云的 IEPL 专线支持哪些国家和地区？","a":"光速云的 IEPL 专线网络全面覆盖亚太与欧美核心枢纽，包括香港（延迟 3-5ms）、日本东京/大阪（延迟 28-40ms）、新加坡、台湾、美国洛杉矶/圣何塞等，全线支持 4K 流媒体与主流 AI 平台全解锁。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>旗舰企业专线 · 二层物理链路</span>
+        <span>·</span>
+        <span>上级主题: <a href="/network/" class="underline hover:text-blue-800">线路与节点总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        IEPL 国际以太网专线深度科普：二层内网架构与防封原理
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        在网络审查与晚高峰拥堵日益严峻的环境下，IEPL 专线已成为高端机场的绝对基石。本文带您揭开其物理层光纤跨境与零丢包的技术奥秘。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>百科核心评测结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>IEPL（国际以太网专线）</strong>是当下科学上网领域综合表现最完美的骨干网络形态。与普通公网或中转隧道不同，IEPL 在物理层采用电信运营商私有二层光缆跨境，<strong>数据全程在企业内网中传输，物理上根本不经过公网国际出口路由器和 GFW 审查硬件</strong>。无论在敏感时期还是晚高峰大拥堵时段，均能保持 0% 丢包与 4K 秒开，是跨国协同办公、外贸金融与高端生产力用户的首选底座（代表品牌：光速云）。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 物理层拓扑全景解构：IEPL 是如何实现光纤跨境的？
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>要想真正理解 IEPL 为什么稳定，必须从计算机网络体系结构的物理层与数据链路层切入。普通网民使用的公网代理，数据包是在公用 Internet 上经过几十个三层公网路由器的逐跳转发（Hop-by-Hop），每一次跳跃都要与亿万普通流量竞争带宽，并在出境时必须通过国家级防火墙（GFW）的深度包检测（DPI）硬件。</p>
+<p>而 <strong>IEPL（International Ethernet Private Line）</strong> 是电信运营商（如中国电信、中国移动国际 CMI、PCCW 电讯盈科）基于以太网技术提供的端到端二层专网服务。其真实物理拓扑由四大模块构成：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【IEPL 物理数据流路径全景图】</div>
+  <div>[用户终端 (PC/手机)]</div>
+  <div>  │  (本地公网宽带直连，走国内优质 BGP 路由)</div>
+  <div>  ▼</div>
+  <div>[国内入口 PoP 点机房] (如深圳前海深港合作区 / 上海临港新片区电信 IDC)</div>
+  <div>  │  (数据在接入交换机完成 IEEE 802.1Q VLAN 标签封装，转换为二层以太网帧)</div>
+  <div>  ▼</div>
+  <div>[跨境陆缆 / 海底光缆传输系统] (物理光纤跨境，直接在光传输设备 OTN/DWDM 上直达)</div>
+  <div>  │  ★ 关键点：全程在运营商企业内网光纤流动，完全不分配公网 IP，不经过 GFW 审查硬件！</div>
+  <div>  ▼</div>
+  <div>[境外出口 PoP 点机房] (如香港柴湾 / 日本 Equinix TY3 IDC)</div>
+  <div>  │  (解封装还原数据包，注入海外原生落地宽带公网)</div>
+  <div>  ▼</div>
+  <div>[目标网络出口] ---> (秒级直达 Google / OpenAI / YouTube / Netflix)</div>
+</div>
+<p>正因为数据在跨境段没有暴露在公网 IP 路由层，GFW 部署在公网网关上的所有审查规则、阻断设备与 DNS 污染机制<strong>从物理层面完全接触不到 IEPL 的数据包</strong>！这就是 IEPL 专线在任何外部网络风浪中都能“风景独好”的物理根源。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 电信级 SLA 保障机制与市场上假冒专线的四步鉴别法
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>运营商对企业级 IEPL 专线提供极其严苛的 <strong>SLA（Service Level Agreement，服务等级协议）</strong> 承诺，通常包括：月度可用性 ≥ 99.99%、丢包率 ≤ 0.1%、单程网络抖动 ≤ 2ms。从深圳 PoP 点到香港 PoP 点的物理单程延迟通常仅需 <strong>3ms ~ 5ms</strong>，上海到东京仅需 <strong>26ms ~ 28ms</strong>。</p>
+<p>由于纯物理 IEPL 专线的运营商采购成本极其高昂（1Gbps 专线月租通常在数万元以上），部分不良小机场常常采用“挂羊头卖狗肉”的方式，把廉价的公网隧道包装成专线高价售卖。我们总结出<strong>四步硬核鉴别法</strong>：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：晚高峰 21:00 延迟抖动（Jitter）压力测试：</strong> 使用 MTR 或 PingPlotter 连续发送 500 个探测包。真 IEPL 专线的延迟曲线如同一根笔直的水平线，抖动在 1ms ~ 2ms 之间，丢包率为 0%；假专线延迟随公网晚高峰剧烈波动，抖动超过 20ms 且丢包率飙升至 5% 以上；</li>
+  <li><strong>第二步：Traceroute 路由跳数检验：</strong> 真正的内网专线在跨国段是二层直通，路由追踪时国内入口到海外落地之间<strong>跳数极少（通常仅 1~2 跳内网私有 IP，无任何公网 202.97 或 59.43 等公网骨干路由跳点）</strong>；</li>
+  <li><strong>第三步：网络敏感时期生存状态核验：</strong> 在特定网络敏感期，所有普通公网直连与普通隧道中转大面积飘红瘫痪，而真专线（如光速云）丝毫不受任何外部风浪干扰；</li>
+  <li><strong>第四步：核验上游运营商与机房资质：</strong> 优质专线机场会在状态页面清晰标注其接入 PoP 机房与专线运营商（如中国电信 CN2/IEPL、中国移动 CMI 专线）。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            IEPL 专线 vs IPLC 专线 vs 公网隧道横向指标对比
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        基于跨国电信基础设施真实参数与实测性能横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">技术维度</th><th class="py-3 px-4">IEPL 国际以太网专线</th><th class="py-3 px-4">IPLC 私有租用线路</th><th class="py-3 px-4">普通国内中转隧道</th><th class="py-3 px-4">普通公网直连 (Direct)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">网络协议层级</td><td class="py-3 px-4 ">二层数据链路层 (Ethernet/VLAN)</td><td class="py-3 px-4 ">一层物理层 (TDM/裸光纤)</td><td class="py-3 px-4 ">三层网络层 (IP-in-IP/GRE/WS)</td><td class="py-3 px-4 ">三层公网 IP 路由 (Public Internet)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">是否经过 GFW 审查</td><td class="py-3 px-4 ">完全不过 (内网物理隔离)</td><td class="py-3 px-4 ">完全不过 (物理裸纤隔离)</td><td class="py-3 px-4 ">经过 (公网封装但易被特征识别)</td><td class="py-3 px-4 ">完全暴露在审查硬件之下</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">晚高峰丢包率</td><td class="py-3 px-4 ">< 0.1% (近乎零丢包)</td><td class="py-3 px-4 ">< 0.1% (极度稳定)</td><td class="py-3 px-4 ">3% ~ 15% (受公网波动影响)</td><td class="py-3 px-4 ">20% ~ 50% (严重断流丢包)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">深圳-香港延迟</td><td class="py-3 px-4 ">3ms ~ 6ms (极限物理光速)</td><td class="py-3 px-4 ">3ms ~ 5ms (极限物理光速)</td><td class="py-3 px-4 ">15ms ~ 30ms (受公网绕路影响)</td><td class="py-3 px-4 ">50ms ~ 90ms (严重排队拥堵)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">动态调度灵活性</td><td class="py-3 px-4 ">极高 (支持以太网灵活切路由)</td><td class="py-3 px-4 ">低 (点对点硬件死连)</td><td class="py-3 px-4 ">中等 (依赖软件面板调度)</td><td class="py-3 px-4 ">极低 (受 IP 被封锁制约)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">采购成本</td><td class="py-3 px-4 ">极高 (8~15元/Mbps/月)</td><td class="py-3 px-4 ">极高 (10~20元/Mbps/月)</td><td class="py-3 px-4 ">中等 (2~5元/Mbps/月)</td><td class="py-3 px-4 ">极低 (0.5~1元/Mbps/月)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">推荐评级</td><td class="py-3 px-4 ">★★★★★ (生产力首选)</td><td class="py-3 px-4 ">★★★★☆ (传统企业首选)</td><td class="py-3 px-4 ">★★★☆☆ (中低预算过渡)</td><td class="py-3 px-4 ">★☆☆☆☆ (纯玩具测试)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        原生搭载 IEPL 真实物理专线的代表服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        不同用户与业务场景的专线选型决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">跨国科研与协同</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Git 代码推拉、跨国 Zoom 会议与学术检索：</strong> 生产力对断网零容忍。首选具备深圳/上海双 PoP 入口的 IEPL 专线，保证视频会议不卡帧、代码拉取满速。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">AI 办公与风控突围</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>OpenAI ChatGPT、Claude 与海外银行服务：</strong> IEPL 专线搭配纯净住宅落地 IP，不仅延迟低至 40ms，且出口 IP 极其纯净，彻底告别 1020 拦截与封号风险。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">4K/8K 极致视听</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Netflix 全区、Disney+ 与 YouTube 4K 60FPS：</strong> 利用 IEPL 专线无单线程限速与零丢包特性，实现点击即开、任意拖拽进度条零缓冲。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">IEPL 专线高阶使用五大黄金法则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>认准具备自建双冗余海缆/陆缆倒换机制的品牌（如光速云），防止单条海底光缆故障导致断网；</li><li>在客户端中保持规则分流（Rule 模式），国内直连不走专线，将宝贵的专线流量留给真正需要加速的境外生产力请求；</li><li>配合支持 FullCone NAT 的客户端（如 Clash Verge Rev），可将外服联机游戏的 NAT 类型优化至开放级；</li><li>针对跨洋大文件下载（如游戏更新包），可临时切换至 0.2x 低倍率普通节点，避免消耗高价值的专线额度；</li><li>坚持优先选用支持月付的专线服务，随时掌握消费主动权。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        IEPL 专线高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 线路与专线进阶技术长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-82/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">底层解密</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线物理层拓扑大揭秘：二层物理光缆是如何过境的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              从光传输设备 OTN 到机房 PoP 点全景剖析。
+            </p>
+          </a>
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">避坑指南</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              高昂专线成本背后的财务真相。
+            </p>
+          </a>
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">高可用架构</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              利用 Clash fallback 组建无感容灾体系。
+            </p>
+          </a>
+        
+          <a href="/articles/article-90/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">成本优化</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点倍率计算公式详解：大文件下载如何利用 0.2x 节点省流？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              算清专线流量倍率账本。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

@@ -1,0 +1,193 @@
+{
+  "id": "lingdong",
+  "slug": "lingdong",
+  "name": "灵动云",
+  "aliases": [
+    "Lingdong Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 29,
+  "establishedYear": 2025,
+  "affiliateURL": "https://varnexa.lingdongaff.com/#/?code=wZvEhEoI",
+  "couponCodes": [
+    {
+      "code": "待核实",
+      "discount": "暂未提供独立优惠码",
+      "condition": "以官网活动为准"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "measured_and_vendor",
+  "protocols": [
+    "VLESS",
+    "Trojan混提"
+  ],
+  "networkTypes": [
+    "IEPL专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "欧洲"
+  ],
+  "nodeCount": "60+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥20/月 (100GB) 或¥99/年 (70GB/月)",
+  "minMonthlyPrice": 8.25,
+  "paymentMethods": [
+    "支付宝",
+    "USDT (微信需客服)"
+  ],
+  "plans": [
+    {
+      "name": "灵动·拂风",
+      "billing": "月付",
+      "price": 20,
+      "traffic": "100GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "季付¥57/年付¥204"
+    },
+    {
+      "name": "灵动·驭浪",
+      "billing": "月付",
+      "price": 50,
+      "traffic": "300GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 50,
+      "notes": "年付¥510"
+    },
+    {
+      "name": "灵动·破晓",
+      "billing": "月付",
+      "price": 100,
+      "traffic": "700GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 100,
+      "notes": "大带宽方案"
+    },
+    {
+      "name": "灵动·凌霄",
+      "billing": "月付",
+      "price": 180,
+      "traffic": "1.5TB/月",
+      "period": "每月重置",
+      "pricePerMonth": 180,
+      "notes": "重度流量方案"
+    },
+    {
+      "name": "灵动·穿云 (年付特惠)",
+      "billing": "年付",
+      "price": 99,
+      "traffic": "70GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 8.25,
+      "notes": "年付折合¥8.25/月"
+    },
+    {
+      "name": "灵动·闲云 (小流量包)",
+      "billing": "一次性付费",
+      "price": 199,
+      "traffic": "150GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    },
+    {
+      "name": "灵动·惊云 (标准流量包)",
+      "billing": "一次性付费",
+      "price": 499,
+      "traffic": "400GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    },
+    {
+      "name": "灵动·飞云 (精英流量包)",
+      "billing": "一次性付费",
+      "price": 899,
+      "traffic": "800GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IEPL",
+      "latency": "38ms",
+      "download": "55MB/s (440Mbps)",
+      "upload": "28MB/s",
+      "date": "2026-07-21",
+      "status": "tested",
+      "isPeak": false,
+      "note": "珠海联通9G实测"
+    },
+    {
+      "region": "日本 节点",
+      "latency": "72ms",
+      "download": "42MB/s (336Mbps)",
+      "upload": "22MB/s",
+      "date": "2026-07-21",
+      "status": "tested",
+      "isPeak": false,
+      "note": "HTTPS延迟稍高"
+    },
+    {
+      "region": "美国 01",
+      "latency": "185ms",
+      "download": "失败",
+      "upload": "失败",
+      "date": "2026-07-21",
+      "status": "tested",
+      "isPeak": false,
+      "note": "整节点失败已标注"
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "全地区基本全解锁 (亮点)",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持 (台湾落地识别偏欧)",
+    "disney": "支持",
+    "youtube": "新台YT送中风险",
+    "tiktok": "多失败已如实标注"
+  },
+  "claimedFeatures": [
+    "2025年开业新专线机场",
+    "IEPL专线不限速不限设备",
+    "单次流量包与私人定制齐全"
+  ],
+  "verifiedFeatures": [
+    "2026-07真实测试记录显示OpenAI主流地区解锁表现突出",
+    "如实记录了测试时TikTok多失败及美国01节点故障，数据真实可靠"
+  ],
+  "strengths": [
+    "OpenAI AI工具解锁能力强，适合AI专业使用者",
+    "年付¥99穿云套餐折合¥8.25/月很实惠",
+    "测试数据记录极其详实且诚实"
+  ],
+  "limitations": [
+    "TikTok测试表现欠佳，部分亚太节点存在YouTube送中情况",
+    "台湾节点Netflix落地被识别为西班牙IP (ES)"
+  ],
+  "riskNotes": "实测数据详实，部分冷门场景存在瑕疵已标注，选购时请对照自身需求避开弱项节点。",
+  "suitableFor": "OpenAI ChatGPT重度科研办公、需要年付低价入门或大额不限时流量包的用户。",
+  "unsuitableFor": "TikTok跨境直播带货运营人员或对台湾本地流媒体IP纯净度有苛刻要求的用户。",
+  "sources": [
+    "灵动云品牌库记录 (2026-08-09)",
+    "珠海联通9Gbps 60测速/60解锁实测记录"
+  ],
+  "verifiedAt": "2026-07-21",
+  "updatedAt": "2026-11-15",
+  "logo": "/images/logos/灵动云256x256.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

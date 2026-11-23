@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "客户端闪退与启动报错排查指南：端口冲突、内核崩溃与环境修复实战";
+const description = "全面解决科学上网客户端闪退、启动报错‘Port 7890 already in use’、内核无法拉起或服务模式安装失败。提供后台死锁进程查杀命令、配置文件重置与系统运行库修复方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"故障排查","url":"/troubleshooting/"},{"name":"client-startup","url":"/troubleshooting/client-startup/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/troubleshooting/client-startup/","url":"https://jichangwiki.homes/troubleshooting/client-startup/","name":"客户端闪退与启动报错排查指南：端口冲突、内核崩溃与环境修复实战","description":"全面解决科学上网客户端闪退、启动报错‘Port 7890 already in use’、内核无法拉起或服务模式安装失败。提供后台死锁进程查杀命令、配置文件重置与系统运行库修复方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"故障排查","item":"https://jichangwiki.homes/troubleshooting/"},{"@type":"ListItem","position":3,"name":"客户端闪退与启动报错排查指南：端口冲突、内核崩溃与环境修复实战","item":"https://jichangwiki.homes/troubleshooting/client-startup/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么每次关机再开机后，客户端就会报错端口被占用？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为 Windows 开启了“快速启动 (Fast Startup)”功能。快速启动会将内核状态写入休眠文件，导致关机时进程没有被完全释放。在控制面板电源选项中关闭“快速启动”，或者在开机时通过任务计划脚本释放端口即可解决。"}},{"@type":"Question","name":"启动时提示“WebView2 runtime not found”怎么处理？","acceptedAnswer":{"@type":"Answer","text":"现代基于 Tauri 的客户端（如 Clash Verge Rev）依赖微软的 Edge WebView2 引擎来渲染前端页面。如果使用的是精简版 Windows 系统，可以在微软官网免费下载“Evergreen Standalone Installer”进行一键安装补齐。"}},{"@type":"Question","name":"安装服务模式（Service Mode）时反复失败报错？","acceptedAnswer":{"@type":"Answer","text":"这是因为安装服务模式需要向 Windows 的 System32 目录写入驱动文件并注册系统服务。请务必右键以“管理员身份运行”客户端，并在杀毒软件弹出拦截通知时选择“允许所有操作”。"}},{"@type":"Question","name":"为什么软件打开后界面是一片纯白或纯黑？","acceptedAnswer":{"@type":"Answer","text":"这通常是显卡硬件加速（GPU Acceleration）与驱动冲突引起的。在快捷方式后加上启动参数 `--disable-gpu` 启动软件，或者在系统设置中更新显卡驱动即可恢复正常渲染。"}},{"@type":"Question","name":"光速云后台推荐的客户端下载包是否包含运行库？","acceptedAnswer":{"@type":"Answer","text":"光速云后台提供的客户端安装包均为官方完整整合版，内置了最新的稳定版 Mihomo 内核与常见驱动组件，最大程度避免了因缺失运行库而导致的启动失败。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么每次关机再开机后，客户端就会报错端口被占用？","a":"这通常是因为 Windows 开启了“快速启动 (Fast Startup)”功能。快速启动会将内核状态写入休眠文件，导致关机时进程没有被完全释放。在控制面板电源选项中关闭“快速启动”，或者在开机时通过任务计划脚本释放端口即可解决。"},{"q":"启动时提示“WebView2 runtime not found”怎么处理？","a":"现代基于 Tauri 的客户端（如 Clash Verge Rev）依赖微软的 Edge WebView2 引擎来渲染前端页面。如果使用的是精简版 Windows 系统，可以在微软官网免费下载“Evergreen Standalone Installer”进行一键安装补齐。"},{"q":"安装服务模式（Service Mode）时反复失败报错？","a":"这是因为安装服务模式需要向 Windows 的 System32 目录写入驱动文件并注册系统服务。请务必右键以“管理员身份运行”客户端，并在杀毒软件弹出拦截通知时选择“允许所有操作”。"},{"q":"为什么软件打开后界面是一片纯白或纯黑？","a":"这通常是显卡硬件加速（GPU Acceleration）与驱动冲突引起的。在快捷方式后加上启动参数 `--disable-gpu` 启动软件，或者在系统设置中更新显卡驱动即可恢复正常渲染。"},{"q":"光速云后台推荐的客户端下载包是否包含运行库？","a":"光速云后台提供的客户端安装包均为官方完整整合版，内置了最新的稳定版 Mihomo 内核与常见驱动组件，最大程度避免了因缺失运行库而导致的启动失败。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>启动排障手册 · 秒级查杀复位</span>
+        <span>·</span>
+        <span>上级主题: <a href="/troubleshooting/" class="underline hover:text-blue-800">故障排查总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        客户端闪退与启动报错排查指南：端口冲突与内核修复
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        双击客户端毫无反应？刚打开就闪退或者弹出一串英文报错？本文带您快速查杀后台僵尸进程、排查端口冲突与修复运行库环境。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>启动报错核心解决结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>客户端启动闪退或报错 <code>already in use</code> 时，<strong>90% 是由于上次退出时后台代理内核（如 clash-meta.exe 或 mihomo.exe）成为僵尸进程残留并占死了 7890 端口</strong>。第一自愈动作：打开任务管理器，强制结束所有名为 <code>clash</code>、<code>mihomo</code>、<code>sing-box</code> 的后台进程；若依然闪退，删除损坏的本地缓存配置文件 <code>config.yaml</code> 即可恢复正常启动。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 客户端闪退与启动报错的技术诱因：端口冲突与内核崩溃
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>现代代理客户端采用“前端 GUI 界面 + 后端代理内核（Core）”的分离式架构。前端界面（如基于 Tauri 或 Electron 开发的面板）在启动时，会通过 RPC 接口尝试唤醒后台内核并监听指定的本地端口。这一过程中常见的崩溃断点包括：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【客户端启动加载链路与常见崩溃点】</div>
+  <div>1. 进程唤醒：前端启动 -> 尝试 spawn 后台 mihomo 内核进程 (被杀毒软件误杀拦截)</div>
+  <div>2. 端口绑定：内核尝试 bind 0.0.0.0:7890 -> [报错: Port already in use] (被残留进程占死)</div>
+  <div>3. 配置文件解析：内核读取 config.yaml -> [报错: YAML syntax error] (缩进错误或特殊非法字符)</div>
+  <div>4. 底层驱动加载：尝试注册 Wintun 网卡 -> [报错: Access Denied] (缺少管理员 UAC 权限)</div>
+</div>
+<p>只要理清报错发生在哪个阶段，即可针对性地在数秒内完成自愈，无需盲目重新下载或盲目重装系统。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 客户端秒级自愈与环境修复四步工作法
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>按照以下四个标准步骤，可以彻底清除环境冲突并修复启动异常：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：命令行强杀僵尸内核进程（释放被占端口）：</strong> 按下 <code>Win + X</code> 打开“终端/PowerShell”，输入以下命令并回车强杀残留进程：<br/><code>taskkill /F /IM "clash-meta.exe" /IM "mihomo.exe" /IM "clash-verge.exe" /T</code><br/>端口瞬间被释放，再次双击软件即可顺畅启动；</li>
+  <li><strong>第二步：查杀第三方抢占端口的软件：</strong> 若强杀后依然提示 7890 被占用，执行 <code>netstat -ano | findstr 7890</code> 查看占用端口的 PID，在任务管理器“详细信息”中找到该 PID 对应的程序（常见为迅雷下载加速模块、各类安卓模拟器），将其彻底关闭；</li>
+  <li><strong>第三步：重置损坏的 YAML 配置文件：</strong> 进入 <code>C:Users用户名.configclash-verge</code>（Mac 为 <code>~/.config/clash-verge</code>），找到 <code>config.yaml</code> 并重命名为 <code>config.yaml.bak</code>。重新打开软件，客户端会自动生成一份全新的默认配置文件；</li>
+  <li><strong>第四步：安装微软官方 VC++ 运行库合集：</strong> 若提示缺少 <code>MSVCP140.dll</code> 或 <code>VCRUNTIME140.dll</code>，说明操作系统缺少 C++ 运行环境。下载安装微软官方的“Visual C++ 2015-2022 Redistributable (x64)”安装包并重启电脑。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            客户端启动高频报错现象与处置决策表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        高频崩溃诱因与修复方案对照：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">启动报错现象 / 代码</th><th class="py-3 px-4">根本技术诱因</th><th class="py-3 px-4">受影响操作系统</th><th class="py-3 px-4">极速处置 SOP</th><th class="py-3 px-4">根治与防复发建议</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Port 7890 already in use</td><td class="py-3 px-4 ">后台存在残留僵尸内核进程占死端口</td><td class="py-3 px-4 ">Windows / macOS</td><td class="py-3 px-4 ">通过任务管理器或 taskkill 命令强杀后台进程</td><td class="py-3 px-4 ">在退出软件时等待 3 秒让其优雅退出</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">双击图标无反应 / 秒闪退</td><td class="py-3 px-4 ">配置文件 YAML 语法缩进严重破损</td><td class="py-3 px-4 ">全平台</td><td class="py-3 px-4 ">重命名或删除 .config 目录下的配置文件</td><td class="py-3 px-4 ">不要用系统记事本直接修改 YAML</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">缺少 MSVCP140.dll 无法运行</td><td class="py-3 px-4 ">系统缺少 VC++ 2015-2022 动态链接库</td><td class="py-3 px-4 ">Windows 10 / 11</td><td class="py-3 px-4 ">安装微软官方 VC++ 运行库分发包</td><td class="py-3 px-4 ">安装正规纯净版 Windows 系统更新</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">服务模式安装失败 (Install Failed)</td><td class="py-3 px-4 ">缺少管理员提升权限或系统安全策略限制</td><td class="py-3 px-4 ">Windows 10 / 11</td><td class="py-3 px-4 ">鼠标右键点击客户端，选择“以管理员身份运行”</td><td class="py-3 px-4 ">关闭杀毒软件的底层驱动保护拦截</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">macOS 提示应用已损坏</td><td class="py-3 px-4 ">苹果 Gatekeeper 安全公证隔离标志未清除</td><td class="py-3 px-4 ">macOS 12 / 13 / 14</td><td class="py-3 px-4 ">终端运行 sudo xattr -r -d com.apple.quarantine</td><td class="py-3 px-4 ">认准官方 GitHub 正规 Release 安装包</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        客户端适配良好、配置语法标准且零报错的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        启动排障决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">小白新手</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>搞不懂命令行，不想看复杂代码：</strong> 直接重启电脑。电脑重启会自动清除所有内存中的僵尸进程与端口占用，70% 的启动报错可瞬间恢复。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">多开软件玩家</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>需要同时运行其他开发环境或代理：</strong> 在 Clash Verge Rev 的“设置”中，将“混合端口 (Mixed Port)”手动修改为一个冷门端口（如 <code>27890</code>），永久避开端口冲突。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">系统精简版用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>使用的是网上下载的 Ghost 精简版系统：</strong> 精简版系统通常删除了关键系统服务。必须手动补齐 WebView2 运行时与 VC++ 运行库合集。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">客户端运维五大铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>遇到启动报错先别急着卸载重装，优先通过任务管理器排查残留进程；</li><li>严禁使用 Windows 自带的“记事本”编辑 YAML 文件（记事本会自动添加 UTF-8 BOM 导致内核报错）；</li><li>右键以管理员身份运行一次客户端，确保底层驱动和服务模式能顺利注册；</li><li>定期更新客户端至稳定的正式版本，避免使用未经测试的 Alpha 预览版；</li><li>遇到无法解决的闪退，备份好订阅链接后，清空配置目录即可恢复出厂纯净状态。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        客户端启动高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 客户端与排障技术深度长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全面掌握客户端安装、运行库配置与服务模式排障。
+            </p>
+          </a>
+        
+          <a href="/clients/clash-verge/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">选型评测</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026主流跨平台客户端横评：Clash Verge Rev vs v2rayN vs Sing-box 谁才是日常主力？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              对比不同客户端的系统兼容性与稳定性表现。
+            </p>
+          </a>
+        
+          <a href="/articles/article-70/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">网络自愈</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              解决客户端非正常退出引起的网络残留断网。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

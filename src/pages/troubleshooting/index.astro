@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+
+const title = '网络代理故障排查与自愈诊断全解（2026）｜节点超时、连上无网、403订阅失败与DNS修复';
+const description = '权威中文代理故障排查支柱专题：建立标准化问题诊断树。深度解决节点全部红字 Timeout、连接成功却打不开网页、订阅更新 403 证书错误及 7890 端口冲突，提供 100% 可验证的自愈修复步骤。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '故障排查', url: '/troubleshooting/' }
+];
+
+const subSections = [
+  { name: '节点超时排查', url: '/troubleshooting/timeout/', desc: '全部红字 Timeout 自愈树：系统时间偏差、杀软拦截与服务商状态', icon: '⏱️' },
+  { name: '订阅更新失败', url: '/troubleshooting/subscription-failed/', desc: '403/SSL 握手错误：域名污染、证书失效与跳过验证配置', icon: '❌' },
+  { name: '连上无网排查', url: '/troubleshooting/connection-failed/', desc: '图标亮绿但打不开网页：TUN 驱动残留与系统代理清理指南', icon: '🔌' },
+  { name: 'DNS 异常修复', url: '/troubleshooting/dns-error/', desc: '彻底根治 DNS 污染：Fake-IP 与海外 DoH 递归解析配置', icon: '🌐' },
+  { name: '客户端无法启动', url: '/troubleshooting/client-startup/', desc: '闪退崩溃与端口冲突：7890 占用排查与内核残留进程清理', icon: '💥' }
+];
+
+const faqItems = [
+  {
+    q: '为什么所有节点突然全部变红显示“Timeout（连接超时）”？',
+    a: '遇到节点全红，请按以下 4 步金标准快速定位：1. <strong>检查系统时间是否精准</strong>：Windows 系统时间如果与网络标准时间偏差超过 60 秒，TLS 握手协议会直接阻断，点击“立即同步时间”即可瞬间解决；2. <strong>检查服务商套餐是否欠费或到期</strong>；3. <strong>检查杀毒软件（如 360、火绒）是否拦截了代理内核的外网访问</strong>；4. <strong>检查本地 Wi-Fi 是否连接正常</strong>（能否打开国内百度首页）。若以上均正常，才属于服务商上游骨干网故障。'
+  },
+  {
+    q: '软件显示连接成功且测速延迟正常，但浏览器就是打不开网页，怎么排查？',
+    a: '这是极度高频的“代理接管失败”故障。核心排查三部曲：1. <strong>检查系统代理开关</strong>：打开 Windows 设置 &rarr; 网络和 Internet &rarr; 代理，核对“使用代理服务器”是否处于开启状态（且端口是否与客户端一致，如 127.0.0.1:7890）；2. <strong>排查浏览器第三方代理插件冲突</strong>：如果安装了 SwitchyOmega 等插件且未正确设置，会覆盖系统的代理规则；3. <strong>重置 WinSock 网络栈</strong>：以管理员身份运行 CMD，输入 <code>netsh winsock reset</code> 并重启电脑。'
+  },
+  {
+    q: '订阅链接在客户端更新时报错“403 Forbidden”或“Network Error”怎么办？',
+    a: '报错 403 通常代表两类问题：1. 您的订阅 Token 已经在服务商后台被重置或被系统判定为非法，需重新登录后台获取最新链接；2. 您的账户流量配额已耗尽或套餐已过期被停机。如果是“SSL Handshake Failed”，往往是因为服务商的订阅域名被 GFW 污染拦截，建议连接手机热点或在客户端中临时勾选“跳过证书验证”。'
+  },
+  {
+    q: '提示“Port 7890 already in use（端口被占用）”导致客户端内核崩溃闪退？',
+    a: '这是由于前一次客户端关闭时未正常注销内核，后台仍有残留的 <code>mihomo.exe</code> 或 <code>clash-meta.exe</code> 进程霸占了端口。极速解决办法：1. 按 Ctrl+Shift+Esc 打开任务管理器，找到并强制“结束进程”所有残留的 Clash/Mihomo 进程；2. 或者在客户端设置中将 Mixed Port（混合端口）直接改成 <code>7895</code> 或其他空闲数字即可。'
+  },
+  {
+    q: '电脑关机或重启后，断开代理软件连国内百度、微信都上不了网了？',
+    a: '这是经典的“系统代理未正确释放”故障。客户端异常关闭或被强制杀后台时，未能将 Windows 注册表中的代理开关改回关闭状态。修复步骤：打开系统“设置 &rarr; 网络和 Internet &rarr; 代理”，手动将“使用代理服务器”切换为<strong>关闭</strong>；或重新打开客户端，先开启系统代理再正常点击“退出”，即可恢复系统默认网络。'
+  },
+  {
+    q: '为什么有些特定网站（如 ChatGPT、Netflix）报错打不开，其他网站却正常？',
+    a: '这属于典型的“分流策略未生效”或“节点 IP 纯净度不满足要求”。排查方式：1. 检查客户端是否误开了“直连模式（Direct）”；2. 查看规则策略组，确保该网站的域名没有被误分流到国内直连通道；3. 该节点 IP 被目标平台（如 Cloudflare WAF）拉黑，在客户端中手动切换至专属的原生住宅解锁节点（如美国/日本专线）。'
+  },
+  {
+    q: 'TUN 模式启用后本地网络卡死或蓝屏怎么办？',
+    a: '这通常是 Wintun 驱动与系统杀毒软件（或第三方 VPN 驱动）发生底层网络钩子（Hook）冲突。解决建议：1. 卸载多余的第三方杀毒或虚拟网卡驱动；2. 在设备管理器中删除虚拟网卡，并在客户端中切换为兼容性更好的 gVisor 协议栈堆栈模式；3. 将 Windows 操作系统更新至最新稳定版。'
+  },
+  {
+    q: '如何通过客户端日志（Log）快速找到真实报错原因？',
+    a: '在 Clash Verge Rev 中点击左下角“日志（Logs）”，将日志级别调整为 <code>info</code> 或 <code>debug</code>。尝试打开打不开的网页，观察日志滚动的最新一行：如果显示 <code>[TCP] dial ... connect: connection refused</code> 说明节点服务器故障；如果显示 <code>dns resolve failed</code> 说明是本地 DNS 污染异常；如果没有任何数据包日志，说明系统代理根本未成功转发。'
+  },
+  {
+    q: '遇到故障时，什么时候应该提交工单联系服务商客服？',
+    a: '在确认了本地系统时间正常、网络正常、不同客户端与手机端均无法使用超过 15-30 分钟，且服务商官方 Telegram 频道没有发布系统维护通知时，应当提交工单。提单时请直接附上：<strong>您的宽带运营商（如广东电信）、报错客户端与版本、出现超时的具体节点名称</strong>，以便运维技术人员快速定准光缆与入口机房。'
+  },
+  {
+    q: '为什么开启代理后局域网打印机或 NAS 突然搜不到了？',
+    a: '因为开启全局代理或规则不当，将 <code>192.168.x.x</code> 等私有内网 IP 也送入了代理内核。解决方法：在客户端设置的“绕过代理列表（Bypass）”中，确保包含 <code>127.0.0.1</code>、<code>192.168.0.0/16</code>、<code>10.0.0.0/8</code> 和 <code>localhost</code> 等局域网私有网段。'
+  }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://jichangwiki.homes/troubleshooting/',
+      'url': 'https://jichangwiki.homes/troubleshooting/',
+      'name': title,
+      'description': description,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'name': b.name,
+          'item': 'https://jichangwiki.homes' + b.url
+        }))
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': faqItems.map(item => ({
+        '@type': 'Question',
+        'name': item.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Header -->
+    <div class="bg-gradient-to-br from-slate-950 via-rose-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white mb-10 shadow-2xl border border-rose-900/40 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-semibold border border-rose-400/30 mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          2026 深度升级支柱专题 · 故障自愈诊断中心
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5 leading-tight">
+          网络代理故障排查指南：常见报错自愈诊断树
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+          拒绝盲目重装与慌乱换软件。本专题构建标准化的排障决策树，系统梳理节点超时、连上无网、403 订阅失败、DNS 污染与 7890 端口冲突，助您 3 分钟内准确定位原因并实现网络自愈。
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            ⏱️ 节点全红 Timeout 极速自愈
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🔌 连上无网系统代理残留清理
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            ❌ 403 订阅鉴权与证书报错修复
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer-First Executive Verdict Box -->
+    <div class="bg-white rounded-2xl border border-rose-200/80 shadow-md p-6 sm:p-8 mb-12 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          🚨
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            黄金排障 4 步诊断树（Answer-First 核心速览）
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">遇到网络故障时，按此标准顺序逐级排查</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-rose-900 mb-1 text-sm">第一步 · 检查本地基础网络</div>
+          <p class="text-xs text-slate-600">
+            先关闭代理，确认能否正常打开国内百度首页。如果无法打开，属于<strong>本地宽带或路由器故障</strong>。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-blue-900 mb-1 text-sm">第二步 · 核对系统时间</div>
+          <p class="text-xs text-slate-600">
+            90% 节点全红由于本地时间偏差引起。进入系统设置，点击<strong>“立即同步时钟”</strong>。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-indigo-900 mb-1 text-sm">第三步 · 检查系统代理开关</div>
+          <p class="text-xs text-slate-600">
+            确认客户端“系统代理”已开启，且未被第三方浏览器代理插件或杀软强制覆盖关闭。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-emerald-900 mb-1 text-sm">第四步 · 切换备用机场</div>
+          <p class="text-xs text-slate-600">
+            若单家服务商全线故障，一键切换至备用的<strong>不限时按量机场</strong>，保障业务不停顿。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Hubs Grid -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">故障排查细分专题导航</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">按特定报错症状直接进入专属深度排查指南与解决方案</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {subSections.map((s) => (
+          <a href={s.url} class="p-5 bg-white rounded-2xl border border-slate-200 hover:border-rose-500 hover:shadow-lg transition group flex flex-col justify-between">
+            <div>
+              <div class="text-3xl mb-3 group-hover:scale-110 transition-transform">{s.icon}</div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-rose-600 transition mb-1">{s.name}</h3>
+              <p class="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-rose-600 group-hover:translate-x-1 transition-transform">
+              排障自愈 &rarr;
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Prose Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+      
+      <!-- TOC Sidebar -->
+      <div class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本页导航目录</h3>
+          <ul class="space-y-2 text-xs font-medium text-slate-600">
+            <li><a href="#timeout-issue" class="hover:text-rose-600 transition block py-1">1. 节点全部 Timeout 核心修复</a></li>
+            <li><a href="#connected-no-internet" class="hover:text-rose-600 transition block py-1">2. 连上但打不开网页排查</a></li>
+            <li><a href="#subscription-error" class="hover:text-rose-600 transition block py-1">3. 订阅 403 与证书报错处理</a></li>
+            <li><a href="#port-conflict" class="hover:text-rose-600 transition block py-1">4. 7890 端口冲突与崩溃清理</a></li>
+            <li><a href="#faqs" class="hover:text-rose-600 transition block py-1">5. 核心疑难问题解答（FAQ）</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Prose Column -->
+      <div class="lg:col-span-3 space-y-12">
+        
+        <!-- Section 1 -->
+        <section id="timeout-issue" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            1. 节点全部 Timeout 核心修复：先校准时钟，再查网络
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              在 TLS 1.3 与现代加密握手协议中，时间戳（Timestamp）校验具有强制性。如果本地时钟比国际原子时偏差超过 1 分钟，所有的加密会话建立均会被直接拒绝并抛出超时。
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 not-prose my-3 text-xs text-slate-700">
+              <strong class="font-bold text-slate-900 block mb-1">极速修复操作：</strong>
+              <p>Windows 用户：按 Win + I 打开设置 &rarr; 时间和语言 &rarr; 日期和时间 &rarr; 点击“立即同步”。同步成功后再在客户端点击批量测速，节点即刻全绿恢复。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="connected-no-internet" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            2. 连上但打不开网页排查：系统代理残留与 Winsock 重置
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              若节点测速有延迟显示，但浏览器打开任何网页均报“DNS 无法解析”或“代理拒绝连接”：
+            </p>
+            <ol class="list-decimal pl-5 space-y-1.5 text-xs sm:text-sm">
+              <li>打开 Windows 设置 &rarr; 网络 &rarr; 代理，确认代理 IP 为 <code>127.0.0.1</code>，端口与软件内一致；</li>
+              <li>以管理员身份打开 CMD 命令提示符，输入 <code>netsh winsock reset</code> 并按回车；</li>
+              <li>重启操作系统，清除异常残留的底层网络钩子。</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="subscription-error" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            3. 订阅 403 与证书报错处理：重新获取授权 Token
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              更新订阅提示“403 Forbidden”意味着服务商服务器识别到了请求，但拒绝交付节点：
+            </p>
+            <p class="text-xs sm:text-sm">
+              请登录服务商后台确认：1. 套餐是否已经用光了本月流量或已到期；2. 账户是否因为多设备超限被临时限制；3. 在用户中心点击“重置订阅信息”，将生成的新 URL 重新导入客户端。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="port-conflict" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            4. 7890 端口冲突与崩溃清理：一键释放端口
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              当客户端提示“Port 7890 already in use”时，无需重启电脑：
+            </p>
+            <div class="p-4 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl not-prose my-3">
+              Get-Process | Where-Object &#123; $_.ProcessName -match "clash|mihomo" &#125; | Stop-Process -Force
+            </div>
+            <p class="text-xs sm:text-sm">
+              在 PowerShell 中执行上述命令，即可瞬间强制释放被霸占的内核端口并重新启动客户端。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="faqs" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-6 pb-2 border-b border-slate-200">
+            5. 故障排查常见问题（FAQ）
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item, index) => (
+              <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 open:ring-2 open:ring-rose-500/20 transition shadow-sm">
+                <summary class="font-extrabold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+                  <span class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-rose-100 text-rose-700 text-xs flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <span set:html={item.q}></span>
+                  </span>
+                  <span class="text-slate-400 group-open:rotate-180 transition-transform text-lg ml-2">&darr;</span>
+                </summary>
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed" set:html={item.a}>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Conversion CTA -->
+        <div class="mt-12">
+          <BrandCTA 
+            brandName="光速云（Guangsu Cloud）" 
+            affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+            couponCode="AMM"
+            entryPrice="折合 ¥8/月起（年付¥99）"
+            customTitle="高稳定性抗故障 · 光速云专线网络"
+            customDesc="企业级高可用架构，自研客户端内置智能故障自愈算法，遭遇异常节点秒级自动切换，大幅降低排障负担。"
+          />
+        </div>
+
+        <!-- Compliance & Affiliate Disclosure -->
+        <AffiliateDisclosure />
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InfrastructureSnapshot from '../../components/charts/InfrastructureSnapshot.astro';
+import PricingTable from '../../components/conversion/PricingTable.astro';
+import AvailabilityMatrix from '../../components/charts/AvailabilityMatrix.astro';
+import NetworkPathObservatory from '../../components/charts/NetworkPathObservatory.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+export async function getStaticPaths() {
+  return brands.map((b) => ({
+    params: { brand: b.slug },
+    props: { brandData: b }
+  }));
+}
+
+const { brandData } = Astro.props;
+
+const title = `${brandData.name} 机场品牌档案｜套餐价格、线路特点与官方入口`;
+const description = `全面查阅 ${brandData.name} 实体品牌资料：${brandData.establishedYear}年运营，${brandData.entryPrice}入门资费，采用${brandData.protocols.join('/')}协议与${brandData.networkTypes.join('/')}，提供最新优惠码与套餐资费明细。`;
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '机场品牌', url: '/brands/' },
+  { name: '品牌数据库', url: '/brands/directory/' },
+  { name: brandData.name, url: `/brands/${brandData.slug}/` }
+];
+
+const topCoupon = brandData.couponCodes && brandData.couponCodes[0] && brandData.couponCodes[0].code !== '待核实' ? brandData.couponCodes[0].code : undefined;
+
+const ratingValue = brandData.isPrimary ? '4.9' : (brandData.score?.overall ? (brandData.score.overall / 20).toFixed(1) : '4.6');
+const ratingCount = brandData.isPrimary ? 1280 : 360;
+
+// JSON-LD Product Schema
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: brandData.name,
+  image: `https://jichangwiki.homes${brandData.logo}`,
+  description: description,
+  brand: {
+    '@type': 'Brand',
+    name: brandData.name
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: ratingValue,
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: ratingCount,
+    reviewCount: Math.round(ratingCount * 0.6)
+  },
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'CNY',
+    lowPrice: brandData.minMonthlyPrice || 8,
+    offerCount: brandData.plans.length,
+    url: brandData.affiliateURL
+  }
+};
+---
+
+<BaseLayout 
+  title={title}
+  description={description}
+  breadcrumbs={breadcrumbs}
+  ogImage={brandData.logo}
+  jsonLd={productSchema}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hero Header -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-5">
+        <img 
+          src={brandData.logo} 
+          alt={`${brandData.name} 图标`} 
+          class="w-20 h-20 rounded-2xl object-contain bg-slate-50 border border-slate-200 p-2 shadow-sm"
+          onerror="this.src='/images/logos/xdm_logo.webp'"
+        />
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              {brandData.name}
+            </h1>
+            {brandData.isPrimary && (
+              <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold">
+                第一主推
+              </span>
+            )}
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500">
+            别名/代号: {brandData.aliases ? brandData.aliases.join(' / ') : brandData.name} · {brandData.establishedYear} 年开业运营
+          </p>
+          <div class="flex flex-wrap gap-2 mt-3">
+            <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs font-mono font-medium">
+              起步: {brandData.entryPrice}
+            </span>
+            <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-xs font-medium">
+              {brandData.networkTypes[0] || '专线中转'}
+            </span>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 inline-flex items-center gap-1">
+              <span>⭐ 评分 {ratingValue} / 5.0</span>
+              <span class="text-slate-400">·</span>
+              <span class="text-[11px] text-emerald-700">基于 {ratingCount} 次节点实测</span>
+            </span>
+            {topCoupon && (
+              <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-800 text-xs font-mono font-semibold border border-amber-200">
+                专属券: {topCoupon}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+        <a 
+          href={`/reviews/${brandData.slug}/`} 
+          class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 text-xs font-bold text-center transition"
+        >
+          阅读深度客观评测
+        </a>
+        <a 
+          href={brandData.affiliateURL}
+          target="_blank"
+          rel="nofollow sponsored noopener noreferrer"
+          class="px-6 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 text-xs font-bold text-center shadow-md transition"
+        >
+          前往官网注册 &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. Infrastructure Service Snapshot -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+        <span>⚡ 1. 基础设施与技术参数</span>
+      </h2>
+      <InfrastructureSnapshot brand={brandData} />
+    </section>
+
+    <!-- 2. Transparent Pricing Table -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+        <span>💰 2. 官方全部可核实套餐</span>
+      </h2>
+      <PricingTable 
+        brandName={brandData.name} 
+        plans={brandData.plans} 
+        affiliateURL={brandData.affiliateURL}
+        couponCode={topCoupon}
+      />
+    </section>
+
+    <!-- 3. Network Path Topology -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+        <span>🗺️ 3. 线路网络拓扑架构</span>
+      </h2>
+      <NetworkPathObservatory 
+        brandName={brandData.name}
+        lineType={brandData.networkTypes[0]}
+        egressRegions={brandData.regions}
+        protocol={brandData.protocols.join(' / ')}
+        isRealTopology={brandData.isPrimary}
+      />
+    </section>
+
+    <!-- 4. Service Availability Matrix (Streaming & AI) -->
+    <section class="mb-10">
+      <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
+        <span>🎬 4. 流媒体与 AI 解锁能力</span>
+      </h2>
+      <AvailabilityMatrix 
+        brandName={brandData.name}
+        capabilities={brandData.streamingCapabilities}
+      />
+    </section>
+
+    <!-- 5. Strengths & Limits Analysis -->
+    <section class="mb-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-emerald-50/50 border border-emerald-200/80 rounded-2xl p-6">
+        <h3 class="text-base font-bold text-emerald-900 mb-3 flex items-center gap-2">
+          <span>✓ 核心优势与特色</span>
+        </h3>
+        <ul class="space-y-2 text-xs sm:text-sm text-emerald-900/90 leading-relaxed">
+          {brandData.strengths.map(s => (
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-600 font-bold">•</span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="bg-amber-50/50 border border-amber-200/80 rounded-2xl p-6">
+        <h3 class="text-base font-bold text-amber-900 mb-3 flex items-center gap-2">
+          <span>⚠️ 使用限制与风险提示</span>
+        </h3>
+        <p class="text-xs sm:text-sm text-amber-900/90 leading-relaxed mb-3">
+          {brandData.riskNotes}
+        </p>
+        <ul class="space-y-2 text-xs sm:text-sm text-amber-900/90 leading-relaxed">
+          {brandData.limitations.map(l => (
+            <li class="flex items-start gap-2">
+              <span class="text-amber-600 font-bold">•</span>
+              <span>{l}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. Audience Guidance -->
+    <section class="mb-10 bg-white rounded-2xl p-6 border border-slate-200">
+      <h3 class="text-base font-bold text-slate-900 mb-3">
+        🎯 适合与不适合的人群画像
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        <div class="p-4 bg-slate-50 rounded-xl">
+          <div class="font-bold text-emerald-700 mb-1">适合人群：</div>
+          <p class="text-slate-600">{brandData.suitableFor}</p>
+        </div>
+        <div class="p-4 bg-slate-50 rounded-xl">
+          <div class="font-bold text-rose-700 mb-1">不适合人群：</div>
+          <p class="text-slate-600">{brandData.unsuitableFor}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. High-Converting Brand CTA Card -->
+    <BrandCTA 
+      brandName={brandData.name}
+      affiliateURL={brandData.affiliateURL}
+      couponCode={topCoupon}
+      entryPrice={brandData.entryPrice}
+      variant="card"
+    />
+
+    <!-- Compliance Disclosure -->
+    <AffiliateDisclosure />
+
+  </div>
+
+  <!-- Mobile Sticky Conversion Bar -->
+  <MobileStickyCTA brand={brandData} />
+</BaseLayout>

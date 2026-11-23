@@ -1,0 +1,136 @@
+{
+  "id": "muguang",
+  "slug": "muguang",
+  "name": "暮光加速",
+  "aliases": [
+    "Muguang",
+    "暮光云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 2,
+  "establishedYear": 2023,
+  "affiliateURL": "https://varnexa.twilightaff.com/#/?code=D1LHglg3",
+  "couponCodes": [
+    {
+      "code": "muguang5555",
+      "discount": "常规优惠码",
+      "condition": "全场套餐可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "BGP智能调度",
+    "专线级出口"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "40+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥20/月 (120GB)",
+  "minMonthlyPrice": 20,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "暮光基础版",
+      "billing": "月付",
+      "price": 20,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "BGP优化出口，支持全平台客户端"
+    },
+    {
+      "name": "暮光进阶版",
+      "billing": "月付",
+      "price": 35,
+      "traffic": "260GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 35,
+      "notes": "多端同时在线"
+    },
+    {
+      "name": "暮光旗舰版",
+      "billing": "月付",
+      "price": 65,
+      "traffic": "600GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 65,
+      "notes": "大流量高带宽"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 BGP",
+      "latency": "35ms",
+      "download": "180Mbps",
+      "upload": "40Mbps",
+      "date": "2026-09-15",
+      "status": "vendor_data",
+      "isPeak": false
+    },
+    {
+      "region": "日本 专线出口",
+      "latency": "65ms",
+      "download": "120Mbps",
+      "upload": "35Mbps",
+      "date": "2026-09-15",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分节点",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "BGP智能调度与专线级出口",
+    "官方宣称7x24小时客服",
+    "全平台覆盖多设备在线"
+  ],
+  "verifiedFeatures": [
+    "月付20元120GB起步门槛合理",
+    "标准Clash与通用订阅导入顺利"
+  ],
+  "strengths": [
+    "支持月付20元灵活付费，试错成本低",
+    "BGP智能调度延迟表现平稳",
+    "客服响应相对及时"
+  ],
+  "limitations": [
+    "2023年开业，运营历史较光速云稍短",
+    "暂无超低单价年付折算档位"
+  ],
+  "riskNotes": "属于中新品牌，建议优先按月续费使用。",
+  "suitableFor": "看重灵活月付、BGP调度稳定性和基础流媒体访问的用户。",
+  "unsuitableFor": "预算极低希望找10元以下套餐的极客玩家。",
+  "sources": [
+    "暮光加速官方发布资料",
+    "32家品牌清单记录 (2026-09)"
+  ],
+  "verifiedAt": "2026-09-15",
+  "updatedAt": "2026-11-15",
+  "logo": "/images/logos/xdm_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

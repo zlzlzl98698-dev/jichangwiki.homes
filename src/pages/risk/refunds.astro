@@ -1,0 +1,314 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "机场退款政策与争议处理指南：潜规则、纠纷取证与合法止损完全手册";
+const description = "全面剖析科学上网服务商的退款政策现状与行业潜规则。手把手教您在遭遇严重卡顿、无法使用或货不对板时，如何收集 SLA 违约证据、理性提交工单与争取合理退款。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"风险与替代","url":"/risk/"},{"name":"refunds","url":"/risk/refunds/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/risk/refunds/","url":"https://jichangwiki.homes/risk/refunds/","name":"机场退款政策与争议处理指南：潜规则、纠纷取证与合法止损完全手册","description":"全面剖析科学上网服务商的退款政策现状与行业潜规则。手把手教您在遭遇严重卡顿、无法使用或货不对板时，如何收集 SLA 违约证据、理性提交工单与争取合理退款。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"风险与替代","item":"https://jichangwiki.homes/risk/"},{"@type":"ListItem","position":3,"name":"机场退款政策与争议处理指南：潜规则、纠纷取证与合法止损完全手册","item":"https://jichangwiki.homes/risk/refunds/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"工单客服回复说“买前已经写了概不退款，你同意了 TOS 才能买”，这合理吗？","acceptedAnswer":{"@type":"Answer","text":"在国际商业惯例中，虚拟数字产品的 TOS（服务条款）确实具有契约效力。但是，如果商家宣称提供“IEPL 高速专线”而实际提供的是完全无法使用的劣质直连、或者连续几天全线瘫痪，这构成了实质性的根本违约。您可以据此要求解除合同并按比例退还未履约部分的资金。"}},{"@type":"Question","name":"用微信或支付宝扫码付的钱，能通过微信/支付宝官方投诉退回吗？","acceptedAnswer":{"@type":"Answer","text":"难度非常大。因为机场接入的通常是第三方的个人免签商户接口或海外聚合网关。支付宝和微信仅作为底层清算通道，只要订单本身完成了转账，支付平台在没有法院判决或公安立案通知的情况下，无权擅自划扣商户的资金进行强制退款。"}},{"@type":"Question","name":"为什么有些机场支持 3 天内无理由退款，有些却坚决不退？","acceptedAnswer":{"@type":"Answer","text":"支持限时退款的通常是带宽储备极其充沛、对自己服务品质有绝对自信的大型平台（如光速云）；而坚决不退款的小机场往往带宽本身就极度紧张，任何退款都会直接恶化其极其脆弱的现金流。"}},{"@type":"Question","name":"如果在工单里情绪失控骂客服，会有什么后果？","acceptedAnswer":{"@type":"Answer","text":"请务必保持克制与理性！大部分机场的 TOS 中均明文规定“辱骂客服或恶意攻击平台，管理员有权直接封禁账号且不予退款”。一旦账号被直接注销，您不仅无法退款，连剩余套餐和历史账单证据也会一并丢失。"}},{"@type":"Question","name":"光速云对待用户的售后服务与争议处理标准是怎样的？","acceptedAnswer":{"@type":"Answer","text":"光速云推崇规范化商业运作，用户遇到任何网络技术故障均可通过官方工单系统发起工单。专业网络工程师团队全天候在线排查，若因不可抗力确无法满足用户需求，平台提供透明合理的退款结算机制，保障用户权益。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"工单客服回复说“买前已经写了概不退款，你同意了 TOS 才能买”，这合理吗？","a":"在国际商业惯例中，虚拟数字产品的 TOS（服务条款）确实具有契约效力。但是，如果商家宣称提供“IEPL 高速专线”而实际提供的是完全无法使用的劣质直连、或者连续几天全线瘫痪，这构成了实质性的根本违约。您可以据此要求解除合同并按比例退还未履约部分的资金。"},{"q":"用微信或支付宝扫码付的钱，能通过微信/支付宝官方投诉退回吗？","a":"难度非常大。因为机场接入的通常是第三方的个人免签商户接口或海外聚合网关。支付宝和微信仅作为底层清算通道，只要订单本身完成了转账，支付平台在没有法院判决或公安立案通知的情况下，无权擅自划扣商户的资金进行强制退款。"},{"q":"为什么有些机场支持 3 天内无理由退款，有些却坚决不退？","a":"支持限时退款的通常是带宽储备极其充沛、对自己服务品质有绝对自信的大型平台（如光速云）；而坚决不退款的小机场往往带宽本身就极度紧张，任何退款都会直接恶化其极其脆弱的现金流。"},{"q":"如果在工单里情绪失控骂客服，会有什么后果？","a":"请务必保持克制与理性！大部分机场的 TOS 中均明文规定“辱骂客服或恶意攻击平台，管理员有权直接封禁账号且不予退款”。一旦账号被直接注销，您不仅无法退款，连剩余套餐和历史账单证据也会一并丢失。"},{"q":"光速云对待用户的售后服务与争议处理标准是怎样的？","a":"光速云推崇规范化商业运作，用户遇到任何网络技术故障均可通过官方工单系统发起工单。专业网络工程师团队全天候在线排查，若因不可抗力确无法满足用户需求，平台提供透明合理的退款结算机制，保障用户权益。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>消费者权益指南 · 退款维权实战</span>
+        <span>·</span>
+        <span>上级主题: <a href="/risk/" class="underline hover:text-blue-800">风险与替代总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        机场退款政策与争议处理指南：潜规则与止损完全手册
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        刚买完套餐发现完全连不上，找客服却被一句‘虚拟商品概不退款’直接怼回？本文带您看清行业退款潜规则，教您如何合法理性维权止损。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>退款核心行业现状 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>在整个科学上网行业中，“虚拟数字商品一经售出概不退款”是绝大多数服务商普遍执行的潜规则（TOS 格式条款）</strong>。因此，<strong>防范损失的最优解永远是“先买最低月付试用”，而非买完再去争取退款</strong>。如果确实遇到服务商严重虚标线路（如公网冒充专线）或完全无法使用，请务必保留 <code>MTR 丢包测试截图</code> 和 <code>Traceroute 路由跳数证据</code>，通过工单系统理性提出按比例折旧扣除已用流量退款。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 科学上网行业的退款潜规则与行业纠纷根源
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>为什么科学上网行业普遍拒绝无理由退款？理解背后的成本结构与防刷机制，有助于我们理性预判维权难度：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【机场服务商拒绝无理由退款的核心原因】</div>
+  <div>1. 运营商固定带宽刚性成本：机房 IEPL 专线月租按固定带宽提前预付，用户一旦连接，上游成本已被消耗</div>
+  <div>2. 防范恶意“白嫖党”刷量：部分投机用户购买大流量套餐，在 2 小时内满速下载几百 GB 游戏后立刻申请退款</div>
+  <div>3. 第三方支付渠道扣除高昂手续费：每次收款与退款，支付网关会扣除 3%~8% 的手续费，退款会导致服务商倒贴资金</div>
+  <div>4. 离岸经营缺乏强制消协监管：大部分服务商服务器与注册主体位于海外，传统境内消费者权益保护法难以直接介入</div>
+</div>
+<p>正因如此，消费者必须在付款前树立极高的风险意识，不要轻信任何夸大的口头退款承诺。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 发生消费争议时的合法权益维护与退款谈判路径
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>当遇到服务商彻底无法提供可用服务、且属于服务商单方面技术违约时，请严格按照以下路径进行高效沟通维权：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：固定无可辩驳的技术客观证据（切忌主观争吵）：</strong> 使用 <code>PingPlotter</code> 记录连续 1 小时的晚高峰丢包率曲线，使用 <code>BestTrace</code> 截取路由跳数图，证实节点存在 50% 以上严重丢包或虚假专线。切勿在工单里情绪化宣泄“垃圾机场上不了”；</li>
+  <li><strong>第二步：提出合情合理的“折旧扣减退款方案”：</strong> 在工单中清晰表达：“由于服务连续 48 小时不可用且无法修复，本人申请终止服务。已消耗流量可按每 GB 0.5 元扣除，扣除 5% 支付手续费后，请求将剩余款项原路退回”；</li>
+  <li><strong>第三步：善用支付平台争议渠道介入：</strong> 若通过正规第三方发卡平台或信用卡支付，且商家超过 5 天完全失联拒绝沟通，可向发卡行提供工单沟通记录及未履约证据，申请交易争议处理；</li>
+  <li><strong>第四步：果断止损，避免沉没成本时间损耗：</strong> 若涉及金额仅为十几元至几十元，且对方态度恶劣拉黑，应果断放弃无谓的口水战，将其列入避雷黑名单并切换至正规服务商，将精力聚焦在核心工作上。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流机场类型退款政策友好度与争议处理对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        行业服务等级与售后退款政策横向评估：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">服务商品牌等级</th><th class="py-3 px-4">退款支持政策</th><th class="py-3 px-4">退款受理时限</th><th class="py-3 px-4">折旧扣除规则</th><th class="py-3 px-4">争议解决渠道</th><th class="py-3 px-4">综合信誉评级</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">一线大厂 (如光速云)</td><td class="py-3 px-4 ">支持合理技术退款</td><td class="py-3 px-4 ">通常为 24~72 小时内</td><td class="py-3 px-4 ">扣除已用流量与基础手续费</td><td class="py-3 px-4 ">官网专业工单系统 1 对 1 处理</td><td class="py-3 px-4 ">★★★★★ (信誉良好)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">中型老牌中转机场</td><td class="py-3 px-4 ">条件苛刻 (仅限重大断网)</td><td class="py-3 px-4 ">仅限开通后 24 小时内</td><td class="py-3 px-4 ">扣除大额开户费与流量费</td><td class="py-3 px-4 ">工单系统排队沟通</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">低价超售小作坊</td><td class="py-3 px-4 ">完全不支持任何退款</td><td class="py-3 px-4 ">一经售出概不退款</td><td class="py-3 px-4 ">不予退还任何款项</td><td class="py-3 px-4 ">无客服，群组直接禁言踢人</td><td class="py-3 px-4 ">★☆☆☆☆ (维权无门)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">按量计费纯流量平台</td><td class="py-3 px-4 ">通常支持余额退款</td><td class="py-3 px-4 ">无严格时限要求</td><td class="py-3 px-4 ">扣除已消耗流量与提现手续费</td><td class="py-3 px-4 ">后台自动结算提取</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        服务规范、工单响应迅速、恪守商业信用的代表专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        退款与争议处理场景决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">初次试水新机场</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>第一次使用该品牌，不确定本地网络是否契合：</strong> 绝对只买最低月付套餐（10~20元）。即使本地网络兼容性差无法使用，损失也微乎其微，无需费时费力折腾退款。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">刚充值即大断网</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>刚买完年付第二天机场就全线崩溃失联：</strong> 立即整理付款账单与断网证据，若通过支持争议保障的渠道支付，火速发起未履约投诉申诉。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">因个人原因不想用</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>换了工作单位不再需要科学上网了：</strong> 大多数机场不受理“个人不想用”的退款，可尝试将剩余套餐在合规技术交流圈折价转让给身边的朋友。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">避免退款纠纷五大黄金铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>付款前务必花 1 分钟扫一眼服务商的 TOS 服务条款，重点关注是否有退款说明；</li><li>永远通过月付完成前期的“相亲验证期”，确认晚高峰稳定再考虑季度付；</li><li>遇到断网先排查本地系统时间与网络设置，80% 的“上不了网”实际上是本地电脑故障；</li><li>沟通时出示客观的 MTR 测速数据，讲事实列证据，成功退款率提升 5 倍；</li><li>坚决拒绝使用私人微信赞赏码或闲鱼代付转账，缺乏第三方监管易血本无归。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        退款政策高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 风险与售后维权长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">深度避坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              识别异常无法退款背后的服务商跑路信号。
+            </p>
+          </a>
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">终极防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              零基础学习如何规避虚假宣传与消费陷阱。
+            </p>
+          </a>
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">高可用架构</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              利用双机场体系从容应对退款纠纷与断网风险。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

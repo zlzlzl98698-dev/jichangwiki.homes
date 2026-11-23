@@ -1,0 +1,102 @@
+{
+  "id": "shenxing",
+  "slug": "shenxing",
+  "name": "神行加速",
+  "aliases": [
+    "Shenxing Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 25,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.shenxingaff.com/#/?code=gawDQqVE",
+  "couponCodes": [
+    {
+      "code": "xs0077",
+      "discount": "特惠优惠码",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "中转专线优化"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥14/月 (120GB)",
+  "minMonthlyPrice": 14,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "神行月付版",
+      "billing": "月付",
+      "price": 14,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 14,
+      "notes": "14元/月，120GB流量，性价比突出"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "40ms",
+      "download": "130Mbps",
+      "upload": "25Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "14元/月超高性价比",
+    "120GB充足流量"
+  ],
+  "verifiedFeatures": [
+    "14元120G方案在同级别中具备明显价格竞争力"
+  ],
+  "strengths": [
+    "比常见的20元档便宜近30%，给到120GB足够日常消耗",
+    "连接稳定度符合预期"
+  ],
+  "limitations": [
+    "节点地区偏基础常规",
+    "无自研定制客户端"
+  ],
+  "riskNotes": "高性价比平民机场，建议月付使用。",
+  "suitableFor": "追求15元以内中大流量月付方案的高性价比偏好者。",
+  "unsuitableFor": "追求多国冷门边缘节点的用户。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/totoro.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

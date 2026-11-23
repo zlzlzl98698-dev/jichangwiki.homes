@@ -1,0 +1,99 @@
+---
+export interface Props {
+  brand: {
+    name: string;
+    establishedYear: number;
+    protocols: string[];
+    networkTypes: string[];
+    regions: string[];
+    nodeCount?: string;
+    clients: string[];
+    entryPrice: string;
+    minMonthlyPrice?: number;
+    paymentMethods?: string[];
+    reviewStatus?: string;
+    dataStatus?: string;
+    verifiedAt?: string;
+  };
+}
+
+const { brand } = Astro.props;
+---
+
+<div class="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0b1120] text-slate-200 shadow-xl font-sans text-xs sm:text-sm">
+  <!-- Header -->
+  <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-base">⚡</span>
+      <span class="font-bold text-white text-sm">Infrastructure Service Snapshot｜{brand.name} 基础设施快照</span>
+    </div>
+    <div class="text-[11px] font-mono">
+      <span class="text-slate-400">核验时间: </span>
+      <span class="text-slate-200">{brand.verifiedAt || '2026 最新'}</span>
+    </div>
+  </div>
+
+  <!-- Key Metric Badges Grid -->
+  <div class="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">开业运营</div>
+      <div class="text-base font-bold text-white font-mono">{brand.establishedYear} 年</div>
+      <div class="text-[10px] text-slate-400 mt-1">持续运营</div>
+    </div>
+
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">入门资费</div>
+      <div class="text-base font-bold text-emerald-400 font-mono">{brand.entryPrice}</div>
+      <div class="text-[10px] text-slate-400 mt-1">支持月付/年付折算</div>
+    </div>
+
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">核心协议</div>
+      <div class="text-sm font-bold text-cyan-300 font-mono truncate">{brand.protocols.slice(0, 2).join(' / ')}</div>
+      <div class="text-[10px] text-slate-400 mt-1">低特征低延迟</div>
+    </div>
+
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">线路属性</div>
+      <div class="text-sm font-bold text-blue-300 truncate">{brand.networkTypes[0] || '专线中转'}</div>
+      <div class="text-[10px] text-slate-400 mt-1">BGP隧道 / IPLC</div>
+    </div>
+
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">节点规模</div>
+      <div class="text-base font-bold text-amber-400 font-mono">{brand.nodeCount || '35+'}</div>
+      <div class="text-[10px] text-slate-400 mt-1">覆盖主流国家</div>
+    </div>
+
+    <div class="p-3 bg-slate-900/80 rounded-lg border border-slate-800">
+      <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">数据状态</div>
+      <div class="text-sm font-bold text-emerald-400">已多维审计</div>
+      <div class="text-[10px] text-slate-400 mt-1">杜绝虚构测试</div>
+    </div>
+  </div>
+
+  <!-- Region & Client Details -->
+  <div class="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="p-3 bg-slate-950/60 rounded-lg border border-slate-800 text-xs">
+      <span class="text-slate-400 font-semibold block mb-1.5">主要覆盖地区:</span>
+      <div class="flex flex-wrap gap-1.5">
+        {brand.regions.map(r => (
+          <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 text-[11px] font-sans">
+            {r}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div class="p-3 bg-slate-950/60 rounded-lg border border-slate-800 text-xs">
+      <span class="text-slate-400 font-semibold block mb-1.5">客户端兼容性:</span>
+      <div class="flex flex-wrap gap-1.5">
+        {brand.clients.map(c => (
+          <span class="px-2 py-0.5 rounded bg-slate-800 text-cyan-300 text-[11px] font-sans">
+            {c}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

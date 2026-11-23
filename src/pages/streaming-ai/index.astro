@@ -1,0 +1,366 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+
+const title = 'AI 与流媒体节点解锁全景指南（2026）｜ChatGPT、Claude、Netflix 原生 IP 判定与避坑';
+const description = '权威中文 AI 与流媒体解锁支柱专题：深度剖析 OpenAI（ChatGPT 4o）、Anthropic（Claude 3.5 Sonnet）及 Netflix 非自制剧的 IP 封锁风控机制。揭秘原生住宅 IP 与机房广播 IP 的本质区别，提供 100% 可验证的节点选购与排查方案。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: 'AI 与流媒体', url: '/streaming-ai/' }
+];
+
+const subSections = [
+  { name: 'ChatGPT 解锁', url: '/streaming-ai/chatgpt/', desc: 'OpenAI 访问专区：解决 1020 拦截、Access Denied 与支付锁卡', icon: '🤖' },
+  { name: 'Claude 解锁', url: '/streaming-ai/claude/', desc: 'Anthropic 苛刻风控对策：原生住宅节点与防封号实践指南', icon: '🧠' },
+  { name: 'Gemini 节点', url: '/streaming-ai/gemini/', desc: 'Google AI 顺畅直达：地区策略匹配与 Google One 联动', icon: '✨' },
+  { name: 'Netflix 解锁', url: '/streaming-ai/netflix/', desc: '奈飞跨区观影指南：非自制剧全区解锁与原生 IP 判定', icon: '🎬' },
+  { name: 'YouTube 加速', url: '/streaming-ai/youtube/', desc: '高码率 4K/8K 缓冲优化：丢包消除与送中定位纠正', icon: '▶️' }
+];
+
+const faqItems = [
+  {
+    q: '为什么我的机场延迟很低，但访问 ChatGPT 还是报“Access Denied (1020)”？',
+    a: '因为 OpenAI 的前端接入了 Cloudflare 极其严苛的企业级 WAF 防火墙。Cloudflare 会对访问者的 IP 地址进行多维信誉评分（Fraud Score），包括：该 IP 是否来自数据中心机房（Datacenter ASN）、是否有大量自动化爬虫请求记录、是否存在 WebRTC 与 DNS 地区不一致。只要欺诈分超过阈值，哪怕延迟低至 20ms，也会直接被拦截在登录页面之外。'
+  },
+  {
+    q: '为什么说 Claude（Anthropic）的封号风控比 ChatGPT 严格数倍？',
+    a: 'Anthropic 对 API 与 Web 端用户实施了极度保守的风控模型：1. 严禁任何数据中心广播 IP（即使能打开登录页，几小时内也会永久封号且不退款）；2. 严查节点 IP 的多用户并发复用率；3. 严查浏览器指纹与系统时区语言匹配。使用 Claude 必须满足“固定单一优质原生住宅节点 + 开启全局 TUN 模式 + 英文浏览器指纹”，严禁在不同国家节点之间频繁漂移。'
+  },
+  {
+    q: '什么是“原生 IP（Native IP）”？它与机房广播 IP 有什么本质区别？',
+    a: '原生 IP 指该 IP 的注册地理归属地、实际广播物理位置与本地电信运营商（ISP，如 Comcast、AT&T、HKT、NTT）完全一致，且在 MaxMind、IPinfo 数据库中被标记为 <code>Type: ISP / Residential</code>（住宅宽带）；而机房广播 IP 是托管在数据中心机房服务器（如 OVH、AWS、DigitalOcean）上的 IP，会被 AI 平台与流媒体服务商瞬间标记为商业机房流量并实施限速或全量阻断。'
+  },
+  {
+    q: 'Netflix（奈飞）所谓的“仅解锁自制剧”和“全区解锁”有什么区别？',
+    a: '这是流媒体版权保护的标志性机制：Netflix 拥有自身全球原创内容（Netflix Originals，如《怪奇物语》）的全球版权，因此任何被识别为机房代理的 IP 也能观看这些自制剧；但带有版权保护的“非自制剧集”（如各国家地区的本土热门电视剧、好莱坞大片），Netflix 仅允许原生住宅 IP 或经过深度流媒体 DNS 解锁伪装的 IP 播放。如果您的搜索列表中看不到地区专属热剧，说明节点并未实现完全解锁。'
+  },
+  {
+    q: 'YouTube 观看 4K 视频时突然出现“送中（重定向到中国）”是怎么回事？如何解决？',
+    a: '“送中”是指 Google 算法通过综合测算（如附近大量访问携带中国 SIM 卡信息、或者该 IP 曾被大量用于访问大陆高频服务），将原本属于香港或新加坡的节点 IP 判定为了中国大陆地区。结果是：YouTube 无法开启后台画中画播放、播放界面出现“此视频在您的国家/地区不可用”、YouTube Premium 会员功能失效。解决方法：更换使用具备原生住宅属性且未被污染的日本或美国节点，或使用专用流媒体重定向分流规则。'
+  },
+  {
+    q: '如何自己动手检测一个节点是否真正解锁了 ChatGPT 和 Netflix？',
+    a: '进阶用户可以通过 SSH 在境外服务器运行开源的流媒体与 AI 检测脚本（如 <code>Check.Platform</code> 或 <code>MediaUnlockTest</code>）；普通用户更简便的方法是：1. 登录 <code>https://ipinfo.io</code> 查看自身的 IP Type 是否为 <code>isp</code>；2. 在开启代理的无痕浏览器中直接打开 <code>https://chatgpt.com</code>，看是否能顺畅进入输入框且无需频繁点击 Cloudflare 人机验证验证码。'
+  },
+  {
+    q: '为什么同一个机场，香港节点能用，但 OpenAI 官方却打不开？',
+    a: '这是政策合规原因。OpenAI 官方从未向中国大陆及中国香港（HK）地区开放服务。因此，OpenAI 在底层全面屏蔽了所有归属于香港的 IP 地址段。访问 ChatGPT 必须使用经过官方支持的国家地区节点（如日本、新加坡、美国、台湾等），这也是为什么高质量机场都会在节点名称中特别注明“支持 ChatGPT/Claude”的专属线路。'
+  },
+  {
+    q: '机场宣传的“DNS 解锁”是什么原理？可靠吗？',
+    a: '“DNS 解锁（Smart DNS Proxy）”是指机场将流媒体（如 Netflix、Disney+）的域名解析劫持到其专门部署的原生住宅中继服务器上，通过 SNI 反向代理伪装流量。这种方式能低成本实现流媒体解锁，但如果中继机器负载过大，在晚高峰容易出现 1080P/4K 频繁缓冲转圈。最根本的解决方案仍然是直接部署高成本的原生落地专线。'
+  },
+  {
+    q: '访问 Gemini（Google AI）有什么特殊的节点要求？',
+    a: 'Gemini 与 Google 账号深度绑定。如果你的 Google 账号注册地区为中国大陆，或者你所使用的节点 IP 被 Google 判定为受限地区，页面会提示“当前国家/地区不支持 Gemini”。建议使用纯净度较高的美国或日本原生节点，并在 Google 账号“个人资料 - 地区”中确保语言与时区协调一致。'
+  },
+  {
+    q: '使用代理访问 AI 工具时，分流规则应该如何配置？',
+    a: '为了防止访问 AI 时 IP 发生突发漂移导致封号，强烈建议在 Clash Verge 或 Shadowrocket 中创建专门的 <code>AI-Services</code> 独立策略组，并将 <code>openai.com</code>、<code>oaistatic.com</code>、<code>anthropic.com</code>、<code>claude.ai</code> 等域名强制绑定到固定的、经测试纯净度极高的美国或日本落地节点上，而不是使用自动轮询负载均衡。'
+  }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://jichangwiki.homes/streaming-ai/',
+      'url': 'https://jichangwiki.homes/streaming-ai/',
+      'name': title,
+      'description': description,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'name': b.name,
+          'item': 'https://jichangwiki.homes' + b.url
+        }))
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': faqItems.map(item => ({
+        '@type': 'Question',
+        'name': item.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Header -->
+    <div class="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white mb-10 shadow-2xl border border-purple-900/40 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold border border-purple-400/30 mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          2026 深度升级支柱专题 · 解锁与风控中心
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5 leading-tight">
+          AI 与流媒体节点解锁：原生 IP 识别与抗风控全解
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+          访问 ChatGPT、Claude 与 Netflix 畅通无阻的核心不在于盲目追求峰值测速，而在于出口 IP 的纯净度、ASN 属性与安全风控对抗。本专题深度拆解各大平台封锁机制，提供科学验证流程与规避封号实操方案。
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🤖 ChatGPT 1020 报错深度排查
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🧠 Claude 严苛风控防封号实践
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🎬 Netflix 原生住宅非自制剧全解
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer-First Executive Verdict Box -->
+    <div class="bg-white rounded-2xl border border-purple-200/80 shadow-md p-6 sm:p-8 mb-12 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          🎯
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            解锁核心机制速览（Answer-First 核心速览）
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">为什么某些节点总是被拦截？如何快速解决？</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-purple-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>🛡️</span> IP 纯净度是首要死穴
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            机房广播 IP（Datacenter）几乎 100% 触发 Cloudflare 验证码或被 Claude 封号。首选具备<strong>双 ISP 住宅宽带属性的原生节点</strong>。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-blue-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>🌍</span> 严格区分受支持地区
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            OpenAI 官方不支持香港地区。访问 AI 严禁走香港节点，应优先配置分流规则强制走<strong>美国、日本或新加坡</strong>专属节点。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-amber-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>🔒</span> 保持 IP 稳定与指纹一致
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            频繁在美、日、英节点切换会导致账号触发高危风控。生产力用户必须为 AI 工具<strong>绑定固定单节点策略组</strong>。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Hubs Grid -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">AI 与流媒体细分专题导航</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">按特定平台深入了解解锁方案、错误代码排查与测试工具</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {subSections.map((s) => (
+          <a href={s.url} class="p-5 bg-white rounded-2xl border border-slate-200 hover:border-purple-500 hover:shadow-lg transition group flex flex-col justify-between">
+            <div>
+              <div class="text-3xl mb-3 group-hover:scale-110 transition-transform">{s.icon}</div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-purple-600 transition mb-1">{s.name}</h3>
+              <p class="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-purple-600 group-hover:translate-x-1 transition-transform">
+              进入专题 &rarr;
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Prose Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+      
+      <!-- TOC Sidebar -->
+      <div class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本页导航目录</h3>
+          <ul class="space-y-2 text-xs font-medium text-slate-600">
+            <li><a href="#ip-types" class="hover:text-purple-600 transition block py-1">1. 原生住宅 IP vs 机房广播 IP</a></li>
+            <li><a href="#ai-risk-matrix" class="hover:text-purple-600 transition block py-1">2. ChatGPT / Claude / Gemini 风控梯度</a></li>
+            <li><a href="#netflix-unlock" class="hover:text-purple-600 transition block py-1">3. Netflix 全区解锁与自制剧识别</a></li>
+            <li><a href="#youtube-songzhong" class="hover:text-purple-600 transition block py-1">4. YouTube 4K 缓冲与“送中”修复</a></li>
+            <li><a href="#faqs" class="hover:text-purple-600 transition block py-1">5. 核心常见问题解答（FAQ）</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Prose Column -->
+      <div class="lg:col-span-3 space-y-12">
+        
+        <!-- Section 1 -->
+        <section id="ip-types" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            1. 原生住宅 IP vs 机房广播 IP：决定解锁成败的底层分水岭
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-4">
+            <p>
+              在海外平台的技术审计体系中，IP 地址被分为两大截然不同的阵营：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-3">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">🏠 原生住宅宽带 IP（Residential ISP）</span>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  <strong>特征</strong>：由海外本土主流运营商（如 AT&T、Verizon、HKT、NTT）分配给普通家庭用户的 IP，属于双 ISP 认证。<br/>
+                  <strong>评价</strong>：信誉分极高，零风险穿透 Cloudflare WAF，完美支持 Claude 与 Netflix 专属片库。
+                </p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">🏢 机房广播 IP（Datacenter / Hosting）</span>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  <strong>特征</strong>：数据中心服务器租赁商（如 AWS、Linode、Cloudflare WARP）名下的网段。<br/>
+                  <strong>评价</strong>：被 AI 平台与流媒体黑名单数据库直接拉黑，登录即报 1020 错误或封号。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="ai-risk-matrix" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            2. ChatGPT / Claude / Gemini 风控梯度与应对策略
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              三大主流 AI 平台的风控机制存在显著差异：
+            </p>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm not-prose my-3 text-xs">
+              <table class="w-full text-left">
+                <thead class="bg-slate-100/80 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="p-3">AI 平台</th>
+                    <th class="p-3">风控严格程度</th>
+                    <th class="p-3">典型被拦截现象</th>
+                    <th class="p-3">最佳应对节点策略</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200/80 text-slate-700">
+                  <tr>
+                    <td class="p-3 font-bold text-slate-900">Claude (Anthropic)</td>
+                    <td class="p-3 text-rose-600 font-black">地狱级（极易封号）</td>
+                    <td class="p-3">App not available / 账号直接封禁</td>
+                    <td class="p-3 font-semibold text-purple-700">仅限单一固定美国原生住宅节点</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-slate-900">ChatGPT (OpenAI)</td>
+                    <td class="p-3 text-amber-600 font-bold">困难级（拦截登录）</td>
+                    <td class="p-3">Cloudflare 1020 / Access Denied</td>
+                    <td class="p-3 font-semibold text-blue-700">日本、美国、新加坡纯净专线节点</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-slate-900">Gemini (Google)</td>
+                    <td class="p-3 text-emerald-600 font-semibold">中等级（地区判定）</td>
+                    <td class="p-3">当前国家/地区不支持此功能</td>
+                    <td class="p-3">美国、台湾、日本常规专线即可</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="netflix-unlock" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            3. Netflix 全区解锁与自制剧识别：如何判定真实成色？
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              很多不良机场宣称“100% 解锁 Netflix”，实则只能观看自制剧。判定全区解锁的金标准：
+            </p>
+            <p class="text-xs sm:text-sm">
+              在客户端连接该节点后，打开 Netflix 网页或 App，在搜索框中搜索<strong>《绝命毒师（Breaking Bad）》</strong>或当地热门剧集。如果能够正常播放并支持 4K 杜比视界，证明该节点为<strong>真·全区解锁</strong>；如果搜索结果中只有《怪奇物语》等 Netflix 自家出品内容，说明版权保护剧已被完全屏蔽。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="youtube-songzhong" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            4. YouTube 4K 缓冲与“送中”修复：彻底解决地区漂移
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              针对高频出现的“YouTube 送中”（识别为中国大陆导致无法画中画、无后台播放）问题：
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 not-prose my-3">
+              <strong class="block mb-1 font-bold text-sm text-slate-900">💡 解决步骤：</strong>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>在 Clash Verge Rev 中检查分流规则，确保 Google/YouTube 域名没有走直连（DIRECT）；</li>
+                <li>在手机系统设置中，将 YouTube 区域与位置服务（GPS）权限关闭；</li>
+                <li>切换至未被污染的日本（NRT）或美国原生住宅专线节点；</li>
+                <li>清除浏览器 Cookie 或重新登录 Google 账号。</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="faqs" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-6 pb-2 border-b border-slate-200">
+            5. AI 与流媒体常见问题（FAQ）
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item, index) => (
+              <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 open:ring-2 open:ring-purple-500/20 transition shadow-sm">
+                <summary class="font-extrabold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+                  <span class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <span set:html={item.q}></span>
+                  </span>
+                  <span class="text-slate-400 group-open:rotate-180 transition-transform text-lg ml-2">&darr;</span>
+                </summary>
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed" set:html={item.a}>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Conversion CTA -->
+        <div class="mt-12">
+          <BrandCTA 
+            brandName="光速云（Guangsu Cloud）" 
+            affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+            couponCode="AMM"
+            entryPrice="折合 ¥8/月起（年付¥99）"
+            customTitle="全绿解锁 ChatGPT 4o 与 4K Netflix · 光速云"
+            customDesc="精选海外原生落地集群，提供专门的 AI 专属加速通道与流媒体自动解锁支持，告别 1020 拦截烦恼。"
+          />
+        </div>
+
+        <!-- Compliance & Affiliate Disclosure -->
+        <AffiliateDisclosure />
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

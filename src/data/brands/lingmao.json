@@ -1,0 +1,114 @@
+{
+  "id": "lingmao",
+  "slug": "lingmao",
+  "name": "灵猫网络",
+  "aliases": [
+    "CivetNet",
+    "灵猫云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 13,
+  "establishedYear": 2022,
+  "affiliateURL": "https://vip01.civetnet.com/#/?code=8MIAyxak",
+  "couponCodes": [
+    {
+      "code": "lmao888",
+      "discount": "新用户特惠",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "高速中转",
+    "专线出口"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "40+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥19/月 (150GB)",
+  "minMonthlyPrice": 19,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "灵猫月享版",
+      "billing": "月付",
+      "price": 19,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 19,
+      "notes": "19元150G大流量"
+    },
+    {
+      "name": "灵猫不限时版",
+      "billing": "一次性付费",
+      "price": 88,
+      "traffic": "150GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "长效不限时"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 高速",
+      "latency": "39ms",
+      "download": "190Mbps",
+      "upload": "38Mbps",
+      "date": "2026-08-12",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "19元150GB高额流量",
+    "提供不限时不过期流量包"
+  ],
+  "verifiedFeatures": [
+    "月付19元给到150GB，单GB成本处于较低水平"
+  ],
+  "strengths": [
+    "流量单价低，且有不限时套餐双向选择",
+    "晚高峰视频加载速度平稳"
+  ],
+  "limitations": [
+    "不限时包流量总额有限",
+    "缺少自研客户端"
+  ],
+  "riskNotes": "按月付费使用安全稳妥。",
+  "suitableFor": "看重流量单价与不限时备选方案的追剧与社交媒体用户。",
+  "unsuitableFor": "只接受专属独立IP定制的用户。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-12",
+  "updatedAt": "2026-11-06",
+  "logo": "/images/logos/kuaili_logo.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

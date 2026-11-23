@@ -1,0 +1,146 @@
+{
+  "id": "feimao",
+  "slug": "feimao",
+  "name": "飞猫云",
+  "aliases": [
+    "Feimao Cloud",
+    "飞猫机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 3,
+  "establishedYear": 2022,
+  "affiliateURL": "https://guangs.flycataff.com/#/?code=6uq0Xe9y",
+  "couponCodes": [
+    {
+      "code": "flycat888",
+      "discount": "8折优惠码",
+      "condition": "新老用户均可抵扣"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "measured_and_vendor",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "IEPL专线",
+    "优质公网中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "50+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "FlClash",
+    "v2rayN"
+  ],
+  "entryPrice": "¥7/月 (折扣后约¥5.6)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "飞猫轻量",
+      "billing": "月付",
+      "price": 7,
+      "traffic": "50GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 7,
+      "notes": "叠加8折码后仅¥5.6/月"
+    },
+    {
+      "name": "飞猫标准",
+      "billing": "月付",
+      "price": 15,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 15,
+      "notes": "IEPL专线节点提速"
+    },
+    {
+      "name": "飞猫旗舰",
+      "billing": "月付",
+      "price": 28,
+      "traffic": "350GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 28,
+      "notes": "大带宽流媒体专用"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IEPL 01",
+      "latency": "45ms",
+      "download": "86.5 MB/s (692Mbps)",
+      "upload": "38 MB/s",
+      "date": "2026-06-01",
+      "status": "tested",
+      "isPeak": true
+    },
+    {
+      "region": "日本 东京专线",
+      "latency": "88ms",
+      "download": "64.2 MB/s (513Mbps)",
+      "upload": "25 MB/s",
+      "date": "2026-06-01",
+      "status": "tested",
+      "isPeak": true
+    },
+    {
+      "region": "美国 洛杉矶优化",
+      "latency": "150ms",
+      "download": "22.8 MB/s (182Mbps)",
+      "upload": "15 MB/s",
+      "date": "2026-06-01",
+      "status": "tested",
+      "isPeak": true
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "全解锁",
+    "claude": "全解锁",
+    "gemini": "区域限制",
+    "netflix": "原创剧全解锁",
+    "disney": "全区解锁",
+    "youtube": "4K稳定",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "IEPL专线网络",
+    "支持ChatGPT/Claude原生解锁",
+    "7元入门档配合8折码极具价格吸引力"
+  ],
+  "verifiedFeatures": [
+    "2026-06实测晚高峰香港节点达到86.5MB/s",
+    "ChatGPT与Claude均顺利放行无降级"
+  ],
+  "strengths": [
+    "7元入门档配合8折券仅5.6元，百兆晚高峰实测亮眼",
+    "AI与流媒体解锁能力处于前列",
+    "节点覆盖主流亚太常用地区"
+  ],
+  "limitations": [
+    "低价轻量套餐流量仅50GB，重度下载容易见底",
+    "Gemini在部分香港节点存在区域限制"
+  ],
+  "riskNotes": "低价档用户较多，遇特殊网络波动期需配合备用节点。",
+  "suitableFor": "预算有限、需要访问ChatGPT和Claude、偶尔看4K流媒体的学生与个人。",
+  "unsuitableFor": "TB级重度下载或需要冷门国家小众节点的用户。",
+  "sources": [
+    "飞猫云官方资料",
+    "实测测速报告 (2026-06)"
+  ],
+  "verifiedAt": "2026-06-01",
+  "updatedAt": "2026-11-10",
+  "logo": "/images/logos/飞猫云主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

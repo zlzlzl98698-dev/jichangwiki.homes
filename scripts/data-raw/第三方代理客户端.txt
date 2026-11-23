@@ -1,0 +1,107 @@
+2026 机场代理客户端大全
+机场代理客户端主要分为两种：
+- 第三方通用客户端：例如 Clash Verge Rev、v2rayN、Shadowrocket、FlClash、Hiddify，可以导入兼容的机场订阅。
+- 机场专属客户端：由机场服务商提供，部分只支持账号登录，不提供 Clash、Shadowrocket 等第三方订阅链接。
+下面按操作系统整理，包含客户端名称、功能定位和项目地址。适合用作机场推荐博客的「客户端下载」和「使用教程」内容资料库。
+一、Windows 电脑客户端
+客户端名称	主要特点	下载或项目地址
+Clash Verge Rev	Mihomo 内核、订阅管理、规则分流、TUN 模式，新手及进阶用户	GitHub
+v2rayN	Xray、sing-box 等核心，适合多协议和节点管理	GitHub
+FlClash	Mihomo 内核、规则分流、简洁界面	GitHub
+Clash Nyanpasu	Clash 图形界面、配置增强、多内核	GitHub
+Hiddify	多协议、自动节点选择、远程配置	GitHub
+Karing	sing-box 系客户端、跨平台、面向新手的配置方式	GitHub
+Clash Mi	Mihomo 内核、多平台、Clash YAML 配置	GitHub
+Mihomo Party	Mihomo 内核、配置与分流管理，适合历史教程和迁移场景	GitHub
+Clash Verge Rev、v2rayN、FlClash、Hiddify、Karing 和 Clash Mi 均有可核实的跨平台项目资料。Mihomo Party 则应单独关注项目维护状态，不宜未经核实就标为持续更新的首选客户端。
+
+GitHub
++6
+
+
+
+
+Windows 栏目的核心搜索词：Clash for Windows、Clash Verge Rev 下载、v2rayN 下载、Windows 机场客户端、电脑代理软件、Mihomo 客户端、VLESS Windows 客户端。
+二、Android 安卓客户端
+客户端名称	主要特点	下载或项目地址
+v2rayNG	Xray 系协议客户端，支持节点链接和订阅导入	GitHub
+FlClash	Mihomo 内核、规则分流、支持订阅配置	GitHub
+Clash Meta for Android	Mihomo 系规则代理，支持 Clash 配置	GitHub
+NekoBox for Android	sing-box 系客户端，适合有一定基础的用户	GitHub
+sing-box for Android（SFA）	官方 sing-box 客户端，适合原生 sing-box 配置	官方文档
+Hiddify	多协议、多种订阅格式，适合新手	GitHub
+Karing	sing-box 系客户端，支持多订阅与规则管理	GitHub
+Clash Mi	Mihomo 内核、Clash YAML 配置、跨平台	GitHub
+其中 v2rayNG、FlClash、Hiddify 和 Karing 很适合作为安卓栏目里的主要介绍对象。NekoBox 官方项目已提示维护资源有限，且特别警告不要使用其名称下已被第三方控制的 Google Play 版本。
+
+GitHub
++3
+
+
+
+三、iPhone / iPad 客户端
+客户端名称	主要特点	下载地址
+Shadowrocket（小火箭）	规则代理、订阅管理、流量与请求查看	App Store
+Stash	Clash 风格规则配置、策略组、覆写功能	App Store
+Quantumult X（圈 X）	规则分流、请求重写、脚本、DNS 自定义	App Store
+Surge 5	高级网络代理、流量分析与调试	App Store
+sing-box（SFI）	官方 sing-box 客户端，适合原生配置	官方文档
+Hiddify	多协议代理、导入订阅、新手友好	GitHub
+Karing	多种订阅格式、规则分流、跨设备使用	App Store
+Clash Mi	Mihomo 内核、支持 Clash 风格配置	App Store
+Streisand	VLESS、VMess、Trojan、Hysteria 等协议	App Store
+Potatso	Shadowsocks、SSR、SOCKS、HTTP(S)	App Store
+OneClick	VMess、Shadowsocks、Trojan 和订阅链接	App Store
+这些客户端并非都免费。例如 Shadowrocket、Stash 和 Quantumult X 在美国 App Store 显示为付费应用，Surge 则包含应用内购买。实际售价和上架情况以用户所属 App Store 地区为准。
+
+App Store
++3
+
+
+
+四、macOS 苹果电脑客户端
+客户端名称	主要特点	下载或项目地址
+Clash Verge Rev	Mihomo、规则分流、TUN 模式	GitHub
+Clash Nyanpasu	多内核、订阅和配置管理	GitHub
+FlClash	Mihomo、订阅配置、规则管理	GitHub
+v2rayN	Xray、sing-box 等多核心	GitHub
+Hiddify	多协议、自动选点、订阅管理	GitHub
+Karing	跨平台订阅与路由管理	GitHub
+Clash Mi	Mihomo 图形界面	GitHub
+Surge Mac	高级网络代理、规则控制、网络调试	官网
+sing-box for macOS（SFM）	官方 sing-box 客户端	官方文档
+macOS 页面建议单独说明 Intel 与 Apple Silicon 芯片安装包的区别，避免用户下载不适用的版本。Clash Verge Rev 和 FlClash 的项目都提供对应架构的安装方式。
+
+GitHub
++1
+
+
+
+五、Linux 客户端
+客户端名称	主要特点	下载或项目地址
+Clash Verge Rev	桌面图形界面、Mihomo、规则分流	GitHub
+v2rayN	Xray 等多核心桌面客户端	GitHub
+FlClash	Mihomo、规则代理、多种 Linux 安装包	GitHub
+Clash Nyanpasu	多核心与配置管理	GitHub
+Hiddify	多协议订阅客户端	GitHub
+Karing	sing-box 系跨平台客户端	GitHub
+Clash Mi	Mihomo 图形客户端	GitHub
+v2rayA	Web 控制界面、透明代理、适合 Linux 主机或服务器	GitHub
+sing-box for Desktop	官方 sing-box 桌面客户端方向	官方文档
+Linux 下载页应该分别提供 DEB、RPM、AppImage 等安装格式的说明，并标注支持架构。v2rayA 还可用于没有传统桌面的 Linux 设备。
+
+GitHub
++2
+
+
+
+六、OpenWrt / 软路由客户端
+客户端名称	核心定位	项目地址
+OpenClash	Mihomo/Clash 系规则代理、订阅管理、透明代理	GitHub
+PassWall2	Xray、sing-box 等核心，支持节点、透明代理和访问控制	GitHub
+Nikki	Mihomo 透明代理与策略管理	GitHub
+HomeProxy	基于 sing-box 的路由代理管理	GitHub
+v2rayA	可用于部分 Linux 路由与网关环境	GitHub
+路由器环境与 Windows、Android 不同，安装前需要确认 OpenWrt 版本、CPU 架构、包管理器、内核和防火墙依赖。例如 Nikki 项目明确要求 OpenWrt 24.10 及以上版本
+
+

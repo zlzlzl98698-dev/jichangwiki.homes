@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "2026 最新机场优惠码与折扣获取全攻略：官方折扣核验与避坑指南";
+const description = "全面整理 2026 最新可用的科学上网机场官方优惠码与折扣券。揭秘优惠码背后的营销套路与虚假打折陷阱，提供权威官方渠道的折上折省钱技巧。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"机场品牌","url":"/brands/"},{"name":"coupons","url":"/brands/coupons/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/brands/coupons/","url":"https://jichangwiki.homes/brands/coupons/","name":"2026 最新机场优惠码与折扣获取全攻略：官方折扣核验与避坑指南","description":"全面整理 2026 最新可用的科学上网机场官方优惠码与折扣券。揭秘优惠码背后的营销套路与虚假打折陷阱，提供权威官方渠道的折上折省钱技巧。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"机场品牌","item":"https://jichangwiki.homes/brands/"},{"@type":"ListItem","position":3,"name":"2026 最新机场优惠码与折扣获取全攻略：官方折扣核验与避坑指南","item":"https://jichangwiki.homes/brands/coupons/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"光速云的专属优惠码【AMM】可以在哪些套餐中使用？","acceptedAnswer":{"@type":"Answer","text":"优惠码 `AMM` 适用于光速云官方的所有主力套餐（包括各档月付、季付与年付套餐）。在收银台结算时，将 `AMM` 填入优惠码框并点击右侧的“验证”按钮，系统会自动核算折扣并立减账单金额。"}},{"@type":"Question","name":"为什么输入优惠码后提示“优惠码无效或已过期”？","acceptedAnswer":{"@type":"Answer","text":"这通常有三种情况：一是字母拼写错误（注意区分大小写，`AMM` 为全大写字母）；二是您复制的优惠码来自于网上未经验证的过期过时页面；三是该活动已到达预设的名额上限。请认准本站实时核验的有效代码。"}},{"@type":"Question","name":"优惠码可以叠加使用多个吗？","acceptedAnswer":{"@type":"Answer","text":"大部分正规机场的收银台系统一次结算仅支持使用一个优惠码，无法同时输入两个文本优惠码。但是，文本优惠码可以与系统自带的“半年付/年付原有折扣”完美叠加，实现双重让利。"}},{"@type":"Question","name":"使用了优惠码购买的套餐，售后服务和节点质量会缩水吗？","acceptedAnswer":{"@type":"Answer","text":"绝对不会！优惠码是服务商为了回馈合作渠道用户而推出的正规营销让利手段。使用优惠码购买的用户，享受的节点带宽、物理线路成色、工单支持与全额原价购买的用户毫无差别，待遇 100% 一致。"}},{"@type":"Question","name":"光速云在节假日会有更大的促销活动吗？","acceptedAnswer":{"@type":"Answer","text":"光速云在每年的元旦跨年、农历春节、年中大促与双十一期间，均会开展回馈新老用户的专项感恩活动。平时常驻使用本站官方核验优惠码 `AMM` 即可随时享受到最优专属渠道折扣。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"光速云的专属优惠码【AMM】可以在哪些套餐中使用？","a":"优惠码 `AMM` 适用于光速云官方的所有主力套餐（包括各档月付、季付与年付套餐）。在收银台结算时，将 `AMM` 填入优惠码框并点击右侧的“验证”按钮，系统会自动核算折扣并立减账单金额。"},{"q":"为什么输入优惠码后提示“优惠码无效或已过期”？","a":"这通常有三种情况：一是字母拼写错误（注意区分大小写，`AMM` 为全大写字母）；二是您复制的优惠码来自于网上未经验证的过期过时页面；三是该活动已到达预设的名额上限。请认准本站实时核验的有效代码。"},{"q":"优惠码可以叠加使用多个吗？","a":"大部分正规机场的收银台系统一次结算仅支持使用一个优惠码，无法同时输入两个文本优惠码。但是，文本优惠码可以与系统自带的“半年付/年付原有折扣”完美叠加，实现双重让利。"},{"q":"使用了优惠码购买的套餐，售后服务和节点质量会缩水吗？","a":"绝对不会！优惠码是服务商为了回馈合作渠道用户而推出的正规营销让利手段。使用优惠码购买的用户，享受的节点带宽、物理线路成色、工单支持与全额原价购买的用户毫无差别，待遇 100% 一致。"},{"q":"光速云在节假日会有更大的促销活动吗？","a":"光速云在每年的元旦跨年、农历春节、年中大促与双十一期间，均会开展回馈新老用户的专项感恩活动。平时常驻使用本站官方核验优惠码 `AMM` 即可随时享受到最优专属渠道折扣。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>官方折扣完全手册 · 独家优惠码</span>
+        <span>·</span>
+        <span>上级主题: <a href="/brands/" class="underline hover:text-blue-800">机场品牌总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        2026 最新机场优惠码与折扣获取全攻略：官方核验与省钱指南
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        买套餐别急着直接付款！本文为您汇总 2026 年最新亲测有效的官方优惠码，并教您识别虚假促销陷阱，教您用最划算的价格拿下顶级专线。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>优惠码核心立减福利 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>在结账前输入官方核验优惠码，立即可享受 <strong>8 折至 9 折</strong> 的额外直减福利！本站作为官方核心合作技术评测平台，为广大用户争取到了<strong>光速云独家官方有效折扣优惠码：<code>AMM</code></strong>。在光速云收银台结账时填入 <code>AMM</code> 并点击验证，即可在现有优惠基础上享受额外立减折扣，支持月付与季度付！</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 机场优惠码背后的营销心理学与常见折扣陷阱
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>许多用户在购买科学上网服务时，往往被各类打折促销吸引。然而在鱼龙混杂的代理市场中，优惠码也是部分不良小作坊进行欺诈营销的高发工具：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【辨析真假优惠：三类常见优惠套路解密】</div>
+  <div>■ 第一类：正常节日合理促销（正规大厂常态）</div>
+  <div>  - 特点：在春节、双十一、黑五或开学季推出，折扣通常在 8 折 ~ 9 折左右，属于健康的营销让利</div>
+  <div>■ 第二类：“先涨价后打折”的虚假折扣（商家小花招）</div>
+  <div>  - 特点：商家提前将月费从 15 元调高至 25 元，随后发放一张“立减 10 元”的优惠券，实际一分钱没降</div>
+  <div>■ 第三类：“一折骨折大促”的圈钱跑路盘（极度危险！）</div>
+  <div>  - 特点：突然推出“输入折扣码立享 1 折，年付只需 20 元”，吸引贪便宜用户集中下单，随后卷款跑路</div>
+</div>
+<p>认准健康合理的折扣区间，结合服务商长期的信誉沉淀，才能真正做到“省钱而不踩雷”。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 2026 最新官方优惠码获取攻略与省钱实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>掌握以下三大核心省钱技巧，能帮您在享受高品质网络的同时最大化压缩支出：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>技巧一：输入本站独家核验优惠码（光速云专属优惠码：AMM）：</strong> 登录光速云官网选择所需套餐（推荐主力月付或季付套餐），在订单结算页面找到“优惠码 / 折扣券”输入框，填入 <code>AMM</code> 并点击“验证”，订单金额将自动扣减优惠金额；</li>
+  <li><strong>技巧二：关注官方 Telegram 公告频道的节日闪促：</strong> 正规大牌机场在重大节日（元旦、国庆、黑五）往往会在 Telegram 官方频道首发限时限量的大额优惠码，订阅官方频道是第一时间获取福利的最佳途径；</li>
+  <li><strong>技巧三：巧妙组合“长周期基础折扣 + 优惠码折上折”：</strong> 许多平台在季度付或半年付时本身就带有 8.5 折系统优惠，此时再叠加优惠码 <code>AMM</code>，可以实现“折上折”，将单月实际使用成本进一步拉低至极限；</li>
+  <li><strong>技巧四：避开来源不明的垃圾优惠券导航站：</strong> 网上充斥着大量自动采集的优惠券“伪伪站”，里面罗列的所谓优惠码 99% 是早已失效的过期代码，或者含有恶意重定向后门，建议直接认准本站人工核验有效代码。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流机场优惠类型与适用场景速查表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        优惠折扣机制与省钱策略一览：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">优惠折扣类型</th><th class="py-3 px-4">典型折扣力度</th><th class="py-3 px-4">真实有效期</th><th class="py-3 px-4">是否支持循环续费</th><th class="py-3 px-4">核心避坑要点</th><th class="py-3 px-4">省钱指数</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">官方合作独家码 (如 AMM)</td><td class="py-3 px-4 ">8.5 折 ~ 9 折立减</td><td class="py-3 px-4 ">长期稳定有效</td><td class="py-3 px-4 ">通常支持首期或循环</td><td class="py-3 px-4 ">认准官方认证渠道发布</td><td class="py-3 px-4 ">★★★★★ (稳妥首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">重大节日限时促销</td><td class="py-3 px-4 ">8 折 ~ 8.8 折</td><td class="py-3 px-4 ">通常为 3 ~ 7 天限时</td><td class="py-3 px-4 ">视具体活动规则而定</td><td class="py-3 px-4 ">注意活动截止时间</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">周期计费自带折扣 (季/半年付)</td><td class="py-3 px-4 ">9 折 ~ 8.5 折</td><td class="py-3 px-4 ">全天候常驻</td><td class="py-3 px-4 ">自动永久生效</td><td class="py-3 px-4 ">确认本地网络满意后再付长周期</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">新用户首单专享立减</td><td class="py-3 px-4 ">立减 5 元 ~ 10 元</td><td class="py-3 px-4 ">仅限首次注册下单</td><td class="py-3 px-4 ">不支持后续续费</td><td class="py-3 px-4 ">核对是否有最低消费门槛</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">宣称 1 折骨折码</td><td class="py-3 px-4 ">立减 80% ~ 90%</td><td class="py-3 px-4 ">永久有效 (虚假)</td><td class="py-3 px-4 ">无意义</td><td class="py-3 px-4 ">高度疑似跑路前圈钱，坚决不买</td><td class="py-3 px-4 ">★☆☆☆☆ (高危陷阱)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        官方支持优惠立减、长期秉持良心定价的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        优惠码使用与选购决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">初次上车新用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>第一次购买光速云套餐，想先试试水：</strong> 选单月套餐，结账输入优惠码 <code>AMM</code>，花十几元零钱即可享受顶级 IEPL 专线体验。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">续费老用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>用着很满意，准备继续续费 3 个月或半年：</strong> 在续费或升级套餐时输入优惠码 <code>AMM</code>，叠加周期折扣，实现最强折上折。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">寻找全网优惠码</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>在网上搜索了一大堆优惠码但全部提示失效：</strong> 不要浪费时间盲目试错，直接使用本站实时人工验证的光速云官方优惠码 <code>AMM</code>。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">优惠码使用五大黄金守则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>付款前务必确认优惠码已经成功应用，查看总金额是否真实发生扣减；</li><li>切勿为了凑满减门槛去购买自己根本用不完的超大额度套餐；</li><li>对于宣称“立减 80%”的超常优惠保持高度警惕，谨防跑路圈钱；</li><li>首推使用官方核验优惠码 <code>AMM</code>，安全合规，长期有效；</li><li>优惠码生效后，优先选用支持月付的套餐进行下单验证。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        优惠码高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 省钱攻略与价格横评长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/brands/prices/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">价格横评</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场价格阶梯与套餐性价比完全横评：一分钱一分货的成本账本 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              算清定价底层逻辑，看穿打折套路。
+            </p>
+          </a>
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">终极防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全方位掌握科学上网初学者的省钱防坑常识。
+            </p>
+          </a>
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">跑路预警</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              看懂超常骨折折扣背后的高危跑路信号。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

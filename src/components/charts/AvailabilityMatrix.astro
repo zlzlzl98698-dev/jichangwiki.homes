@@ -1,0 +1,98 @@
+---
+export interface Props {
+  brandName: string;
+  testNode?: string;
+  testTool?: string;
+  capabilities: {
+    chatgpt?: string;
+    claude?: string;
+    gemini?: string;
+    netflix?: string;
+    disney?: string;
+    youtube?: string;
+    tiktok?: string;
+    spotify?: string;
+  };
+}
+
+const {
+  brandName,
+  testNode = '香港 / 日本 专线节点',
+  testTool = 'RegionRestrictionCheck & 独立客户端访问验证',
+  capabilities = {}
+} = Astro.props;
+
+interface ServiceItem {
+  id: string;
+  name: string;
+  category: 'AI' | 'Streaming';
+  statusText: string;
+  state: 'success' | 'warning' | 'error' | 'untested';
+}
+
+function parseState(val: string = ''): 'success' | 'warning' | 'error' | 'untested' {
+  if (val.includes('全解锁') || val.includes('支持') || val.includes('全区') || val.includes('流畅') || val.includes('秒开')) {
+    if (val.includes('部分') || val.includes('视节点') || val.includes('偏欧') || val.includes('送中')) return 'warning';
+    return 'success';
+  }
+  if (val.includes('部分') || val.includes('特定') || val.includes('限制') || val.includes('视节点')) return 'warning';
+  if (val.includes('失败') || val.includes('不支持') || val.includes('阻断')) return 'error';
+  return 'untested';
+}
+
+const services: ServiceItem[] = [
+  { id: 'chatgpt', name: 'ChatGPT / OpenAI', category: 'AI', statusText: capabilities.chatgpt || '未测试', state: parseState(capabilities.chatgpt) },
+  { id: 'claude', name: 'Claude (Anthropic)', category: 'AI', statusText: capabilities.claude || '未测试', state: parseState(capabilities.claude) },
+  { id: 'gemini', name: 'Google Gemini', category: 'AI', statusText: capabilities.gemini || '未测试', state: parseState(capabilities.gemini) },
+  { id: 'netflix', name: 'Netflix (奈飞非自制)', category: 'Streaming', statusText: capabilities.netflix || '未测试', state: parseState(capabilities.netflix) },
+  { id: 'disney', name: 'Disney+ (迪士尼)', category: 'Streaming', statusText: capabilities.disney || '未测试', state: parseState(capabilities.disney) },
+  { id: 'youtube', name: 'YouTube 4K Premium', category: 'Streaming', statusText: capabilities.youtube || '4K流畅', state: parseState(capabilities.youtube || '4K流畅') },
+  { id: 'tiktok', name: 'TikTok (国际版抖音)', category: 'Streaming', statusText: capabilities.tiktok || '待核实', state: parseState(capabilities.tiktok) },
+  { id: 'spotify', name: 'Spotify 跨区', category: 'Streaming', statusText: capabilities.spotify || '支持', state: parseState(capabilities.spotify || '支持') }
+];
+---
+
+<div class="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0b1120] text-slate-100 shadow-xl font-sans text-xs sm:text-sm">
+  <!-- Header -->
+  <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-base">🎬</span>
+      <span class="font-bold text-white text-sm">Service Availability Matrix｜流媒体与 AI 解锁矩阵</span>
+      <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+        {brandName}
+      </span>
+    </div>
+    <div class="text-[11px] text-slate-400 font-mono">
+      节点: {testNode}
+    </div>
+  </div>
+
+  <!-- Grid Items -->
+  <div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+    {services.map((item) => (
+      <div class="rounded-lg p-3 bg-slate-900/60 border border-slate-800/80 flex flex-col justify-between space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">{item.category}</span>
+          {item.state === 'success' && <span class="text-emerald-400 font-bold flex items-center gap-1 text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>已解锁</span>}
+          {item.state === 'warning' && <span class="text-amber-400 font-bold flex items-center gap-1 text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block"></span>部分/待测</span>}
+          {item.state === 'error' && <span class="text-red-400 font-bold flex items-center gap-1 text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-red-400 inline-block"></span>受限</span>}
+          {item.state === 'untested' && <span class="text-slate-400 font-medium flex items-center gap-1 text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-slate-500 inline-block"></span>待测</span>}
+        </div>
+        
+        <div class="font-bold text-slate-200 text-xs sm:text-sm">
+          {item.name}
+        </div>
+
+        <div class="text-[11px] text-slate-400 border-t border-slate-800/50 pt-1.5 line-clamp-2">
+          {item.statusText}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Footer Info -->
+  <div class="px-4 py-2.5 bg-slate-950/70 border-t border-slate-800 flex flex-wrap items-center justify-between text-[11px] text-slate-400">
+    <div>验证工具: {testTool}</div>
+    <div class="opacity-60">[jichangwiki.homes · 观测矩阵]</div>
+  </div>
+</div>

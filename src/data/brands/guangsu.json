@@ -1,0 +1,217 @@
+{
+  "id": "guangsu",
+  "slug": "guangsu",
+  "name": "光速云",
+  "aliases": [
+    "Guangsu Cloud",
+    "光速云机场",
+    "GSY"
+  ],
+  "isPrimary": true,
+  "displayOrder": 1,
+  "establishedYear": 2020,
+  "affiliateURL": "https://sahude.gsyvipaff.com/#/?code=keqgvT5Y",
+  "couponCodes": [
+    {
+      "code": "AMM",
+      "discount": "新人专属优惠",
+      "condition": "新用户注册购买可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "measured_and_vendor",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "IEPL专线",
+    "企业级内网专线",
+    "全球IPLC"
+  ],
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "马来西亚",
+    "英国",
+    "法国",
+    "德国",
+    "土耳其",
+    "泰国",
+    "巴西"
+  ],
+  "nodeCount": "70+",
+  "clients": [
+    "官方自研客户端 (Windows/Android/macOS)",
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥8/月 (年付折算)",
+  "minMonthlyPrice": 8,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付",
+    "USDT"
+  ],
+  "plans": [
+    {
+      "name": "致敬斯诺克147永久套餐",
+      "billing": "一次性付费",
+      "price": 147,
+      "traffic": "247GB不过期",
+      "period": "一次性不过期",
+      "pricePerMonth": "一次性",
+      "notes": "不限设备，原生稳定节点，最高2.5Gbps"
+    },
+    {
+      "name": "轻量版 (入门推荐)",
+      "billing": "年付",
+      "price": 99,
+      "traffic": "69GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 8.25,
+      "notes": "年付折合约¥8/月，原生稳定节点"
+    },
+    {
+      "name": "极速版 (热门推荐)",
+      "billing": "月付",
+      "price": 25,
+      "traffic": "168GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 25,
+      "notes": "全球IPLC专线，全节点1x倍率，单节点最高2.5Gbps"
+    },
+    {
+      "name": "流光版",
+      "billing": "月付",
+      "price": 34,
+      "traffic": "268GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 34,
+      "notes": "多端不限设备"
+    },
+    {
+      "name": "量子版",
+      "billing": "月付",
+      "price": 68,
+      "traffic": "568GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 68,
+      "notes": "大流量高速方案"
+    },
+    {
+      "name": "无界版",
+      "billing": "月付",
+      "price": 138,
+      "traffic": "900GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 138,
+      "notes": "高带宽重度使用"
+    },
+    {
+      "name": "定制套餐 (独立IP)",
+      "billing": "月付",
+      "price": 680,
+      "traffic": "500GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 680,
+      "notes": "专属原生IP与独立带宽，全IPLC专线，一对一客服"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IEPL",
+      "latency": "22ms",
+      "download": "529Mbps",
+      "upload": "78Mbps",
+      "date": "2026-10-19",
+      "status": "tested",
+      "isPeak": false
+    },
+    {
+      "region": "台湾 专线",
+      "latency": "41ms",
+      "download": "114Mbps",
+      "upload": "45Mbps",
+      "date": "2026-10-19",
+      "status": "tested",
+      "isPeak": false
+    },
+    {
+      "region": "新加坡 专线",
+      "latency": "46ms",
+      "download": "387Mbps",
+      "upload": "62Mbps",
+      "date": "2026-10-19",
+      "status": "tested",
+      "isPeak": false
+    },
+    {
+      "region": "日本 东京",
+      "latency": "57ms",
+      "download": "135Mbps",
+      "upload": "51Mbps",
+      "date": "2026-10-19",
+      "status": "tested",
+      "isPeak": false
+    },
+    {
+      "region": "美国 洛杉矶",
+      "latency": "143ms",
+      "download": "18Mbps",
+      "upload": "15Mbps",
+      "date": "2026-10-19",
+      "status": "tested",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分节点支持 (需特定原生节点)",
+    "claude": "支持",
+    "gemini": "部分节点支持 (需选对出口)",
+    "netflix": "全区解锁",
+    "disney": "全区解锁",
+    "youtube": "4K流畅",
+    "tiktok": "原生节点支持"
+  },
+  "claimedFeatures": [
+    "2020年起持续稳定运营",
+    "IEPL专线 + 企业级内网专线双架构",
+    "VLESS主流轻量协议",
+    "自研客户端一键连接与第三方订阅双兼容",
+    "定制版提供专属原生IP与独立带宽"
+  ],
+  "verifiedFeatures": [
+    "2026-10-19实测香港/新加坡节点速率突破300Mbps+",
+    "年付轻量套餐折算月价¥8.25确实具备突出价格优势",
+    "支持Windows/Android/macOS自研客户端及Clash/Shadowrocket通用订阅"
+  ],
+  "strengths": [
+    "综合性价比极高，轻量版年付折算仅约8元/月",
+    "提供247GB不过期永久套餐，适合低频轻度备用用户",
+    "节点覆盖12+主流国家和地区，香港/新加坡节点延迟极低",
+    "提供独立原生IP高阶定制方案，满足跨境电商与直播需求"
+  ],
+  "limitations": [
+    "最低8元/月属于年付预付折算价（¥99/年），并非直接月付",
+    "ChatGPT和Gemini等AI工具并非全节点解锁，需选对香港或美西对应落地",
+    "特殊商品套餐不支持无理由退款，建议先按需选择"
+  ],
+  "riskNotes": "官方明确标注特殊定制或特惠套餐不支持退款。建议初次使用先体验小额月付或年付入门版确认本地网络匹配度。",
+  "suitableFor": "需要稳定晚高峰、AI工具与流媒体综合访问，注重长期运营品牌与高性价比的个人或小团队。",
+  "unsuitableFor": "要求全节点100%强制解锁所有冷门AI平台，或拒绝年付单次预付的用户。",
+  "sources": [
+    "光速云官方品牌资料 (2026-10-19)",
+    "光速云独立评测报告",
+    "Speedtest实测记录"
+  ],
+  "verifiedAt": "2026-10-19",
+  "updatedAt": "2026-11-20",
+  "logo": "/images/logos/光速云主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

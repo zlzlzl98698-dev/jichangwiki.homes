@@ -1,0 +1,114 @@
+{
+  "id": "shanyue",
+  "slug": "shanyue",
+  "name": "闪跃",
+  "aliases": [
+    "FlashLeap",
+    "闪跃云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 20,
+  "establishedYear": 2022,
+  "affiliateURL": "https://vip02.flashleapaff.com/#/?code=3lgzm9mm",
+  "couponCodes": [
+    {
+      "code": "shanyue",
+      "discount": "常规优惠码",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "高质量中转",
+    "专线出口"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "40+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥24/月 (150GB)",
+  "minMonthlyPrice": 24,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "闪跃畅行版",
+      "billing": "月付",
+      "price": 24,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 24,
+      "notes": "24元150G高质量节点"
+    },
+    {
+      "name": "闪跃至尊版",
+      "billing": "月付",
+      "price": 45,
+      "traffic": "320GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 45,
+      "notes": "低延迟专线"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 专线",
+      "latency": "35ms",
+      "download": "200Mbps",
+      "upload": "40Mbps",
+      "date": "2026-08-15",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "24元150GB品质中转",
+    "延迟控制优秀"
+  ],
+  "verifiedFeatures": [
+    "延迟表现确实紧凑，香港节点常驻35ms左右"
+  ],
+  "strengths": [
+    "网络质感偏扎实，日常丢包率低",
+    "客服工单处理较为规范"
+  ],
+  "limitations": [
+    "24元月付起步相比7元档略显偏高",
+    "无不限时包"
+  ],
+  "riskNotes": "稳扎稳打的品质中转服务，适合预算稍充裕的用户。",
+  "suitableFor": "对连接平顺度、网页秒开率有一定要求的进阶用户。",
+  "unsuitableFor": "极限低价追求者。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-15",
+  "updatedAt": "2026-11-06",
+  "logo": "/images/logos/echo_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

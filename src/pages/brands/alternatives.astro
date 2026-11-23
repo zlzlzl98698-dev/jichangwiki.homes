@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "主流机场平替与容灾备用方案指南：无痛迁移、线路互补与跨品牌热备实战";
+const description = "全面解决主力机场断网、跑路或大降速时的紧急替代难题。深入剖析主流服务商的平替选型标准、无痛迁移流程，以及利用 Clash Fallback 打造跨品牌自动容灾网络。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"机场品牌","url":"/brands/"},{"name":"alternatives","url":"/brands/alternatives/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/brands/alternatives/","url":"https://jichangwiki.homes/brands/alternatives/","name":"主流机场平替与容灾备用方案指南：无痛迁移、线路互补与跨品牌热备实战","description":"全面解决主力机场断网、跑路或大降速时的紧急替代难题。深入剖析主流服务商的平替选型标准、无痛迁移流程，以及利用 Clash Fallback 打造跨品牌自动容灾网络。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"机场品牌","item":"https://jichangwiki.homes/brands/"},{"@type":"ListItem","position":3,"name":"主流机场平替与容灾备用方案指南：无痛迁移、线路互补与跨品牌热备实战","item":"https://jichangwiki.homes/brands/alternatives/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"更换平替机场需要把我电脑和手机上的代理软件卸载重装吗？","acceptedAnswer":{"@type":"Answer","text":"完全不需要！这是许多小白最大的误区。代理客户端（如 Clash Verge Rev、Shadowrocket、v2rayNG）是完全中立的开源通用工具。更换机场仅仅是在客户端中添加一条新的“订阅链接 URL”而已，就像换一张手机 SIM 卡一样简单，原有的软件设置与分流规则完全保留。"}},{"@type":"Question","name":"为什么不建议选择“同类型甚至同模板”的小机场作为平替？","acceptedAnswer":{"@type":"Answer","text":"因为市面上很多小机场表面上名字不同，但背后实际上是同一个站长租用的同一批廉价 VPS 和上游机房。当上游线路波动或被查封时，这些小机场会同时集体瘫痪。真正的平替必须是物理线路和运营主体完全独立的异构大厂（如光速云）。"}},{"@type":"Question","name":"如果我想同时使用两个机场的节点，怎么合并分流？","acceptedAnswer":{"@type":"Answer","text":"在 Clash Verge Rev 中，您可以在订阅列表中同时启用两个订阅。通过在“代理 (Proxies)”面板中针对不同的策略组选择不同机场的节点（例如：流媒体策略组选 A 机场的香港节点，AI 策略组选光速云的纯净美国专线节点），即可实现多机场协同分流。"}},{"@type":"Question","name":"原机场套餐还没到期，现在换平替会不会太浪费？","acceptedAnswer":{"@type":"Answer","text":"如果原机场已经严重丢包卡顿、严重影响您的工作效率甚至耽误关键业务，那么继续死守沉没成本所带来的隐形损失（时间浪费、心情烦躁、工作延误）远超过一个月十几元的套餐费。果断止损切换到高品质专线，效率的提升能在第一天就值回票价。"}},{"@type":"Question","name":"为什么光速云被誉为主流用户的“终极退烧平替”？","acceptedAnswer":{"@type":"Answer","text":"许多用户在经历过免费节点的蜜罐骚扰、廉价中转的晚高峰丢包、小作坊的突然跑路之后，最终都汇聚到了光速云。光速云凭借真实二层内网专线带来的电信级稳定度、公道亲民的月付机制与 4 年长效口碑，让用户彻底告别了“频繁找梯子、换梯子”的焦虑，成为省心安心的终点站。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"更换平替机场需要把我电脑和手机上的代理软件卸载重装吗？","a":"完全不需要！这是许多小白最大的误区。代理客户端（如 Clash Verge Rev、Shadowrocket、v2rayNG）是完全中立的开源通用工具。更换机场仅仅是在客户端中添加一条新的“订阅链接 URL”而已，就像换一张手机 SIM 卡一样简单，原有的软件设置与分流规则完全保留。"},{"q":"为什么不建议选择“同类型甚至同模板”的小机场作为平替？","a":"因为市面上很多小机场表面上名字不同，但背后实际上是同一个站长租用的同一批廉价 VPS 和上游机房。当上游线路波动或被查封时，这些小机场会同时集体瘫痪。真正的平替必须是物理线路和运营主体完全独立的异构大厂（如光速云）。"},{"q":"如果我想同时使用两个机场的节点，怎么合并分流？","a":"在 Clash Verge Rev 中，您可以在订阅列表中同时启用两个订阅。通过在“代理 (Proxies)”面板中针对不同的策略组选择不同机场的节点（例如：流媒体策略组选 A 机场的香港节点，AI 策略组选光速云的纯净美国专线节点），即可实现多机场协同分流。"},{"q":"原机场套餐还没到期，现在换平替会不会太浪费？","a":"如果原机场已经严重丢包卡顿、严重影响您的工作效率甚至耽误关键业务，那么继续死守沉没成本所带来的隐形损失（时间浪费、心情烦躁、工作延误）远超过一个月十几元的套餐费。果断止损切换到高品质专线，效率的提升能在第一天就值回票价。"},{"q":"为什么光速云被誉为主流用户的“终极退烧平替”？","a":"许多用户在经历过免费节点的蜜罐骚扰、廉价中转的晚高峰丢包、小作坊的突然跑路之后，最终都汇聚到了光速云。光速云凭借真实二层内网专线带来的电信级稳定度、公道亲民的月付机制与 4 年长效口碑，让用户彻底告别了“频繁找梯子、换梯子”的焦虑，成为省心安心的终点站。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>高可用平替手册 · 告别断网停摆</span>
+        <span>·</span>
+        <span>上级主题: <a href="/brands/" class="underline hover:text-blue-800">机场品牌总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        主流机场平替与容灾备用方案指南：无痛迁移与高可用热备
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        主力机场突然断流慢成蜗牛？服务商突发维护群组失联？本文手把手教您如何挑选合格平替品牌，教您 3 分钟完成无痛迁移与双活热备。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>平替选型核心原则 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>科学上网切忌在同一个技术流派的劣质小作坊之间“来回换坑”</strong>！如果您当前使用的中转机场频繁卡顿或失联，<strong>最彻底的终极平替方案是全面升级至纯物理二层专线品牌（如光速云）</strong>；若需要构建永不掉线的备用容灾网络，应选择<strong>“线路异构原则”（例如主力选用光速云深圳/上海 IEPL 专线，备用选用不同机房入口的轻量弹性套餐）</strong>，在客户端中一键组建主备自动容灾体系。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 为什么每一位重度用户都需要掌握‘平替’与备用思维？
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在复杂的国际网络生态中，任何单一节点、单一机房甚至单一海底光缆都存在突发中断的客观物理概率。对于高度依赖外网的现代生产力人群而言，<strong>没有备用方案的网络架构是极其脆弱的</strong>：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【单点故障的致命打击 vs 异构平替容灾收益】</div>
+  <div>■ 单一服务商受阻场景：</div>
+  <div>  主力机场遭遇海缆割接 / 机房停电 ---> 全面断网 ---> 正在进行的 Zoom 跨国会议直接掉线 / Git 代码无法拉取</div>
+  <div>--------------------------------------------------------------------------------</div>
+  <div>■ 异构平替与主备双活场景：</div>
+  <div>  主力专线机场 (光速云) 出现瞬时抖动 ---> 客户端内核 (Fallback) 毫秒级自动切换至备用平替节点</div>
+  <div>  ★ 结果：用户端视频会议无感连通，工作零停摆，待主力恢复后全自动静默切回！</div>
+</div>
+<p>挑选一个合格的平替，绝不仅仅是“换一个网址买套餐”，而是构建一套高可用、抗风险的现代化个人网络防线。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 常见主流机场平替方案与选型迁移指南
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>当您对现有服务商感到不满或需要寻找备份时，按照以下标准工作流进行无痛迁移：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>平替场景一：从“频繁跳 ping 的廉价公网中转”平替至“真正 0 丢包的 IEPL 专线”：</strong><br/>
+    如果您的痛点是“晚高峰看视频卡顿、打游戏丢包跳 ping”，直接平替至<strong>光速云</strong>。全线真实二层物理内网，彻底解决公网晚高峰拥堵难题；</li>
+  <li><strong>平替场景二：从“价格高昂但流量极少的老牌”平替至“高性价比主流大厂”：</strong><br/>
+    部分早期老牌机场单月收费 50~80 元但仅给几十 GB 流量。平替至光速云主力套餐，以每月十几元到二十多元的公道资费，享受更充沛的流量与同等级甚至更优的专线品质；</li>
+  <li><strong>平替场景三：构建极低成本的“冷热备用容灾方案”：</strong><br/>
+    将光速云作为主力订阅导入 Clash Verge Rev，同时购买一份按量计费不过期的备用订阅。在客户端内通过 Merge 扩展脚本将两者合并为一个 <code>fallback</code> 容灾策略组，平时 100% 跑光速云极速专线，遇险自动自愈；</li>
+  <li><strong>三步无痛快速迁移 SOP：</strong> ① 在平替服务商后台复制订阅链接；② 打开客户端“新建配置”粘贴导入；③ 在代理面板将主力策略组一键勾选为新节点，全过程仅需 30 秒，无需重新安装任何客户端软件。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流服务商痛点与最佳平替升级方向对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        不同痛点场景下的最佳平替决策方案：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">当前原服务商痛点</th><th class="py-3 px-4">核心平替诉求</th><th class="py-3 px-4">推荐平替升级方向</th><th class="py-3 px-4">迁移操作成本</th><th class="py-3 px-4">体验提升预期</th><th class="py-3 px-4">推荐指数</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">晚高峰丢包严重、频繁断流</td><td class="py-3 px-4 ">追求绝对稳定与 0 丢包</td><td class="py-3 px-4 ">升级至全线 IEPL 专线 (如光速云)</td><td class="py-3 px-4 ">极低 (仅需导入新订阅)</td><td class="py-3 px-4 ">晚高峰 4K 随意拖拽秒开</td><td class="py-3 px-4 ">★★★★★ (终极方案)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">价格虚高、流量严重不足</td><td class="py-3 px-4 ">追求公道性价比与宽裕流量</td><td class="py-3 px-4 ">升级至光速云主力资费档位</td><td class="py-3 px-4 ">极低</td><td class="py-3 px-4 ">资费降低 50% 且流量翻倍</td><td class="py-3 px-4 ">★★★★★</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">海外流媒体与 AI 频繁被封</td><td class="py-3 px-4 ">需要纯净原生出口 IP</td><td class="py-3 px-4 ">选用拥有原生住宅落地 IP 的品牌</td><td class="py-3 px-4 ">极低</td><td class="py-3 px-4 ">秒解 ChatGPT / Netflix 4K</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">经常无法拉取更新订阅</td><td class="py-3 px-4 ">需要具备全球 CDN 分发能力的大厂</td><td class="py-3 px-4 ">选用具备多活 Anycast 容灾的品牌</td><td class="py-3 px-4 ">极低</td><td class="py-3 px-4 ">订阅更新秒拉，永不失联</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备电信级 IEPL 专线、充当终极平替与主力底座的标杆品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        平替与备用方案选型决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">受够了卡顿断网</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>手头机场三天两头维护，开会频繁断线：</strong> 果断止损！直接平替到光速云 IEPL 物理专线，单月试用即可感受质的飞跃。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">构建双重保险</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>手头已有稳定主力，想准备一份低成本备用：</strong> 选择一份按量计费不过期的备用套餐常驻客户端，花费几元钱即可获得全年的断网保险。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">原机场突然跑路</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>刚买的机场突然关停失联，急需救急：</strong> 通过本站经过人工实测的直达链接，一键购入光速云月付套餐，3 分钟内极速恢复网络连接。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">平替选型五大黄金原则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>平替选型必须遵循“向上升级线路成色”，切忌从小作坊跳入另一个小作坊；</li><li>平替品牌首月必须坚决坚持月付试水，在自己本地网络实测满意后再长期使用；</li><li>常备一份不同上游运营商与机房架构的备用订阅，保障异构容灾；</li><li>更换机场不需要重装软件，只需在客户端中添加新订阅 URL 即可；</li><li>选用运营时间长、口碑卓著且支持月付的大型标杆品牌（如光速云）。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        平替方案高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 高可用架构与平替进阶长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">双机容灾</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              手把手实操教您利用平替机场搭建高可用双活热备。
+            </p>
+          </a>
+        
+          <a href="/brands/reviews/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">品牌评测</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              科学上网机场深度评测与口碑榜：万字客观实测与优缺点画像全解 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全方位了解平替品牌的客观优缺点画像。
+            </p>
+          </a>
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">终极防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              掌握科学上网的核心选型门道与防坑技巧。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

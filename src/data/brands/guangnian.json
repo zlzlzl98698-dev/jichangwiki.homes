@@ -1,0 +1,111 @@
+{
+  "id": "guangnian",
+  "slug": "guangnian",
+  "name": "光年梯",
+  "aliases": [
+    "Guangnian Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 15,
+  "establishedYear": 2023,
+  "affiliateURL": "https://guangs.gntaff.com/#/?code=X1FoxjGE",
+  "couponCodes": [
+    {
+      "code": "gnt6666",
+      "discount": "常规优惠码",
+      "condition": "全站可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "中转专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥18/月 (110GB)",
+  "minMonthlyPrice": 18,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "光年起步版",
+      "billing": "月付",
+      "price": 18,
+      "traffic": "110GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 18,
+      "notes": "110GB月付"
+    },
+    {
+      "name": "光年高能版",
+      "billing": "月付",
+      "price": 30,
+      "traffic": "220GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 30,
+      "notes": "双倍流量高速通道"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 中转",
+      "latency": "41ms",
+      "download": "130Mbps",
+      "upload": "26Mbps",
+      "date": "2026-08-05",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "18元110GB均衡配比",
+    "线路延迟优化"
+  ],
+  "verifiedFeatures": [
+    "订阅配置规范，常用客户端连接平稳"
+  ],
+  "strengths": [
+    "18元月付价位均衡，日常刷推浏览流畅",
+    "流量配给略高于普通百元档"
+  ],
+  "limitations": [
+    "缺少进阶定制化功能",
+    "节点区域相对紧凑"
+  ],
+  "riskNotes": "正常月付机场，建议按月购买。",
+  "suitableFor": "普通网络冲浪、查询学术与外贸资料的个人用户。",
+  "unsuitableFor": "极端要求低延迟跨国电竞联机的用户。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-05",
+  "updatedAt": "2026-11-03",
+  "logo": "/images/logos/光年梯主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

@@ -1,0 +1,85 @@
+---
+export interface PlanItem {
+  name: string;
+  billing: string;
+  price: number;
+  traffic: string;
+  period: string;
+  pricePerMonth?: number | string;
+  notes?: string;
+}
+
+export interface Props {
+  brandName: string;
+  plans: PlanItem[];
+  affiliateURL: string;
+  couponCode?: string;
+}
+
+const {
+  brandName,
+  plans = [],
+  affiliateURL,
+  couponCode
+} = Astro.props;
+---
+
+<div class="my-6 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+  <div class="bg-slate-50 px-4 py-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <h4 class="font-bold text-slate-900 text-sm">{brandName} 官方可核实套餐资费表</h4>
+      <p class="text-[11px] text-slate-500">
+        注：年付折算价格仅代表长期预付平均成本，并非直接单月付款金额。实际支付以官方结算页面为准。
+      </p>
+    </div>
+    {couponCode && couponCode !== '待核实' && (
+      <div class="text-xs px-2.5 py-1 rounded bg-amber-50 text-amber-800 border border-amber-200 font-mono font-semibold">
+        可用券码: {couponCode}
+      </div>
+    )}
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-xs sm:text-sm">
+      <thead class="bg-slate-100/70 text-slate-700 font-semibold border-b border-slate-200">
+        <tr>
+          <th class="py-3 px-4">套餐名称</th>
+          <th class="py-3 px-4">计费周期</th>
+          <th class="py-3 px-4">实付标价</th>
+          <th class="py-3 px-4">流量配额</th>
+          <th class="py-3 px-4">折算月价</th>
+          <th class="py-3 px-4">核心特点 / 备注</th>
+          <th class="py-3 px-4 text-right">选购入口</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 text-slate-600">
+        {plans.map((p) => (
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="py-3 px-4 font-bold text-slate-900">{p.name}</td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px] font-sans">
+                {p.billing}
+              </span>
+            </td>
+            <td class="py-3 px-4 font-bold text-emerald-600 font-mono">¥{p.price}</td>
+            <td class="py-3 px-4 font-mono font-medium text-slate-800">{p.traffic}</td>
+            <td class="py-3 px-4 font-mono text-slate-700">
+              {typeof p.pricePerMonth === 'number' ? `¥${p.pricePerMonth}/月` : (p.pricePerMonth || '-')}
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-500 max-w-xs">{p.notes || '-'}</td>
+            <td class="py-3 px-4 text-right">
+              <a 
+                href={affiliateURL}
+                target="_blank"
+                rel="nofollow sponsored noopener noreferrer"
+                class="inline-block px-3 py-1 rounded-md bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
+              >
+                选购
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>

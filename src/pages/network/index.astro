@@ -1,0 +1,336 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+
+const title = '线路与节点技术全景指南（2026）｜IEPL、IPLC 专线拓扑、BGP 接入与测速指标';
+const description = '权威中文网络线路支柱专题：深度剖析企业级 IEPL 专线、IPLC 私网物理光纤、BGP 智能就近接入与公网隧道中转的技术差异。揭示晚高峰丢包 QoS 拥塞模型与节点倍率暗扣防范，建立客观科学的测速评价体系。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '线路与节点', url: '/network/' }
+];
+
+const subSections = [
+  { name: 'IEPL 专线', url: '/network/iepl/', desc: '国际以太网私网：二层光纤内网直连，抗封锁无视敏感期', icon: '⚡' },
+  { name: 'IPLC 专线', url: '/network/iplc/', desc: '国际私有租用线路：极低抖动与零公网审查，企业级基准', icon: '🛡️' },
+  { name: '香港节点', url: '/network/hong-kong/', desc: '极速低延迟首选：物理近距优势，学术与日常首选', icon: '🇭🇰' },
+  { name: '日本节点', url: '/network/japan/', desc: '流媒体与二次元万能：原生 IP 纯净度高，全解锁支持', icon: '🇯🇵' },
+  { name: '低延迟优化', url: '/network/low-latency/', desc: '网络抖动调优：BGP 智能多线接入与晚高峰抗拥堵', icon: '📉' },
+  { name: '线路倍率', url: '/network/traffic-ratio/', desc: '计费透明度核查：0.1x-5x 实际扣量模型与防坑指南', icon: '⚖️' }
+];
+
+const faqItems = [
+  {
+    q: 'IEPL 和 IPLC 专线到底有什么区别？哪一个更好？',
+    a: '两者均属于不经过公网 GFW 出口的物理专线，抗封锁性能均属顶级。技术细节差异：1. IPLC（International Private Leased Circuit）是传统的电信二层点对点私有租用电路，延迟极其稳定，但在物理断纤时无法自动路由切换；2. IEPL（International Ethernet Private Line）是基于以太网技术的现代高速专线，具备更强大的二层以太网承载与动态多路径保护（环网自动倒换），且支持单端口千兆以上弹性带宽。在现代代理网络中，两者实际使用体验差距极小，重点看服务商采购的专线带宽冗余度。'
+  },
+  {
+    q: '什么是 BGP 入口？为什么移动、联通、电信的体验差异很大？',
+    a: 'BGP（边界网关协议）入口是指服务商在国内设立的智能多线机房。它同时接入了中国电信、中国联通、中国移动三大运营商的核心骨干网。无论用户使用哪家宽带，都能就近直连至服务商的 BGP 服务器，再通过内网专线送达境外。如果机场没有 BGP 入口（仅提供单一电信中转机房），移动或联通用户访问时就会遭遇跨网互联互通瓶颈，导致延迟倍增甚至丢包。'
+  },
+  {
+    q: '为什么白天测速跑满千兆，晚高峰（20:00-23:00）却卡得打不开网页？',
+    a: '这是典型的“公网国际出口 QoS（服务质量）拥塞”现象。公网中转和直连节点在白天网络空闲时，能轻松跑满带宽；但到了晚间 20:00-23:00 全民上网高峰期，中国电信 163 骨干网等国际出口总带宽严重过载，运营商交换机启动强制 QoS 丢包限速，非高优先级民用数据包丢包率可飙升至 30% 以上。只有走独立物理光纤的 IEPL/IPLC 专线才能彻底免疫这种公共网络拥堵。'
+  },
+  {
+    q: '为什么香港节点的 ping 延迟只有 20ms，但看 YouTube 经常不如 60ms 的日本节点？',
+    a: '这是“物理距离延迟”与“节点负载及路由拥堵”的综合结果。ping 延迟只代表小数据包往返时间；香港节点物理距离最近，ping 确实最低，但也是全网用户最密集扎堆的节点，容易造成服务器并发连接数跑满、单线程丢包增高；而日本节点拥有充裕的海底光缆带宽和更纯净的落地机房，TCP 连接吞吐更平稳。'
+  },
+  {
+    q: '机场经常标注的“0.2x”、“1.0x”、“3.0x”倍率是什么意思？',
+    a: '倍率是流量扣费系数：实际扣除配额 = 真实产生流量 &times; 节点倍率。例如使用 1.0x 节点看 10GB 视频，扣除 10GB 套餐；使用 0.2x 低倍率节点看 10GB 视频，仅扣除 2GB（适合大文件下载）；但如果使用了 3.0x 或 5.0x 高倍率专线，看 10GB 视频将被扣除 30GB 或 50GB 套餐。用户选购时必须警惕高倍率陷阱。'
+  },
+  {
+    q: '测速脚本显示的“单线程”与“多线程”测速有什么区别？',
+    a: 'Speedtest 默认使用 8-16 个并发连接（多线程），能最大化占满链路带宽，适合测试线路的极限承载能力；而 Fast.com 或浏览单网页、播放 4K 视频、与 AI 对话高度依赖“单线程吞吐”。如果一个节点多线程跑 500M，但单线程只有 10M 且丢包率高，实际使用体验将极其糟糕。'
+  },
+  {
+    q: '公网隧道中转（Relay）与物理专线（IEPL）如何通过抓包鉴别？',
+    a: '进阶用户可以通过 <code>traceroute</code> 或 <code>mtr</code> 追踪数据包跳数：公网中转节点在经过境内中继服务器后，下一跳会进入公共国际出口交换机（IP 属于公网可路由段），并伴随跳数增多和延迟阶梯式跳跃；而纯内网专线在出境段通常表现为 1-2 跳内网私有 IP（如 10.x.x.x 或 192.168.x.x），随后直接到达境外落地机房，且全天延迟曲线几乎呈一条无波动的直线。'
+  },
+  {
+    q: '冷门地区节点（如阿根廷、土耳其、尼日利亚）延迟为什么高达 300ms 以上？',
+    a: '这属于正常的物理光纤传输延迟。从中国大陆至南美洲或非洲没有直达海底光缆，数据必须经由香港跨太平洋至美国西海岸，再穿越南美陆地光缆到达阿根廷，物理距离超过 20,000 公里。光在光纤中的传播速度约为每秒 20 万公里，加上途中数十台交换机转发耗时，300-400ms 的往返延迟完全符合物理定律，此类节点仅适用于跨区购买低价数字会员。'
+  },
+  {
+    q: '为什么同一个节点，不同时间测出来的延迟会变动？',
+    a: '导致延迟变动的原因有三：1. 用户本地宽带（如 Wi-Fi 信号干扰、光猫过热丢包）；2. 运营商动态调整了骨干网路由（如突发光缆割接导致数据包绕行其他省份）；3. 机场后端的智能调度系统根据服务器负载自动切换了不同入口或落地备用机房。'
+  },
+  {
+    q: '什么是双线或多线负载均衡（Load Balance）？',
+    a: '指在 Clash 等客户端中建立一个负载均衡策略组，将同地区的多条专线节点（如香港01、香港02、香港03）打包。客户端会根据轮询算法或源 IP 哈希将流量分摊到不同节点，不仅能防止单节点被打满拥塞，还能在某个节点离线时实现零感知的自动热切。'
+  }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://jichangwiki.homes/network/',
+      'url': 'https://jichangwiki.homes/network/',
+      'name': title,
+      'description': description,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'name': b.name,
+          'item': 'https://jichangwiki.homes' + b.url
+        }))
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': faqItems.map(item => ({
+        '@type': 'Question',
+        'name': item.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Header -->
+    <div class="bg-gradient-to-br from-slate-950 via-cyan-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white mb-10 shadow-2xl border border-cyan-900/40 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold border border-cyan-400/30 mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          2026 深度升级支柱专题 · 物理网络拓扑中心
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5 leading-tight">
+          线路与节点技术全景：专线架构、BGP入口与测速真相
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+          代理体验的优劣 80% 取决于底层物理网络。本专题深度拆解 IEPL/IPLC 跨境光纤物理专线、BGP 智能就近接入、晚高峰 QoS 丢包拥塞控制与节点倍率模型，助您穿透虚标数字看清真实网络质量。
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            ⚡ IEPL vs IPLC 物理光纤解剖
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🌐 BGP 三网智能就近调度机制
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            📉 晚高峰 QoS 丢包拥塞模型
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer-First Executive Verdict Box -->
+    <div class="bg-white rounded-2xl border border-cyan-200/80 shadow-md p-6 sm:p-8 mb-12 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-cyan-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          ⚡
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            线路拓扑技术天梯（Answer-First 核心速览）
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">不同网络架构的抗封锁与抗抖动性能对比</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-cyan-900 mb-1 text-sm">👑 IPLC / IEPL 物理专线</div>
+          <p class="text-xs text-slate-600">
+            走运营商二层企业私网，完全不经过公网国际出口。<strong>零审查、零丢包、无视任何敏感时期封锁</strong>。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-blue-900 mb-1 text-sm">🥈 BGP 隧道公网中转</div>
+          <p class="text-xs text-slate-600">
+            国内三网接入优秀，但跨境段仍走公网加密隧道。平时速度极快，敏感时期可能被偶发干扰阻断。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-amber-900 mb-1 text-sm">🥉 单线普通中转</div>
+          <p class="text-xs text-slate-600">
+            仅单线接入（如仅限移动或电信），跨网访问延迟高，晚高峰易出现单线程丢包抖动。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-rose-900 mb-1 text-sm">❌ 公网直连（Direct）</div>
+          <p class="text-xs text-slate-600">
+            完全裸露在公网中，晚高峰丢包率通常在 20%-40% 以上，极易被全面阻断封锁。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Hubs Grid -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">线路与节点细分专题导航</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">按特定线路类型深入了解技术参数、实测报告与选型建议</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        {subSections.map((s) => (
+          <a href={s.url} class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-cyan-500 hover:shadow-lg transition group flex flex-col justify-between">
+            <div>
+              <div class="text-2xl mb-2 group-hover:scale-110 transition-transform">{s.icon}</div>
+              <h3 class="text-sm font-bold text-slate-900 group-hover:text-cyan-600 transition mb-1">{s.name}</h3>
+              <p class="text-[11px] text-slate-500 leading-snug">{s.desc}</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 flex items-center text-[11px] font-semibold text-cyan-600 group-hover:translate-x-1 transition-transform">
+              进入专题 &rarr;
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Prose Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+      
+      <!-- TOC Sidebar -->
+      <div class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本页导航目录</h3>
+          <ul class="space-y-2 text-xs font-medium text-slate-600">
+            <li><a href="#iepl-vs-iplc" class="hover:text-cyan-600 transition block py-1">1. IEPL 与 IPLC 物理光纤拓扑</a></li>
+            <li><a href="#bgp-mechanics" class="hover:text-cyan-600 transition block py-1">2. BGP 智能就近调度机制</a></li>
+            <li><a href="#qos-congestion" class="hover:text-cyan-600 transition block py-1">3. 晚高峰 QoS 丢包拥塞模型</a></li>
+            <li><a href="#multiplier-rules" class="hover:text-cyan-600 transition block py-1">4. 线路倍率与实际扣费核算</a></li>
+            <li><a href="#faqs" class="hover:text-cyan-600 transition block py-1">5. 核心常见问题解答（FAQ）</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Prose Column -->
+      <div class="lg:col-span-3 space-y-12">
+        
+        <!-- Section 1 -->
+        <section id="iepl-vs-iplc" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            1. IEPL 与 IPLC 物理光纤拓扑：为什么专线能够完全无视封锁？
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-4">
+            <p>
+              很多人误以为专线是某种高级的加密软件算法，实际上它完全是<strong>物理硬件层面的专用点对点光纤基础设施</strong>：
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 not-prose text-xs text-slate-700 space-y-2">
+              <div class="font-bold text-slate-900 text-sm">💡 数据包物理传输路径比对：</div>
+              <div class="flex items-center gap-2 text-slate-600">
+                <span class="w-20 font-semibold">公网直连:</span>
+                <span>客户端 &rarr; 本地城域网 &rarr; 省级出口 &rarr; 国际公网互联关口局（GFW DPI 过滤） &rarr; 海底光缆 &rarr; 落地机房</span>
+              </div>
+              <div class="flex items-center gap-2 text-cyan-900 font-semibold">
+                <span class="w-20">IEPL 专线:</span>
+                <span>客户端 &rarr; 境内 BGP 机房 &rarr; [运营商内网二层物理光纤直接过境] &rarr; 境外落地机房</span>
+              </div>
+            </div>
+            <p>
+              在 IEPL 架构下，跨境传输走的是运营商租借给跨国银行、跨国金融机构的企业专用物理信道，完全独立于民用互联网，因而从物理根源上不存在任何国际出口审查与防火墙阻断。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="bgp-mechanics" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            2. BGP 智能就近调度机制：解决跨网互通延迟
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              中国电信、中国联通、中国移动三家运营商的骨干网在跨网互联时存在天然的结算壁垒与网间结算瓶颈。
+            </p>
+            <p>
+              优质服务商（如光速云、红莓等）采用三网 BGP 聚合入口，在华南（广州/深圳）、华东（上海/杭州）、华北（北京/青岛）均设立接入节点。用户的 DNS 解析请求会根据用户 IP 自动调度到同省同运营商的接入机房，将国内网内延迟压低至 5-15ms 黄金区间。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="qos-congestion" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            3. 晚高峰 QoS 丢包拥塞模型：拒绝虚假的白天跑分
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              在每晚 20:00 至 23:00 的晚高峰时段，骨干网带宽负荷达到峰值。根据 TCP 拥塞控制协议（如 BBR、Cubic）的数学模型：
+            </p>
+            <div class="p-4 bg-slate-900 text-emerald-400 font-mono text-xs rounded-xl not-prose my-3">
+              Throughput &le; (MSS / RTT) &times; (1 / &radic;Loss_Rate)
+            </div>
+            <p class="text-xs sm:text-sm">
+              上述公式表明：<strong>吞吐量与丢包率的平方根成反比</strong>。当线路丢包率仅为 1% 时，TCP 窗口开始频繁收缩重传；当丢包率达到 5% 时，即使你的物理宽带是 1000Mbps，实际有效传输速率也会暴跌至 20Mbps 以下，视频播放将陷入无休止的缓冲区加载。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="multiplier-rules" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            4. 线路倍率与实际扣费核算：算清真实使用成本
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              各家服务商对不同成本的线路设定了不同的倍率权重：
+            </p>
+            <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+              <li><strong>0.1x - 0.5x</strong>：大流量冷门节点，通常用于下载大文件或系统升级镜像；</li>
+              <li><strong>1.0x</strong>：基准主力线路，所有标准专线节点的理想倍率；</li>
+              <li><strong>2.0x - 5.0x</strong>：高昂成本的超低延迟 IPLC 专线或罕见原生住宅 IP 节点。</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="faqs" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-6 pb-2 border-b border-slate-200">
+            5. 线路与节点技术常见问题（FAQ）
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item, index) => (
+              <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 open:ring-2 open:ring-cyan-500/20 transition shadow-sm">
+                <summary class="font-extrabold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+                  <span class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-cyan-100 text-cyan-700 text-xs flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <span set:html={item.q}></span>
+                  </span>
+                  <span class="text-slate-400 group-open:rotate-180 transition-transform text-lg ml-2">&darr;</span>
+                </summary>
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Conversion CTA -->
+        <div class="mt-12">
+          <BrandCTA 
+            brandName="光速云（Guangsu Cloud）" 
+            affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+            couponCode="AMM"
+            entryPrice="折合 ¥8/月起（年付¥99）"
+            customTitle="企业级专线 + BGP 智能多线接入 · 光速云"
+            customDesc="拒绝虚高倍率与晚高峰丢包 QoS，精选高冗余跨境专线，全天候保持流畅生产力体验。"
+          />
+        </div>
+
+        <!-- Compliance & Affiliate Disclosure -->
+        <AffiliateDisclosure />
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

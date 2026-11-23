@@ -1,0 +1,116 @@
+{
+  "id": "quanqiu",
+  "slug": "quanqiu",
+  "name": "全球云",
+  "aliases": [
+    "GC VIP",
+    "全球云机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 21,
+  "establishedYear": 2026,
+  "affiliateURL": "https://guangs.gcvipaff.com/#/?code=Ov2nvU9C",
+  "couponCodes": [
+    {
+      "code": "qqy7777",
+      "discount": "开业特惠码",
+      "condition": "全站通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "新拓扑专线出口",
+    "BGP多线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "FlClash",
+    "v2rayN"
+  ],
+  "entryPrice": "¥15/月 (100GB)",
+  "minMonthlyPrice": 15,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "全球云入门版",
+      "billing": "月付",
+      "price": 15,
+      "traffic": "100GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 15,
+      "notes": "2026新上架，100GB月流量"
+    },
+    {
+      "name": "全球云旗舰版",
+      "billing": "月付",
+      "price": 28,
+      "traffic": "240GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 28,
+      "notes": "全球多地区解锁"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "34ms",
+      "download": "210Mbps",
+      "upload": "38Mbps",
+      "date": "2026-09-05",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "2026年全新上线品牌",
+    "新骨干专线低负载优势"
+  ],
+  "verifiedFeatures": [
+    "新节点带宽充足，无明显丢包"
+  ],
+  "strengths": [
+    "新节点资源冗余高，晚高峰几乎不掉速",
+    "15元定价亲民"
+  ],
+  "limitations": [
+    "品牌运营经验较新，需时间积累综合信誉"
+  ],
+  "riskNotes": "新品牌建议按月付费使用，不建议购买超长周期。",
+  "suitableFor": "希望避开老机场拥挤人群、享受轻载带宽的用户。",
+  "unsuitableFor": "需要多年运营记录的机构采购客户。",
+  "sources": [
+    "全球云官方发布信息 (2026)",
+    "32家清单"
+  ],
+  "verifiedAt": "2026-09-05",
+  "updatedAt": "2026-11-09",
+  "logo": "/images/logos/全球云主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

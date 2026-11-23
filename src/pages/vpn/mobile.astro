@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "移动端科学上网加速器选型指南：iOS 与 Android 熄屏保活、功耗控制与基站漫游优化";
+const description = "全面解决手机移动端科学上网的痛点。深度剖析 iOS 内存 15MB 限制（Jetsam 机制）、安卓墓碑后台保活、4G/5G 基站漫游断流重连，以及 Shadowrocket 与 v2rayNG 的最佳能效配置方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"VPN与加速器","url":"/vpn/"},{"name":"mobile","url":"/vpn/mobile/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/vpn/mobile/","url":"https://jichangwiki.homes/vpn/mobile/","name":"移动端科学上网加速器选型指南：iOS 与 Android 熄屏保活、功耗控制与基站漫游优化","description":"全面解决手机移动端科学上网的痛点。深度剖析 iOS 内存 15MB 限制（Jetsam 机制）、安卓墓碑后台保活、4G/5G 基站漫游断流重连，以及 Shadowrocket 与 v2rayNG 的最佳能效配置方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"VPN与加速器","item":"https://jichangwiki.homes/vpn/"},{"@type":"ListItem","position":3,"name":"移动端科学上网加速器选型指南：iOS 与 Android 熄屏保活、功耗控制与基站漫游优化","item":"https://jichangwiki.homes/vpn/mobile/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"iPhone 开启代理后，手机电量消耗会不会特别快？","acceptedAnswer":{"@type":"Answer","text":"如果您使用的是正规的 Shadowrocket 并保持“配置（规则分流）”模式，耗电量极低（实测全天开启耗电占比通常不足 3%）。如果您发现手机发烫严重、电量雪崩，99% 是因为误开了“全局（Proxy）”模式，导致国内数十款后台 App 不断通过代理发送长连接，频繁唤醒手机基带所致。"}},{"@type":"Question","name":"从家里 Wi-Fi 走出门切换到 5G 蜂窝网络后，为什么突然上不了网？","acceptedAnswer":{"@type":"Answer","text":"这是因为手机在物理网络接口切换时，旧的 Wi-Fi TCP 路由套接字被强制重置，而代理客户端的本地监听可能出现了短暂死锁。解决方法：在客户端设置中开启“网络变动自动重连”，或者在下拉通知栏将代理开关快速关闭再重新开启即可秒恢复。"}},{"@type":"Question","name":"安卓手机锁屏后微信消息收不到，必须点亮屏幕才弹出来？","acceptedAnswer":{"@type":"Answer","text":"这说明国内推送通道受到影响。请检查分流规则中是否将小米推送、华为推送、腾讯微信等域名错误地分流到了境外节点。将国内推送与通信服务规则设置为 `DIRECT`（直连），消息推送即可恢复秒级实时到达。"}},{"@type":"Question","name":"手机端可以使用多个机场的订阅吗？","acceptedAnswer":{"@type":"Answer","text":"完全可以。在 Shadowrocket 或 v2rayNG 中可以导入任意多个服务商的订阅。您可以将主力专线（光速云）作为日常默认，同时保留一个备用订阅，遇到紧急情况在主界面点击勾选即可瞬间切换。"}},{"@type":"Question","name":"光速云对移动端网络有哪些深度专项优化？","acceptedAnswer":{"@type":"Answer","text":"光速云的入口服务器针对国内移动、联通、电信的 4G/5G 蜂窝基站特性，专门调优了 TCP 窗口大小与 MTU 报文分片参数，大幅削减了基站漫游时的握手重传率，在弱网环境下依然能为手机提供秒开体验。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"iPhone 开启代理后，手机电量消耗会不会特别快？","a":"如果您使用的是正规的 Shadowrocket 并保持“配置（规则分流）”模式，耗电量极低（实测全天开启耗电占比通常不足 3%）。如果您发现手机发烫严重、电量雪崩，99% 是因为误开了“全局（Proxy）”模式，导致国内数十款后台 App 不断通过代理发送长连接，频繁唤醒手机基带所致。"},{"q":"从家里 Wi-Fi 走出门切换到 5G 蜂窝网络后，为什么突然上不了网？","a":"这是因为手机在物理网络接口切换时，旧的 Wi-Fi TCP 路由套接字被强制重置，而代理客户端的本地监听可能出现了短暂死锁。解决方法：在客户端设置中开启“网络变动自动重连”，或者在下拉通知栏将代理开关快速关闭再重新开启即可秒恢复。"},{"q":"安卓手机锁屏后微信消息收不到，必须点亮屏幕才弹出来？","a":"这说明国内推送通道受到影响。请检查分流规则中是否将小米推送、华为推送、腾讯微信等域名错误地分流到了境外节点。将国内推送与通信服务规则设置为 `DIRECT`（直连），消息推送即可恢复秒级实时到达。"},{"q":"手机端可以使用多个机场的订阅吗？","a":"完全可以。在 Shadowrocket 或 v2rayNG 中可以导入任意多个服务商的订阅。您可以将主力专线（光速云）作为日常默认，同时保留一个备用订阅，遇到紧急情况在主界面点击勾选即可瞬间切换。"},{"q":"光速云对移动端网络有哪些深度专项优化？","a":"光速云的入口服务器针对国内移动、联通、电信的 4G/5G 蜂窝基站特性，专门调优了 TCP 窗口大小与 MTU 报文分片参数，大幅削减了基站漫游时的握手重传率，在弱网环境下依然能为手机提供秒开体验。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>移动极客手册 · 省电保活不中断</span>
+        <span>·</span>
+        <span>上级主题: <a href="/vpn/" class="underline hover:text-blue-800">VPN与加速器总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        移动端科学上网加速器选型指南：熄屏保活与基站漫游优化
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        手机锁屏几分钟代理就自动断开？出门从 Wi-Fi 切换到 5G 节点就彻底失联？本文带您彻底攻克移动端后台保活与低功耗调优顽疾。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>移动端配置核心要领 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>移动端科学上网的核心痛点是<strong>“后台被系统强杀”与“Wi-Fi/移动蜂窝网络切换断流”</strong>。在苹果 iOS 端，<strong>Shadowrocket（小火箭）配合“按需连接 (On Demand)”是省电与永不断连的最佳解法</strong>；在安卓端，<strong>必须在系统电池优化中将代理软件设为“无限制”，并在多任务后台中加上小锁头锁定</strong>。同时开启规则分流，严禁让国内微信走海外代理，避免手机异常发热与耗电。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 移动端科学上网的独有挑战：基站漫游、熄屏休眠与电量博弈
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>手机移动端相比台式电脑，其网络环境要恶劣复杂得多。为了保障手机续航，iOS 与 Android 系统内核设计了极其激进的后台资源回收策略，这对代理软件提出了严苛的技术挑战：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【移动端网络四大特有瓶颈与系统限制】</div>
+  <div>1. iOS Jetsam 内存硬限制：苹果 NetworkExtension 框架对 VPN 扩展内存硬性限制在 15MB 以内，超标即被系统静默秒杀</div>
+  <div>2. Android 激进电池优化 (Doze Mode)：安卓手机息屏进入深度休眠后，系统切断后台应用的 CPU 唤醒与网络套接字</div>
+  <div>3. 基站漫游与网络跳变：从家里的 Wi-Fi 走进电梯切到 4G，或在地铁上频繁切换基站，物理 IP 变动导致长连接 TCP 全部断开</div>
+  <div>4. 协议高频加密引发发热：复杂的加解密计算如果处理不当，会导致手机处理器大核持续高频运转，严重发烫掉电</div>
+</div>
+<p>只有深入理解这些底层约束，通过科学的配置调整，才能在手机上获得“如同本地网络般”丝滑无感的全天候连接体验。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 iOS 与 Android 双平台移动端极客调优指南
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>针对两大主流操作系统，严格执行以下调优配置，即可实现全天候极速保活且兼顾全天续航：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>iOS 平台（Shadowrocket 小火箭高能效配置）：</strong> 打开小火箭设置 -> 开启“按需连接 (On Demand)”，并设置匹配规则。当检测到需要访问境外网络时系统自动唤醒代理隧道，静置时休眠；在“延迟测试方法”中将测试方式由 ICMP 改为 CONNECT，测试结果更准确且耗电更低；</li>
+  <li><strong>Android 平台（进程常驻与自启动放行）：</strong> 进入手机“设置 -> 电池与性能” -> 找到代理客户端（v2rayNG / FlClash），将省电策略由“智能推荐”修改为<strong>“无限制（允许后台常驻）”</strong>；在系统应用管理中开启“自启动权限”，并在后台多任务卡片界面长按点击“小锁头图标”锁定进程；</li>
+  <li><strong>应对网络切换断流（开启快速重连）：</strong> 在客户端高级设置中开启“自动探测网络变动”，当手机从 Wi-Fi 断开接入 5G 基站时，内核在 500 毫秒内重置底层网络接口，避免必须手动关开代理才能恢复的尴尬；</li>
+  <li><strong>规则分流拯救手机续航：</strong> 确保选择“配置/规则 (Rule)”模式。如果误开全局代理，国内的大量 App（微信、抖音、淘宝）会持续在后台发起频繁的心跳唤醒，导致手机半天电量耗尽。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流移动端代理工具续航表现与系统兼容性对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        四大移动端主力软件运行指标深度横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">移动操作系统</th><th class="py-3 px-4">主力推荐软件</th><th class="py-3 px-4">内核引擎架构</th><th class="py-3 px-4">后台保活机制</th><th class="py-3 px-4">息屏每小时耗电</th><th class="py-3 px-4">网络切换自愈能力</th><th class="py-3 px-4">推荐评级</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">iOS / iPadOS</td><td class="py-3 px-4 ">Shadowrocket (小火箭)</td><td class="py-3 px-4 ">自研轻量级 C 引擎</td><td class="py-3 px-4 ">系统级 NetworkExtension (极佳)</td><td class="py-3 px-4 ">< 0.5% (极度省电)</td><td class="py-3 px-4 ">秒级无感自愈</td><td class="py-3 px-4 ">★★★★★ (苹果首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">iOS / iPadOS</td><td class="py-3 px-4 ">Quantumult X / Loon</td><td class="py-3 px-4 ">高级分流引擎</td><td class="py-3 px-4 ">NE 框架 + 本地脚本</td><td class="py-3 px-4 ">约 0.8% ~ 1.2%</td><td class="py-3 px-4 ">极佳</td><td class="py-3 px-4 ">★★★★☆ (进阶极客)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Android</td><td class="py-3 px-4 ">v2rayNG</td><td class="py-3 px-4 ">Xray-core 原生</td><td class="py-3 px-4 ">前台前置常驻服务通知栏</td><td class="py-3 px-4 ">约 1.0% ~ 1.5%</td><td class="py-3 px-4 ">良好</td><td class="py-3 px-4 ">★★★★★ (安卓首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Android</td><td class="py-3 px-4 ">FlClash</td><td class="py-3 px-4 ">Mihomo (Go 跨平台)</td><td class="py-3 px-4 ">前台常驻服务</td><td class="py-3 px-4 ">约 1.2% ~ 2.0%</td><td class="py-3 px-4 ">良好</td><td class="py-3 px-4 ">★★★★☆ (现代UI)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">HarmonyOS</td><td class="py-3 px-4 ">v2rayNG</td><td class="py-3 px-4 ">Xray-core</td><td class="py-3 px-4 ">需手动加入电池白名单</td><td class="py-3 px-4 ">约 1.5%</td><td class="py-3 px-4 ">中等</td><td class="py-3 px-4 ">★★★★☆ (鸿蒙适配)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        针对移动端弱网环境专项优化、全天省电不发烫的专线服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        移动端使用场景决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">iPhone 深度用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>追求省心、全天开着不耗电、通知准时推送：</strong> 在美区 App Store 购买安装正版 Shadowrocket，导入光速云订阅，开启规则分流，全天免维护。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">安卓商务旗舰</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>使用华为、小米等国产定制系统处理跨国业务：</strong> 安装 v2rayNG，务必完成“电池无限制 + 自动启动 + 任务锁定”三部曲，确保出差路上随时稳定秒连。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">经常出差高铁族</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>在高铁、地铁等信号极差的弱网环境下频繁漫游：</strong> 优先选择光速云的多节点 Fallback 自动容灾组，配合低延迟香港专线，在基站跳变时迅速自愈恢复。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">移动端日常使用五大黄金守则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>手机端永远保持“配置/规则（Rule）”模式，严禁开启全局代理；</li><li>定期在 Wi-Fi 环境下更新一次订阅，获取最新的移动端优化专线；</li><li>出门前确认代理软件已在后台任务栏加锁，防止被手机管家一键清理误杀；</li><li>在弱网环境下（如地下车库）遇到卡顿，下拉通知栏一秒快速重置代理开关；</li><li>选用针对移动端 4G/5G 网络做了 MTU 优化的专线机场（如光速云）。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        移动端科学上网高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 移动端与系统优化推荐长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              桌面端与移动端分流规则设计相通逻辑解析。
+            </p>
+          </a>
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">终极防坑</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              零基础了解移动设备科学上网的工具链与常识。
+            </p>
+          </a>
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障自愈</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              解决移动设备跨时区漫游引起的握手超时问题。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

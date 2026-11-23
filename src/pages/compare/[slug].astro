@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import comparisons from '../../data/comparisons.json';
+import brands from '../../data/brands.json';
+
+export async function getStaticPaths() {
+  return comparisons.map(item => ({
+    params: { slug: item.slug },
+    props: { comparison: item }
+  }));
+}
+
+const { comparison } = Astro.props;
+
+const brandA = brands.find(b => b.id === comparison.brandAId || b.slug === comparison.brandAId) || brands[0];
+const brandB = brands.find(b => b.id === comparison.brandBId || b.slug === comparison.brandBId) || brands[1];
+
+const title = comparison.title;
+const description = comparison.description;
+const canonical = `https://jichangwiki.homes/compare/${comparison.slug}/`;
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '品牌横向对比', url: '/compare/' },
+  { name: `${brandA.name} VS ${brandB.name}`, url: canonical }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': canonical,
+      'headline': title,
+      'description': description,
+      'url': canonical,
+      'datePublished': '2026-09-01',
+      'dateModified': '2026-11-22',
+      'author': {
+        '@type': 'Organization',
+        'name': '百科机场评测实验室',
+        'url': 'https://jichangwiki.homes/'
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': comparison.faqs.map(f => ({
+        '@type': 'Question',
+        'name': f.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': f.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-sm text-slate-500 mb-6 space-x-2">
+      <a href="/" class="hover:text-primary-600 transition-colors">首页</a>
+      <span>/</span>
+      <a href="/compare/" class="hover:text-primary-600 transition-colors">品牌横向对比</a>
+      <span>/</span>
+      <span class="text-slate-800 font-medium">{brandA.name} VS {brandB.name}</span>
+    </nav>
+
+    <!-- Header Hero -->
+    <header class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl border border-indigo-900/40 relative overflow-hidden">
+      <div class="max-w-4xl relative z-10">
+        <div class="flex items-center space-x-2 mb-4 flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+            双品牌深度实测对决
+          </span>
+          <span class="inline-flex items-center gap-1.5 text-xs text-indigo-200">
+            <img src="/images/avatar.webp" alt="评测组" class="w-4 h-4 rounded-full object-cover ring-1 ring-indigo-400" />
+            <span>评测组：百科机场实验室</span>
+          </span>
+          <span class="text-xs text-slate-400">· 核验时间: 2026 最新</span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
+          {comparison.title}
+        </h1>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+          {comparison.description}
+        </p>
+
+        <!-- Executive Verdict (Answer-First) -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15">
+          <div class="flex items-center space-x-2 text-indigo-300 font-bold mb-2 text-sm sm:text-base">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>百科核心选型结论 (Executive Verdict)</span>
+          </div>
+          <p class="text-slate-200 text-sm leading-relaxed">
+            {comparison.verdict}
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Head-to-Head Specification Table -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+        <span class="w-2 h-6 bg-indigo-600 rounded-full inline-block"></span>
+        <span>同口径核心参数横向对照表</span>
+      </h2>
+
+      <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-sm">
+        <table class="w-full text-left text-sm text-slate-600">
+          <thead class="bg-slate-50 text-slate-900 font-semibold border-b border-slate-200">
+            <tr>
+              <th class="p-4 w-1/4">对比维度</th>
+              <th class="p-4 w-3/8 text-indigo-700 bg-indigo-50/40">{brandA.name}</th>
+              <th class="p-4 w-3/8 text-slate-800">{brandB.name}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            {comparison.keyDifferences.map(diff => (
+              <tr>
+                <td class="p-4 font-bold text-slate-900">{diff.dimension}</td>
+                <td class="p-4 bg-indigo-50/20 text-slate-700 font-medium leading-relaxed">{diff.brandA}</td>
+                <td class="p-4 text-slate-600 leading-relaxed">{diff.brandB}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Dual Brand Cards Showcase -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+        <span class="w-2 h-6 bg-indigo-600 rounded-full inline-block"></span>
+        <span>参赛品牌官方详情与专属通道</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-3xl border border-indigo-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-bold">选手 A：{brandA.name}</span>
+              <span class="text-xs text-emerald-600 font-bold">{brandA.entryPrice} 起</span>
+            </div>
+            <BrandCard brand={brandA} />
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href={`/reviews/${brandA.slug}/`} class="text-indigo-600 font-bold hover:underline">查看万字独立评测 →</a>
+            <a href={`/brands/${brandA.slug}/`} class="text-slate-500 hover:text-slate-800">套餐与官网详情</a>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-3 py-1 bg-slate-100 text-slate-800 rounded-full text-xs font-bold">选手 B：{brandB.name}</span>
+              <span class="text-xs text-slate-600 font-bold">{brandB.entryPrice} 起</span>
+            </div>
+            <BrandCard brand={brandB} />
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href={`/reviews/${brandB.slug}/`} class="text-indigo-600 font-bold hover:underline">查看万字独立评测 →</a>
+            <a href={`/brands/${brandB.slug}/`} class="text-slate-500 hover:text-slate-800">套餐与官网详情</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+        <span class="w-2 h-6 bg-indigo-600 rounded-full inline-block"></span>
+        <span>选型高频疑问解答 (FAQ)</span>
+      </h2>
+      <div class="space-y-4">
+        {comparison.faqs.map(faq => (
+          <details class="group bg-white rounded-xl border border-slate-200 p-5 open:bg-slate-50 transition-colors">
+            <summary class="font-semibold text-slate-900 cursor-pointer flex justify-between items-center list-none">
+              <span>{faq.q}</span>
+              <span class="text-indigo-600 group-open:rotate-180 transition-transform duration-200">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <p class="mt-3 text-slate-600 leading-relaxed text-sm pt-2 border-t border-slate-100">{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Navigation Breadcrumbs back to Hubs -->
+    <nav class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-10 text-sm">
+      <h3 class="font-bold text-slate-900 mb-3">相关专题与导航</h3>
+      <div class="flex flex-wrap gap-4 text-xs sm:text-sm">
+        <a href="/compare/" class="text-indigo-600 hover:underline">返回品牌对比中心</a>
+        <a href="/airport/recommend/" class="text-indigo-600 hover:underline">高速机场推荐指南</a>
+        <a href="/pricing/value/" class="text-indigo-600 hover:underline">性价比机场排行</a>
+        <a href="/brands/directory/" class="text-indigo-600 hover:underline">全部机场品牌库</a>
+      </div>
+    </nav>
+
+    <AffiliateDisclosure />
+  </div>
+</BaseLayout>

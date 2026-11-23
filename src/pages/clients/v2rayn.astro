@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "v2rayN 电脑版完全配置教程：Windows 经典多协议代理神器全攻略";
+const description = "全面解读 Windows 平台经典代理客户端 v2rayN。支持 Xray、Sing-box 双核心切换、一键订阅导入、快捷键呼出、系统代理分流与证书排障。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"客户端软件","url":"/clients/"},{"name":"v2rayn","url":"/clients/v2rayn/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/clients/v2rayn/","url":"https://jichangwiki.homes/clients/v2rayn/","name":"v2rayN 电脑版完全配置教程：Windows 经典多协议代理神器全攻略","description":"全面解读 Windows 平台经典代理客户端 v2rayN。支持 Xray、Sing-box 双核心切换、一键订阅导入、快捷键呼出、系统代理分流与证书排障。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"客户端软件","item":"https://jichangwiki.homes/clients/"},{"@type":"ListItem","position":3,"name":"v2rayN 电脑版完全配置教程：Windows 经典多协议代理神器全攻略","item":"https://jichangwiki.homes/clients/v2rayn/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"v2rayN 测速显示 -1 或连接超时怎么排查？","acceptedAnswer":{"@type":"Answer","text":"首先检查电脑系统时间是否与网络时间精准同步（偏差超 90 秒协议会自动拦截）；其次检查本地杀毒软件（如 360/火绒）是否拦截了 xray.exe 的网络通信权限。"}},{"@type":"Question","name":"v2rayN 退出后网页打不开怎么解决？","acceptedAnswer":{"@type":"Answer","text":"这是因为注册表代理键值残留。进入 Windows 设置 -> 网络和 Internet -> 代理，将“手动设置代理”彻底关闭即可瞬间恢复。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"v2rayN 测速显示 -1 或连接超时怎么排查？","a":"首先检查电脑系统时间是否与网络时间精准同步（偏差超 90 秒协议会自动拦截）；其次检查本地杀毒软件（如 360/火绒）是否拦截了 xray.exe 的网络通信权限。"},{"q":"v2rayN 退出后网页打不开怎么解决？","a":"这是因为注册表代理键值残留。进入 Windows 设置 -> 网络和 Internet -> 代理，将“手动设置代理”彻底关闭即可瞬间恢复。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>Windows 经典神器 · 功能集大成者</span>
+        <span>·</span>
+        <span>上级主题: <a href="/clients/" class="underline hover:text-blue-800">客户端软件总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        v2rayN 电脑版完全配置教程与高级排障
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        历经数年迭代，v2rayN 凭借直观的节点列表展示、双核心自由切换和极高的自定义权限，成为无数 Windows 资深极客的首选利器。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>v2rayN 选型评测结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>如果您使用的是 Windows 操作系统，且习惯了<strong>一目了然的高密度平铺节点明细列表、对多核心（Xray-core / Sing-box core）底层参数有精细化调校需求，v2rayN 是最透明、最可靠、扩展性最强的经典神器</strong>。它纯绿色免安装、占用极小，完美支持全协议，是 Windows 技术极客的必备底座。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 v2rayN 的核心优势与底层双核心驱动架构
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在 Windows 代理软件生态中，v2rayN 始终保持着旺盛的生命力，其核心竞争力体现在两大硬核特性上：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>Xray-core 与 Sing-box 自由双核驱动：</strong> v2rayN 本质上是一个成熟强大的图形化前端（GUI），它允许用户在设置中一键自由切换底层的运行时核心。无论是 Xray 独占的 XTLS / Reality 特性，还是 Sing-box 的高性能轻量网络栈，用户均可自由选择；</li>
+  <li><strong>高密度紧凑型节点列表：</strong> 与现代卡片式软件不同，v2rayN 采用经典的表格视图，直接展示每个节点的协议、别名、服务器地址、端口、传输协议、真连接延迟与测试结果，按 <code>Ctrl+A</code> 全选后按 <code>Ctrl+O</code> 即可几秒内完成全部节点实测；</li>
+  <li><strong>纯绿色便携免安装：</strong> 整个软件直接解压到非系统盘文件夹即可运行，所有配置保存在本地 <code>guiConfigs</code> 目录，随 U 盘即插即用。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 v2rayN 极速入门上手与防断网实操指引
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>使用 v2rayN 时，必须掌握以下规范化操作以避免断网：</p>
+<ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>添加订阅与批量测速：</strong> 点击顶部菜单<strong>“订阅分组”</strong> -> <strong>“订阅分组设置”</strong> -> 点击“添加”，在可选地址栏粘贴机场提供的 V2Ray/Clash 订阅链接，保存后点击顶部菜单<strong>“订阅分组 -> 更新全部订阅(不通过代理)”</strong>；</li>
+  <li><strong>模式选择黄金设置：</strong> 观察软件底部状态栏，务必将<strong>“系统代理”选为“自动配置系统代理”</strong>；将<strong>“路由”务必选为“绕过大陆 (绕过大陆及局域网)”</strong>，切勿选择“全局”，否则国内应用会严重卡顿；</li>
+  <li><strong>规范退出避免网络死锁：</strong> 关机或不用代理时，<strong>必须在任务栏右下角蓝色托盘图标右键选择“退出”</strong>，软件会自动复原 Windows 注册表代理设置。如果直接强制关机，可能导致开机后“微信能上但网页打不开”。</li>
+</ol>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            v2rayN vs Clash Verge Rev 对比选型表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        Windows 平台两大主流工具横向对比：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">评估维度</th><th class="py-3 px-4">v2rayN</th><th class="py-3 px-4">Clash Verge Rev</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">界面交互风格</td><td class="py-3 px-4 ">传统 Windows 紧凑列表 (极客风)</td><td class="py-3 px-4 ">现代卡片式仪表盘 (简约美观)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">核心支持</td><td class="py-3 px-4 ">Xray / Sing-box 多核心自由切</td><td class="py-3 px-4 ">固定 Mihomo (Meta) 内核</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">跨平台支持</td><td class="py-3 px-4 ">仅限 Windows 系统</td><td class="py-3 px-4 ">支持 Windows / macOS / Linux 全平台</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">批量测速便捷度</td><td class="py-3 px-4 ">极快 (支持快捷键一键全测)</td><td class="py-3 px-4 ">良好 (策略组分类测速)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">推荐用户群</td><td class="py-3 px-4 ">资深极客、Windows 原生爱好者</td><td class="py-3 px-4 ">大众主流用户、双平台办公用户</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        v2rayN 原生深度兼容的优质专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        v2rayN 常见场景适配
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">深度测速</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>对比所有节点真实延迟与真连接速率：</strong> 按 Ctrl+A 全选节点按 Ctrl+O 进行批量测试，极度高效。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">v2rayN 安全使用准则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>关机前右键托盘图标选择退出，防止注册表代理残留导致断网；</li><li>遇到节点测速全 -1 时核查电脑系统时间是否精准同步；</li><li>路由模式务必保持“绕过大陆”，保障国内网站直连。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        v2rayN 常见疑难答疑 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 本客户端关联的三级深度实操长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障修复</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              解决 v2rayN 节点全部显示 -1 的终极急救方案。
+            </p>
+          </a>
+        
+          <a href="/articles/article-70/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障修复</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              v2rayN 异常崩溃导致断网的一键修复命令。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

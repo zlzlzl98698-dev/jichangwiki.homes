@@ -1,0 +1,168 @@
+{
+  "id": "langwang",
+  "slug": "langwang",
+  "name": "浪网",
+  "aliases": [
+    "WaveNet",
+    "浪网机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 30,
+  "establishedYear": 2024,
+  "affiliateURL": "https://varnexa.wavenetaff.com/#/?code=xwAM4tTd",
+  "couponCodes": [
+    {
+      "code": "待核实",
+      "discount": "暂未提供独立优惠码",
+      "condition": "以官网最新公告为准"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan (待核实)"
+  ],
+  "networkTypes": [
+    "IEPL专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥30/月 (150GB) 或¥119/年 (80GB/月)",
+  "minMonthlyPrice": 9.9,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付 (待核实)"
+  ],
+  "plans": [
+    {
+      "name": "浪网 入门档",
+      "billing": "月付",
+      "price": 30,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 30,
+      "notes": "年付¥306"
+    },
+    {
+      "name": "浪网 进阶档",
+      "billing": "月付",
+      "price": 70,
+      "traffic": "450GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 70,
+      "notes": "季付¥199.5"
+    },
+    {
+      "name": "浪网 高端档",
+      "billing": "月付",
+      "price": 120,
+      "traffic": "800GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 120,
+      "notes": "年付¥1224"
+    },
+    {
+      "name": "浪网 商业档",
+      "billing": "月付",
+      "price": 200,
+      "traffic": "2000GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 200,
+      "notes": "年付¥2040"
+    },
+    {
+      "name": "浪网 年付标准",
+      "billing": "年付",
+      "price": 119,
+      "traffic": "80GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 9.92,
+      "notes": "年付折合约¥9.9/月"
+    },
+    {
+      "name": "浪网 小流量包",
+      "billing": "一次性付费",
+      "price": 239,
+      "traffic": "180GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    },
+    {
+      "name": "浪网 标准流量包",
+      "billing": "一次性付费",
+      "price": 569,
+      "traffic": "450GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    },
+    {
+      "name": "浪网 定制线路包",
+      "billing": "月付",
+      "price": 640,
+      "traffic": "500GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 640,
+      "notes": "独立定制"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IEPL",
+      "latency": "待测",
+      "download": "待测",
+      "upload": "待测",
+      "date": "待核实",
+      "status": "untested",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "待测",
+    "claude": "待测",
+    "gemini": "待测",
+    "netflix": "支持 (官方宣称)",
+    "disney": "支持 (官方宣称)",
+    "youtube": "支持",
+    "tiktok": "待测"
+  },
+  "claimedFeatures": [
+    "IEPL专线定位",
+    "从个人入门到企业商业2000GB全层级覆盖",
+    "提供定制线路与一次性不过期流量包"
+  ],
+  "verifiedFeatures": [
+    "多梯队套餐体系完整，包含商业级大容量档位"
+  ],
+  "strengths": [
+    "商业档提供高达2000GB月流量，适合团队和工作室",
+    "价格梯度覆盖全"
+  ],
+  "limitations": [
+    "目前缺少按地区的独立逐项测速记录，数据状态标记为待测",
+    "部分流量限制截图被遮挡"
+  ],
+  "riskNotes": "测速与详细流媒体解锁数据待进一步实测核验，购买请先以小额月付为主。",
+  "suitableFor": "需要单月大额流量（450G-2000G）的工作室或团队使用。",
+  "unsuitableFor": "必须看到详尽晚高峰测速曲线才考虑购买的挑剔用户。",
+  "sources": [
+    "浪网品牌库记录 (2026-08-09)"
+  ],
+  "verifiedAt": "2026-08-09",
+  "updatedAt": "2026-11-12",
+  "logo": "/images/logos/TNT.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

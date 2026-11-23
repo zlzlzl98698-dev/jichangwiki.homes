@@ -1,0 +1,30 @@
+# Robots.txt for https://jichangwiki.homes/
+# Standard Crawl Rules for Major Search Engine Crawlers
+
+User-agent: *
+Allow: /
+Disallow: /search/
+
+# Explicit Rules for Google
+User-agent: Googlebot
+Allow: /
+Disallow: /search/
+
+# Explicit Rules for Microsoft Bing
+User-agent: bingbot
+Allow: /
+Disallow: /search/
+
+# Explicit Rules for Baidu
+User-agent: Baiduspider
+Allow: /
+Disallow: /search/
+
+# Explicit Rules for Shenma / Quark / UC (Alibaba)
+User-agent: yisouspider
+Allow: /
+Disallow: /search/
+
+# XML Sitemap Locations
+Sitemap: https://jichangwiki.homes/sitemap.xml
+Sitemap: https://jichangwiki.homes/sitemap-index.xml

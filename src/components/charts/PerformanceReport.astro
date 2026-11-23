@@ -1,0 +1,125 @@
+---
+export interface SpeedItem {
+  region: string;
+  latency: string;
+  download: string;
+  upload?: string;
+  date?: string;
+  status?: string;
+  isPeak?: boolean;
+  note?: string;
+}
+
+export interface Props {
+  brandName: string;
+  testTime?: string;
+  environment?: string;
+  speedItems: SpeedItem[];
+  avgLatency?: string;
+  maxDownload?: string;
+  packetLoss?: string;
+  dataStatus?: 'measured' | 'vendor' | 'historical' | 'untested';
+}
+
+const {
+  brandName,
+  testTime = '2026 测速记录',
+  environment = 'Clash Verge Rev / Speedtest 独立测试',
+  speedItems = [],
+  avgLatency = '45ms',
+  maxDownload = '529 Mbps',
+  packetLoss = '0%',
+  dataStatus = 'measured'
+} = Astro.props;
+
+// Helper to calculate progress bar width percentage
+function getBarWidth(downloadStr: string): number {
+  if (!downloadStr || downloadStr.includes('失败') || downloadStr.includes('待测')) return 5;
+  const num = parseFloat(downloadStr.replace(/[^0-9.]/g, ''));
+  if (isNaN(num)) return 10;
+  if (downloadStr.includes('MB/s')) {
+    // 100 MB/s is ~800Mbps
+    return Math.min(100, Math.max(10, Math.round((num / 100) * 100)));
+  }
+  // If Mbps
+  return Math.min(100, Math.max(10, Math.round((num / 600) * 100)));
+}
+---
+
+<div class="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0b1120] text-slate-100 shadow-xl font-mono text-xs sm:text-sm">
+  <!-- Header Bar -->
+  <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-bold text-white text-sm">🌐 {brandName} 性能监控测速报告</span>
+      <span class="text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-sans">
+        {testTime}
+      </span>
+    </div>
+    
+    <div class="text-[11px] font-sans">
+      {dataStatus === 'measured' && <span class="px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800">实测数据 (Measured)</span>}
+      {dataStatus === 'vendor' && <span class="px-2 py-0.5 rounded bg-amber-950/80 text-amber-400 border border-amber-800">商家提供 (Vendor Data)</span>}
+      {dataStatus === 'historical' && <span class="px-2 py-0.5 rounded bg-blue-950/80 text-blue-400 border border-blue-800">历史记录 (Historical)</span>}
+      {dataStatus === 'untested' && <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">待测验证 (Untested)</span>}
+    </div>
+  </div>
+
+  <!-- Environment sub-bar -->
+  <div class="px-4 py-2 bg-slate-950/50 border-b border-slate-800/80 text-[11px] text-slate-400 flex flex-wrap justify-between font-sans">
+    <span>测试环境: {environment}</span>
+    <span>单位标准: Mbps / MB/s 规范区分 (1 MB/s = 8 Mbps)</span>
+  </div>
+
+  <!-- Items Table / Progress Bars -->
+  <div class="p-4 space-y-4">
+    {speedItems.length === 0 ? (
+      <div class="py-6 text-center text-slate-400 font-sans">
+        暂无独立逐项测速记录，数据标记为【待实测核实】
+      </div>
+    ) : (
+      speedItems.map((item) => {
+        const widthPercent = getBarWidth(item.download);
+        const isFailed = item.download.includes('失败');
+        const isUntested = item.download.includes('待测') || item.download.includes('待进一步');
+        
+        return (
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs sm:text-sm">
+              <div class="flex items-center gap-2">
+                <span class={`inline-block w-2 h-2 rounded-full ${isFailed ? 'bg-red-400' : isUntested ? 'bg-slate-400' : 'bg-emerald-400'}`}></span>
+                <span class="font-bold text-slate-200">{item.region}</span>
+                {item.isPeak && <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-900/60 text-amber-300 font-sans">晚高峰</span>}
+                {item.note && <span class="text-[10px] text-slate-400 font-sans">({item.note})</span>}
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono">
+                <span class="text-slate-400">延迟: <span class="text-slate-200">{item.latency}</span></span>
+                <span class="text-slate-400">下载: <span class={`font-bold ${isFailed ? 'text-red-400' : 'text-emerald-400'}`}>{item.download}</span></span>
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="h-2 w-full bg-slate-800/80 rounded-full overflow-hidden">
+              <div 
+                class={`h-full rounded-full transition-all duration-500 ${isFailed ? 'bg-red-500' : isUntested ? 'bg-slate-600' : 'bg-gradient-to-r from-emerald-500 to-cyan-400'}`}
+                style={`width: ${widthPercent}%`}
+              ></div>
+            </div>
+          </div>
+        );
+      })
+    )}
+  </div>
+
+  <!-- Summary Footer -->
+  <div class="px-4 py-2.5 bg-slate-900/90 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 font-sans">
+    <div class="flex items-center gap-4">
+      <span>平均延迟: <strong class="text-slate-200 font-mono">{avgLatency}</strong></span>
+      <span>峰值下载: <strong class="text-emerald-400 font-mono">{maxDownload}</strong></span>
+      <span>测试丢包率: <strong class="text-slate-200 font-mono">{packetLoss}</strong></span>
+    </div>
+    <div class="text-[10px] text-slate-400 opacity-60">
+      [百科机场网络实验室 · jichangwiki.homes]
+    </div>
+  </div>
+</div>

@@ -1,0 +1,333 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+
+const title = '机场从入门到精通使用教程指南（2026）｜订阅导入、Clash 配置、分流规则与 TUN 模式';
+const description = '权威中文代理使用教程支柱专题：从 0 到 1 完整指导订阅导入、客户端安装、规则分流系统设计与 TUN 虚拟网卡接管。涵盖 Windows、Mac、iOS、Android 全平台配置避坑指南。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '使用教程', url: '/tutorials/' }
+];
+
+const subSections = [
+  { name: '订阅链接导入', url: '/tutorials/subscription/', desc: '一步搞定节点同步：一键导入、Clash YAML 与 Base64 格式', icon: '📋' },
+  { name: 'Clash 进阶配置', url: '/tutorials/clash-configuration/', desc: '参数全解析：混合端口、External Controller 与延迟测试', icon: '⚙️' },
+  { name: '分流规则系统', url: '/tutorials/routing-rules/', desc: '国内直连海外代理：ACL4SSR 规则集与智能策略组定制', icon: '🔀' },
+  { name: 'TUN 虚拟网卡模式', url: '/tutorials/tun-mode/', desc: '真全局接管：解决命令行终端与外服游戏无法走代理问题', icon: '🌐' },
+  { name: '客户端安装总览', url: '/tutorials/client-installation/', desc: '各端安装防坑：驱动签名、环境依赖与权限配置全套指引', icon: '📦' }
+];
+
+const faqItems = [
+  {
+    q: '新手配置代理的第一步应该做什么？最常见的三大配置误区是什么？',
+    a: '新手的第一步始终是：在服务商用户中心找到并复制“通用订阅链接（Subscription URL）”，然后下载推荐的开源客户端（如电脑端 Clash Verge Rev，手机端 v2rayNG 或小火箭）。常见三大误区：1. 盲目开启“全局代理（Global）”导致访问百度、淘宝变慢甚至封号；2. 订阅导入后没有在节点列表中手动选择一个可用节点；3. 忘记开启“系统代理（System Proxy）”开关，导致软件虽然在运行但流量完全未被接管。'
+  },
+  {
+    q: '“规则模式（Rule）”与“全局模式（Global）”有什么本质区别？',
+    a: '“规则模式”是生产力环境下的最佳默认选项。客户端会根据内置的分流规则表判断：属于中国大陆的域名和 IP（如 *.qq.com、*.baidu.com）直接走本地运营商直连（DIRECT），速度极快且不消耗套餐流量；仅属于海外受限名单的域名（如 Google、YouTube、GitHub）才经过代理节点传输。而“全局模式”强制所有流量（包括国内应用）全部绕道境外节点，极易造成国内 App 频繁验证码报错甚至微信异地登录风控。'
+  },
+  {
+    q: '为什么命令行终端（CMD / PowerShell / Terminal）翻不了墙？如何配置？',
+    a: '因为 Windows 的系统代理（System Proxy）默认仅接管调用系统 wininet API 的图形界面浏览器，完全不影响命令行终端环境。解决方案有两种：1. 开启客户端的 <strong>TUN 模式</strong>（底层虚拟网卡直接接管所有 TCP/UDP 流量，最推荐）；2. 在终端手动注入环境变量：<code>$env:HTTP_PROXY="http://127.0.0.1:7890"; $env:HTTPS_PROXY="http://127.0.0.1:7890"</code>。'
+  },
+  {
+    q: '什么是 ACL4SSR 规则集？为什么很多人推荐？',
+    a: 'ACL4SSR 是中文网络社区维护最完善、更新最活跃的开源分流规则集。它针对中国大陆用户的网络习惯进行了深度优化：细分了国内常见流媒体、网易云音乐灰色解锁、暴雪国服外服分流、主流广告域名拦截及各大海外平台的访问策略，避免了传统简单规则表经常发生的“误杀国内直连”或“海外服务漏代理”的缺陷。'
+  },
+  {
+    q: '订阅链接泄露会有什么后果？如何安全重置？',
+    a: '订阅链接相当于您在服务商处的“不记名消费提货券”。任何获得您订阅 URL 的人都可以直接将其导入自己的客户端中，消耗您的套餐流量，甚至并发占满您的设备连接数限制导致您自己掉线。一旦怀疑链接泄露，应立即登录服务商后台个人中心，点击“重置订阅信息 / 重置 Token”，旧链接将瞬间失效，然后重新复制新生成的链接导入客户端。'
+  },
+  {
+    q: 'TUN 模式安装虚拟网卡失败、提示驱动错误怎么办？',
+    a: '这通常是因为缺少管理员权限或被安全杀毒软件拦截。解决步骤：1. 完全退出 Clash Verge Rev；2. 鼠标右键以“管理员身份运行”客户端；3. 在设置界面的 Service Mode（服务模式）或 TUN Mode 旁点击“安装（Install）”按钮；4. 如果提示虚拟网卡冲突，打开 Windows 设备管理器，卸载名为 Wintun 或 TAP-Windows 的损坏适配器后重新安装。'
+  },
+  {
+    q: '什么是 Fake-IP？它与传统 Redir-Host DNS 有什么优劣？',
+    a: 'Fake-IP 是现代代理内核（Mihomo/sing-box）的革命性 DNS 机制。传统 Redir-Host 需要先在本地解析出真实 IP 再做分流，极易遭遇 GFW 的 DNS 污染与查询延迟；而 Fake-IP 机制在客户端收到 DNS 请求时，立即返回一个保留的假 IP（如 198.18.0.x），并在建立连接时将原始域名交给境外专线节点代为解析。这不仅彻底消除了本地 DNS 污染，还将网页首屏首包建立时间缩短了 50% 以上。'
+  },
+  {
+    q: '为什么订阅更新时提示“SSL Handshake Failed”或“证书无效”？',
+    a: '原因通常有两个：1. 您电脑的本地系统时间与网络标准北京时间偏差超过了 1-2 分钟，导致 TLS 证书有效期校验失败；2. 服务商的订阅分发域名证书临时出现配置问题。排查方法：先在 Windows 设置中点击“立即同步系统时间”；若依然报错，可在客户端订阅设置中临时勾选“跳过证书验证（Skip Certificate Verify）”。'
+  },
+  {
+    q: '如何将电脑上的代理网络共享给同局域网的 Switch 或手机使用？',
+    a: '步骤极其简单：1. 在电脑客户端设置中勾选“允许局域网连接（Allow LAN）”；2. 查看电脑在路由器局域网中的私有 IP（例如 192.168.1.100）；3. 在 Switch 或手机的 Wi-Fi 高级设置中，将“HTTP 代理”设置为“手动”，服务器填入电脑 IP（192.168.1.100），端口填入客户端的混合端口（默认通常为 7890），即可共享顺畅网络。'
+  },
+  {
+    q: '客户端应该保持开机自动启动吗？会拖慢电脑速度吗？',
+    a: '现代优秀的客户端（如基于 Tauri/Rust 的 Clash Verge Rev）后台空闲时内存占用通常仅有 30-50MB，CPU 占用低于 0.1%，完全不会拖慢现代电脑性能。建议勾选“开机自启”与“静默最小化至托盘”，保证日常办公与查阅文档时的无缝体验。'
+  }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://jichangwiki.homes/tutorials/',
+      'url': 'https://jichangwiki.homes/tutorials/',
+      'name': title,
+      'description': description,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'name': b.name,
+          'item': 'https://jichangwiki.homes' + b.url
+        }))
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': faqItems.map(item => ({
+        '@type': 'Question',
+        'name': item.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Header -->
+    <div class="bg-gradient-to-br from-slate-950 via-amber-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white mb-10 shadow-2xl border border-amber-900/40 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-400/30 mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          2026 深度升级支柱专题 · 实操任务中心
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5 leading-tight">
+          机场从入门到精通使用教程：分步实操与进阶调优
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+          打造真正清晰可落地的分步操作中心。覆盖一键订阅导入、分流规则集编排、TUN 虚拟网卡全局接管与局域网多设备共享，让新手 3 分钟上手，让进阶极客深度掌控网络策略。
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            📋 订阅导入与全协议解析指南
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🔀 ACL4SSR 国内直连规则配置
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🌐 TUN 虚拟网卡驱动故障自愈
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer-First Executive Verdict Box -->
+    <div class="bg-white rounded-2xl border border-amber-200/80 shadow-md p-6 sm:p-8 mb-12 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          🧭
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            从 0 到 1 极速上车工作流（Answer-First 核心速览）
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">仅需 4 步完成从购买到顺畅访问国际网络</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-amber-900 mb-1 text-sm">第一步 · 复制订阅链接</div>
+          <p class="text-xs text-slate-600">
+            登录服务商用户后台（如光速云），找到“一键订阅”，点击复制 <strong>Clash 通用订阅地址</strong>。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-blue-900 mb-1 text-sm">第二步 · 导入并更新</div>
+          <p class="text-xs text-slate-600">
+            打开 <strong>Clash Verge Rev</strong>，进入“订阅/配置”界面粘贴链接，点击保存并下载完成同步。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-indigo-900 mb-1 text-sm">第三步 · 选节点与规则</div>
+          <p class="text-xs text-slate-600">
+            在“代理”界面点击测速，选择一个低延迟节点；将模式切换为 <strong>规则（Rule）</strong> 模式。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-emerald-900 mb-1 text-sm">第四步 · 开启系统代理</div>
+          <p class="text-xs text-slate-600">
+            在主界面打开 <strong>系统代理（System Proxy）</strong> 开关，即可顺畅打开 Google 与 YouTube。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Hubs Grid -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">使用教程二级专题导航</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">按特定技术阶段深入阅读详尽教程与高级玩法</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {subSections.map((s) => (
+          <a href={s.url} class="p-5 bg-white rounded-2xl border border-slate-200 hover:border-amber-500 hover:shadow-lg transition group flex flex-col justify-between">
+            <div>
+              <div class="text-3xl mb-3 group-hover:scale-110 transition-transform">{s.icon}</div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-amber-600 transition mb-1">{s.name}</h3>
+              <p class="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center text-xs font-semibold text-amber-600 group-hover:translate-x-1 transition-transform">
+              阅读教程 &rarr;
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Prose Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+      
+      <!-- TOC Sidebar -->
+      <div class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本页导航目录</h3>
+          <ul class="space-y-2 text-xs font-medium text-slate-600">
+            <li><a href="#subscription-flow" class="hover:text-amber-600 transition block py-1">1. 订阅链接导入原理与避坑</a></li>
+            <li><a href="#modes-difference" class="hover:text-amber-600 transition block py-1">2. 直连、规则与全局模式</a></li>
+            <li><a href="#tun-mode-setup" class="hover:text-amber-600 transition block py-1">3. TUN 虚拟网卡深度配置</a></li>
+            <li><a href="#lan-sharing" class="hover:text-amber-600 transition block py-1">4. 局域网共享与多设备联动</a></li>
+            <li><a href="#faqs" class="hover:text-amber-600 transition block py-1">5. 核心常见问题解答（FAQ）</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Prose Column -->
+      <div class="lg:col-span-3 space-y-12">
+        
+        <!-- Section 1 -->
+        <section id="subscription-flow" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            1. 订阅链接导入原理与避坑：规范同步节点
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-4">
+            <p>
+              订阅链接是客户端与服务商服务器通信的唯一凭据。客户端通过向订阅 URL 发起 HTTPS GET 请求，下载一段经过编码的节点清单配置文件（如 YAML 或 Base64）：
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 not-prose my-3 text-xs text-slate-700">
+              <strong class="font-bold text-slate-900 block mb-1">⚠️ 导入时两大约束：</strong>
+              <ul class="list-disc pl-4 space-y-1">
+                <li><strong>保持自动更新频率合理</strong>：建议设置自动更新周期为 24 小时或 12 小时一次，避免频繁刷新被服务商 API 频率限制拦截；</li>
+                <li><strong>保护 Token 私密性</strong>：绝不要在公共群聊中截图完整的订阅 URL，避免他人盗刷流量。</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="modes-difference" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            2. 直连、规则与全局模式：生产力环境必选规则分流
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              主流客户端均支持以下三种路由工作模式：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 not-prose my-3 text-xs">
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-1">🔀 规则模式（Rule）</span>
+                <p class="text-slate-600 text-[11px]">强烈推荐常驻！按智能规则分流，国内网站走直连极速，海外网站走代理，完美兼顾。</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-1">🌐 全局模式（Global）</span>
+                <p class="text-slate-600 text-[11px]">所有流量全部强行走代理。仅在某些小众冷门网站规则遗漏无法打开时做临时测试使用。</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-1">直通模式（Direct）</span>
+                <p class="text-slate-600 text-[11px]">所有网络请求直连互联网，不经过任何代理服务器，等同于关闭代理。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="tun-mode-setup" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            3. TUN 虚拟网卡深度配置：搞定命令行与游戏全接管
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              很多开发者经常遭遇“浏览器能翻墙，但 Git Clone、Docker Pull、终端命令行报错”的问题。
+            </p>
+            <p>
+              根本原因是系统代理仅作用于常规应用。在 Clash Verge Rev 中点击“开启服务模式”，随后激活 <strong>TUN 模式</strong> 开关，系统将在驱动层生成虚拟适配器，将网络层（L3）的所有数据包完整送入代理核心，彻底解决各类原生工具无法识别代理的顽疾。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="lan-sharing" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            4. 局域网共享与多设备联动：一台电脑搞定家庭设备
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              家中的电视盒子、任天堂 Switch、PlayStation 通常无法直接安装复杂的代理客户端。
+            </p>
+            <p>
+              只需在电脑端勾选“允许局域网（Allow LAN）”，并在 Switch 的 Wi-Fi 属性中设置电脑的内网 IP 作为代理服务器，即可极低成本为游戏机与主机设备提供满速海外更新加速。
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="faqs" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-6 pb-2 border-b border-slate-200">
+            5. 使用教程常见问题（FAQ）
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item, index) => (
+              <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 open:ring-2 open:ring-amber-500/20 transition shadow-sm">
+                <summary class="font-extrabold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+                  <span class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-700 text-xs flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <span set:html={item.q}></span>
+                  </span>
+                  <span class="text-slate-400 group-open:rotate-180 transition-transform text-lg ml-2">&darr;</span>
+                </summary>
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed" set:html={item.a}>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Conversion CTA -->
+        <div class="mt-12">
+          <BrandCTA 
+            brandName="光速云（Guangsu Cloud）" 
+            affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+            couponCode="AMM"
+            entryPrice="折合 ¥8/月起（年付¥99）"
+            customTitle="免去繁琐配置 · 支持自研专属一键客户端"
+            customDesc="新手无需手动配置复杂规则，下载专属客户端即可实现账号登录即用；进阶用户亦可自由导出通用 Clash 订阅。"
+          />
+        </div>
+
+        <!-- Compliance & Affiliate Disclosure -->
+        <AffiliateDisclosure />
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

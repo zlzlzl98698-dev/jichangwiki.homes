@@ -1,0 +1,101 @@
+{
+  "id": "kexin",
+  "slug": "kexin",
+  "name": "可信云",
+  "aliases": [
+    "Kexin Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 18,
+  "establishedYear": 2023,
+  "affiliateURL": "https://guangs.kosingaff.com/#/register?code=UYDtNlCY",
+  "couponCodes": [
+    {
+      "code": "kkk333",
+      "discount": "专属折扣",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "中转专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥18/月 (100GB)",
+  "minMonthlyPrice": 18,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "可信基础套餐",
+      "billing": "月付",
+      "price": 18,
+      "traffic": "100GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 18,
+      "notes": "诚实标注数据缺口"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "42ms",
+      "download": "120Mbps",
+      "upload": "24Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分节点",
+    "claude": "部分节点",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "品牌资料诚实标注数据缺口，不夸大宣传"
+  ],
+  "verifiedFeatures": [
+    "后台说明坦诚，实事求是标注节点状态"
+  ],
+  "strengths": [
+    "不搞夸张宣称，数据透明度较高",
+    "定价中规中矩，无隐藏暗坑"
+  ],
+  "limitations": [
+    "节点规模有限",
+    "AI工具支持需手动挑选对应可用节点"
+  ],
+  "riskNotes": "按月付费即可正常满足日常浏览需求。",
+  "suitableFor": "喜欢看清服务限制、实事求是选购的理性用户。",
+  "unsuitableFor": "希望一键全节点全自动化的高阶AI重度使用者。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-02",
+  "logo": "/images/logos/kuku_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

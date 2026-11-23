@@ -1,0 +1,158 @@
+---
+import SEOHead from '../components/seo/SEOHead.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import Breadcrumb from '../components/layout/Breadcrumb.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  breadcrumbs?: Array<{ name: string; url: string }>;
+  ogImage?: string;
+  type?: 'website' | 'article' | 'product';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+  robots?: string;
+  verification?: {
+    google?: string;
+    bing?: string;
+    shenma?: string;
+    baidu?: string;
+  };
+  jsonLd?: Record<string, any> | Array<Record<string, any>>;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  breadcrumbs,
+  ogImage,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  section,
+  tags,
+  robots,
+  verification,
+  jsonLd
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      keywords={keywords}
+      ogImage={ogImage}
+      type={type}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      section={section}
+      tags={tags}
+      robots={robots}
+      verification={verification}
+      jsonLd={jsonLd}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/webp" href="/images/avatar.webp" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/avatar.webp" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+    <Header />
+    
+    <main class="flex-grow">
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+      )}
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Global Copy Toast Notification -->
+    <div 
+      id="global-copy-toast" 
+      class="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 px-4 py-2.5 rounded-2xl bg-slate-900/90 backdrop-blur-md text-white text-xs sm:text-sm font-semibold shadow-2xl border border-slate-700/80 flex items-center gap-2"
+      role="status"
+      aria-live="polite"
+    >
+      <span class="text-emerald-400 font-bold text-base">✓</span>
+      <span id="global-copy-toast-text">已复制到剪贴板</span>
+    </div>
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        let toastTimeout;
+        const toast = document.getElementById('global-copy-toast');
+        const toastText = document.getElementById('global-copy-toast-text');
+
+        function showToast(msg) {
+          if (!toast) return;
+          if (toastText) toastText.textContent = msg;
+          toast.classList.remove('opacity-0', 'translate-y-[-10px]');
+          toast.classList.add('opacity-100', 'translate-y-0');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            toast.classList.remove('opacity-100', 'translate-y-0');
+            toast.classList.add('opacity-0', 'translate-y-[-10px]');
+          }, 2200);
+        }
+
+        // Global delegation for copy
+        document.addEventListener('click', (e) => {
+          const target = e.target.closest('[data-copy], .copy-coupon-btn, code');
+          if (!target) return;
+
+          let textToCopy = target.getAttribute('data-copy');
+          if (!textToCopy) {
+            const text = target.textContent.trim();
+            if (text === 'AMM' || text.includes('AMM')) {
+              textToCopy = 'AMM';
+            }
+          }
+
+          if (textToCopy) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`✓ 已成功复制优惠码：${textToCopy}（结账立享折扣）`);
+              }).catch(() => {
+                fallbackCopy(textToCopy);
+              });
+            } else {
+              fallbackCopy(textToCopy);
+            }
+          }
+
+          function fallbackCopy(val) {
+            try {
+              const ta = document.createElement('textarea');
+              ta.value = val;
+              ta.style.position = 'fixed';
+              ta.style.left = '-9999px';
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand('copy');
+              document.body.removeChild(ta);
+              showToast(`✓ 已成功复制优惠码：${val}（结账立享折扣）`);
+            } catch (err) {
+              showToast(`请手动复制：${val}`);
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

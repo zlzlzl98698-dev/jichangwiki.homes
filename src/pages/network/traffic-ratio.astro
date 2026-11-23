@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "节点流量倍率计算公式详解：大文件下载与省流套利秘籍";
+const description = "全面拆解机场面板中的节点倍率（Traffic Ratio）计费规则：0.1x 与 0.2x 低倍率省流技巧、2.0x 与 3.0x 住宅高倍率成本真相、暗倍率刺客防范与流量放大策略。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"线路与节点","url":"/network/"},{"name":"traffic-ratio","url":"/network/traffic-ratio/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/network/traffic-ratio/","url":"https://jichangwiki.homes/network/traffic-ratio/","name":"节点流量倍率计算公式详解：大文件下载与省流套利秘籍","description":"全面拆解机场面板中的节点倍率（Traffic Ratio）计费规则：0.1x 与 0.2x 低倍率省流技巧、2.0x 与 3.0x 住宅高倍率成本真相、暗倍率刺客防范与流量放大策略。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"线路与节点","item":"https://jichangwiki.homes/network/"},{"@type":"ListItem","position":3,"name":"节点流量倍率计算公式详解：大文件下载与省流套利秘籍","item":"https://jichangwiki.homes/network/traffic-ratio/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"什么是“暗倍率”？遇到暗倍率怎么维权？","acceptedAnswer":{"@type":"Answer","text":"暗倍率是指商家在客户端节点名称上标注 1.0x，但实际在后端计费系统中悄悄配置了 2.0x 或 3.0x 的扣除参数，属于欺诈行为。辨别方法：记录当前剩余流量，下载一个 100MB 测速文件后刷新后台。若扣除远超 100MB，应立即停止使用并申请退款或换用光速云等透明品牌。"}},{"@type":"Question","name":"0.2x 节点的速度一定会比 1.0x 节点慢吗？","acceptedAnswer":{"@type":"Answer","text":"不一定。在非高峰时段，很多 0.2x 节点依托大带宽公网机房，单线程下载速度甚至能跑满千兆宽带；但在晚高峰拥堵时段，其稳定性和丢包控制会弱于 1.0x 的 IEPL 专线。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"什么是“暗倍率”？遇到暗倍率怎么维权？","a":"暗倍率是指商家在客户端节点名称上标注 1.0x，但实际在后端计费系统中悄悄配置了 2.0x 或 3.0x 的扣除参数，属于欺诈行为。辨别方法：记录当前剩余流量，下载一个 100MB 测速文件后刷新后台。若扣除远超 100MB，应立即停止使用并申请退款或换用光速云等透明品牌。"},{"q":"0.2x 节点的速度一定会比 1.0x 节点慢吗？","a":"不一定。在非高峰时段，很多 0.2x 节点依托大带宽公网机房，单线程下载速度甚至能跑满千兆宽带；但在晚高峰拥堵时段，其稳定性和丢包控制会弱于 1.0x 的 IEPL 专线。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>计费精算 · 流量套利秘笈</span>
+        <span>·</span>
+        <span>上级主题: <a href="/network/" class="underline hover:text-blue-800">线路与节点总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        节点流量倍率计算公式详解：大文件省流秘籍
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        在机场面板中，0.2x、1.0x、3.0x 倍率究竟代表着什么？本文带您算清计费账本，掌握将 100GB 套餐放大成 500GB 的省流实战技巧。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>流量倍率核心速查 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>节点流量倍率（Traffic Ratio）</strong>是机场计费系统衡量网络物理成本的核心杠杆：<strong>账户扣除流量 = 实际传输总流量 × 当前节点倍率</strong>。聪明的高阶用户懂得任务与倍率精准匹配：日常工作与 4K 视频使用标准 1.0x 专线；而遇到 Steam 游戏更新、BT 下载或大文件拉取时，<strong>切换至 0.1x ~ 0.2x 低倍率节点，可将套餐实际可用容量放大整整 5 到 10 倍</strong>！同时需警惕不良机场标注 1.0x 实际扣 3.0x 的“暗倍率陷阱”。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 什么是节点倍率？机场计费系统的底层扣费算式
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在基于 SSPanel-Uim、V2Board 等主流机场开源面板中，每个节点名称旁边通常都会标注一个乘数符号，如 <code>0.1x</code>、<code>1.0x</code>、<code>1.5x</code>、<code>3.0x</code>。这个乘数正是<strong>节点倍率（Traffic Ratio）</strong>：</p>
+<div class="p-4 bg-blue-50 border border-blue-200 rounded-xl my-3 text-xs sm:text-sm text-blue-950 font-mono">
+  用户后台实际扣除额度 = (本次连接实际上传流量 + 实际下载流量) × 节点倍率
+</div>
+<p class="text-xs sm:text-sm text-slate-700">
+  我们通过两个截然相反的真实案例，即可看清倍率对套餐寿命的巨大影响：
+</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>案例 A（省流套利）：</strong> 用户套餐内仅剩 20GB 流量，需要下载一个 100GB 的大型游戏安装包。用户切换到一个 <strong>0.2x</strong> 的低倍率节点进行下载。下载完成后，账户实际仅被扣除 <code>100GB × 0.2 = 20GB</code>！用户成功用 20GB 的余额完成了 100GB 任务，相当于流量凭空放大了 5 倍！</li>
+  <li><strong>案例 B（倍率刺客）：</strong> 用户套餐有 100GB 流量，无意中连上了一个标注为 <strong>5.0x</strong> 的超高倍率原生住宅节点看了两小时 4K 电影（消耗 20GB 数据）。后台结算时瞬间扣除 <code>20GB × 5.0 = 100GB</code>，导致整个月度套餐直接被瞬间吸干！</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 为什么不同节点倍率差异巨大？背后刚性成本拆解
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>很多新手会质疑：为什么机场不能把所有节点都设为 1.0x 或 0.1x？这背后直接对应了<strong>不同物理服务器资源的采购成本差异</strong>：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">低倍率节点 (0.1x ~ 0.5x)：廉价大带宽消耗通道</span>
+    通常采用普通公网 VPS 直连，单兆带宽成本仅几毛钱，或者利用机房闲时冗余带宽。虽然晚高峰容易出现抖动和丢包，但在白天或非高峰期跑下载大文件，极其划算。
+  </div>
+  <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs sm:text-sm text-emerald-950">
+    <span class="font-bold text-emerald-950 block mb-1">标准倍率节点 (1.0x)：主力基石专线</span>
+    采用企业级 IEPL/IPLC 物理内网专线（如光速云主力），采购成本与技术支持达到最佳平衡，兼顾 0 丢包与 4K 秒开，是日常办公与视频的主力军。
+  </div>
+  <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs sm:text-sm text-amber-950">
+    <span class="font-bold text-amber-950 block mb-1">高倍率节点 (2.0x ~ 5.0x)：高成本原生住宅出口</span>
+    配备罕见的原生家庭住宅 ISP 宽带，专为突破严苛流媒体（Netflix/Disney+）或特定 AI 平台反作弊风控。由于住宅宽带按流量采购成本极高，商家必须通过提高倍率收回成本。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流节点倍率梯度与使用任务匹配决策表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        高阶用户场景与流量倍率最佳分配策略：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">倍率区间</th><th class="py-3 px-4">底层线路属性</th><th class="py-3 px-4">扣量比例</th><th class="py-3 px-4">最佳推荐应用任务</th><th class="py-3 px-4">使用建议与避坑提醒</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">0.1x ~ 0.2x</td><td class="py-3 px-4 ">普通大带宽公网 / 闲时线路</td><td class="py-3 px-4 ">下载 100GB 扣 10-20GB</td><td class="py-3 px-4 ">Steam游戏更新、GitHub Releases、网盘大文件</td><td class="py-3 px-4 ">只看重下载速度与省流，不适合打联机电竞</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">0.5x ~ 0.8x</td><td class="py-3 px-4 ">次级中转线路 / 优化公网</td><td class="py-3 px-4 ">下载 100GB 扣 50-80GB</td><td class="py-3 px-4 ">日常社交浏览、推特短视频、非高峰期网页</td><td class="py-3 px-4 ">适合轻量用户日常省流常驻</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">1.0x 标准</td><td class="py-3 px-4 ">真 IEPL 内网专线 (光速云主力)</td><td class="py-3 px-4 ">下载 100GB 实扣 100GB</td><td class="py-3 px-4 ">日常办公、4K 视频、Zoom 跨国会议、日常科研</td><td class="py-3 px-4 ">最推荐的日常默认出口，速度与成本兼顾</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">1.5x ~ 2.0x</td><td class="py-3 px-4 ">优化专线 / 双向专线</td><td class="py-3 px-4 ">下载 100GB 实扣 150-200GB</td><td class="py-3 px-4 ">晚高峰高规格直播、特定地区自制剧</td><td class="py-3 px-4 ">按需使用，用完即切回 1.0x</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">3.0x ~ 5.0x</td><td class="py-3 px-4 ">原生家庭住宅宽带 (ISP)</td><td class="py-3 px-4 ">下载 100GB 扣 300-500GB</td><td class="py-3 px-4 ">OpenAI/Claude 敏感注册、海外银行支付</td><td class="py-3 px-4 ">切勿常驻使用！严禁在此节点下跑大文件更新！</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        倍率标注透明规范的代表服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        省流套利与防踩坑决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">场景一：大容量下载任务</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Steam 3A 大作更新或百度网盘备份：</strong> 坚决切到 0.1x/0.2x 节点。不仅能跑满百兆宽带，还能省下 80% 以上的月度流量配额。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">场景二：日常办公与网页冲浪</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Slack、Notion、Gmail 与网页检索：</strong> 保持在 1.0x 标准 IEPL 专线，享受毫秒级稳定，无需担心扣量异常。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">场景三：海外金融与重要注册</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>注册海外虚拟信用卡或 Claude 账号：</strong> 短期切换至高倍率纯净住宅节点，操作完毕立即切回标准节点。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">流量倍率五大防坑军规：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>每次连接高倍率节点（>2.0x）前务必心中有数，用完立刻切回标准 1.0x 节点；</li><li>定期登录机场用户中心，查看流量使用统计图表，核对扣费与实际下载是否匹配；</li><li>防范“暗倍率”：个别劣质小机场标称 1.0x 实际在后台面板设置 3.0x 扣流，可通过下载 100MB 标准文件前后刷新对比自测；</li><li>将支持一键测速与倍率显示的客户端（如 Clash Verge Rev）作为首选，节点名称一目了然；</li><li>大流量用户建议购买大容量不限时流量包搭配低倍率节点，将性价比发挥到极致。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        流量倍率高频疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 流量与计费关联技术手册
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-90/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">计费精算</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点倍率计算公式详解：大文件下载如何利用 0.2x 节点省流？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              掌握流量套利完整实操方法。
+            </p>
+          </a>
+        
+          <a href="/articles/article-16/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">低价横评</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              5元至15元平价机场真实可用性调查：便宜真的有好货吗？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              低价套餐背后的超售与倍率内幕。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

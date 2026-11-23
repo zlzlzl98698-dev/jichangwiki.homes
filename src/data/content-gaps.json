@@ -1,0 +1,30 @@
+[
+  {
+    "gapId": "gap-01",
+    "topic": "Mac M系列芯片与Intel芯片的Clash/FlClash架构包区分",
+    "searchDemand": "用户下载错误架构安装包打不开",
+    "targetPath": "/clients/clash-verge/",
+    "solution": "在客户端页面加入DMG架构识别指引（arm64 vs x64）与Rosetta排查"
+  },
+  {
+    "gapId": "gap-02",
+    "topic": "ChatGPT 1020错误与Cloudflare验证无限循环",
+    "searchDemand": "节点IP被拉黑或数据中心ASN被屏蔽",
+    "targetPath": "/streaming-ai/chatgpt/",
+    "solution": "提供原生住宅IP识别、换节点与清理LocalStorage标准步骤"
+  },
+  {
+    "gapId": "gap-03",
+    "topic": "年付折算月价与真实月付的区别",
+    "searchDemand": "用户误以为99元/年可以按8元单月购买",
+    "targetPath": "/pricing/monthly/",
+    "solution": "建立价格口径规范，明确年付一次性实付总额与月付门槛"
+  },
+  {
+    "gapId": "gap-04",
+    "topic": "自研客户端与开源订阅模式的技术取舍",
+    "searchDemand": "新手追求一键登录 vs 老手需要软路由/Clash订阅分流",
+    "targetPath": "/brands/reviews/",
+    "solution": "以隐形人（纯自研）与光速云/梯子云（双兼容）进行对比分析"
+  }
+]

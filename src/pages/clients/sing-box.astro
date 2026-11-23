@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "sing-box 通用代理平台完全指南：新一代全能通用代理核心从入门到精通";
+const description = "全面剖析新一代跨平台代理神器 sing-box。基于纯 Go 语言从零编写，支持极其纯净的 JSON 配置体系、原生 TUN 网卡路由栈、全协议覆盖及在 iOS/Android/PC 上的实战技巧。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"客户端软件","url":"/clients/"},{"name":"sing-box","url":"/clients/sing-box/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/clients/sing-box/","url":"https://jichangwiki.homes/clients/sing-box/","name":"sing-box 通用代理平台完全指南：新一代全能通用代理核心从入门到精通","description":"全面剖析新一代跨平台代理神器 sing-box。基于纯 Go 语言从零编写，支持极其纯净的 JSON 配置体系、原生 TUN 网卡路由栈、全协议覆盖及在 iOS/Android/PC 上的实战技巧。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"客户端软件","item":"https://jichangwiki.homes/clients/"},{"@type":"ListItem","position":3,"name":"sing-box 通用代理平台完全指南：新一代全能通用代理核心从入门到精通","item":"https://jichangwiki.homes/clients/sing-box/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"sing-box 能够直接读取 Clash 的 YAML 订阅链接吗？","acceptedAnswer":{"@type":"Answer","text":"不能直接读取。因为两者的语法模型完全不同（JSON vs YAML）。您可以使用机场后台专门提供的“导入到 sing-box”链接，或者使用 Sub-Store 等订阅转换工具将 Clash 配置一键转换为 sing-box 格式。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"sing-box 能够直接读取 Clash 的 YAML 订阅链接吗？","a":"不能直接读取。因为两者的语法模型完全不同（JSON vs YAML）。您可以使用机场后台专门提供的“导入到 sing-box”链接，或者使用 Sub-Store 等订阅转换工具将 Clash 配置一键转换为 sing-box 格式。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>全能新生态 · sing-box 通用引擎</span>
+        <span>·</span>
+        <span>上级主题: <a href="/clients/" class="underline hover:text-blue-800">客户端软件总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        sing-box 通用代理平台完全指南：下一代全能引擎
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        以轻盈、纯粹与极致性能著称的 sing-box，正在迅速重构整个代理客户端生态。本文带您深入其 JSON 架构模型，掌握新一代网络工具的驾驭之道。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>sing-box 核心评价结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>sing-box 是目前代理技术界最具极客气质与纯粹性能的下一代通用代理平台</strong>。由 SagerNet 团队完全使用纯 Go 语言从零开发，摒弃了传统工具的历史代码包袱。它不仅拥有全网最快最轻的原生 TUN 虚拟网卡栈，更采用结构严密的 <strong>JSON 配置规范</strong>，在 iOS、Android、Windows、macOS 与 Linux 上提供了一致且极具确定性的顶级体验。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 为什么说 sing-box 是“下一代代理平台”？三大核心技术突破
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>相较于传统代理客户端，sing-box 展现了令人惊叹的现代工程设计水准：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>1. 纯 Go 原生高性能 TUN 网卡栈：</strong> sing-box 自研了与 Linux/Windows/macOS 底层网络栈深度绑定的 TUN 模块，CPU 占用与内存消耗比传统方案降低 40% 以上，千兆吞吐时不发热不降速；</li>
+  <li><strong>2. 结构严密的模块化 JSON 配置：</strong> 彻底淘汰了 YAML 中缩进敏感与容易因空格报错的缺陷，所有 <code>inbounds</code>、<code>outbounds</code>、<code>route</code>、<code>dns</code> 模块结构分明，具备严格的类型校验；</li>
+  <li><strong>3. 全协议第一天原生支持：</strong> 包括 Shadowsocks-2022、VLESS、VMess、Trojan、Hysteria、Hysteria 2、TUIC、WireGuard、ShadowTLS，所有协议均在官方内核代码中统一维护，不存在协议拼凑与依赖冲突。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 sing-box 在多平台的客户端形态与极速上手
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>目前 sing-box 在各主流平台均已推出了官方图形化客户端：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">iOS 平台（苹果 App Store）：</span>
+    在美区搜索 <code>sing-box</code>，官方客户端完全免费下载！原生基于 Network.framework 构建，支持一键导入订阅，耗电量极低。
+  </div>
+  <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs sm:text-sm text-emerald-950">
+    <span class="font-bold text-emerald-950 block mb-1">Android 平台（Google Play / GitHub）：</span>
+    界面采用 Material You 现代设计语言，原生集成系统 VpnService，无缝支持按应用单独分流。
+  </div>
+  <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs sm:text-sm text-blue-950">
+    <span class="font-bold text-blue-950 block mb-1">桌面端（Windows / macOS）：</span>
+    除了官方 GUI 外，主流的 v2rayN 与各大第三方多协议客户端均已支持内置 sing-box 核心作为默认驱动。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            sing-box vs Clash 体系核心技术差异全方位对比
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        两大现代代理阵营架构横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">技术维度</th><th class="py-3 px-4">sing-box 体系</th><th class="py-3 px-4">Clash (Mihomo) 体系</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">配置文件格式</td><td class="py-3 px-4 ">严格结构化 JSON 格式 (类型安全)</td><td class="py-3 px-4 ">标准 YAML 格式 (对缩进敏感)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">TUN 虚拟网卡性能</td><td class="py-3 px-4 ">极高 (自研原生网络栈，极省电)</td><td class="py-3 px-4 ">优秀 (依赖 gVisor/Mixed 栈)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">协议更新速度</td><td class="py-3 px-4 ">极快 (新协议首发适配地)</td><td class="py-3 px-4 ">极快 (社区快速跟进)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">移动端官方免费 App</td><td class="py-3 px-4 ">支持 (iOS/Android 官方完全免费)</td><td class="py-3 px-4 ">无统一官方 App (由衍生工具主导)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">生态成熟度与开箱即用</td><td class="py-3 px-4 ">快速爆发期 (极客与高阶首选)</td><td class="py-3 px-4 ">极度成熟 (主流商业机场标配)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        原生支持 sing-box 订阅的代表服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        sing-box 用户选型指南
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">极客极简党</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>追求纯粹、低功耗与最新协议：</strong> 在手机与电脑上配置 sing-box，享受无任何广告与冗余代码的极致纯粹感。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">sing-box 进阶法则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>编写 JSON 配置时建议使用 VS Code 配合官方 JSON Schema 语法插件；</li><li>移动端开启按应用分流，国内应用直接排查在 VPN 之外提升速度；</li><li>订阅导入优先使用机场提供的专有 sing-box 格式。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        sing-box 常见疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 核心关联技术手册
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-61/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">协议原理</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Fake-IP 原理解析：它是如何消除本地 DNS 往返延迟实现秒开的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              sing-box 中 Fake-IP 最佳实践。
+            </p>
+          </a>
+        
+          <a href="/articles/article-82/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">专线体验</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线物理层拓扑大揭秘：二层物理光缆是如何过境的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              为 sing-box 注入低延迟骨干网络动力。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

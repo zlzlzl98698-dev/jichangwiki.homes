@@ -1,0 +1,111 @@
+{
+  "id": "jilian",
+  "slug": "jilian",
+  "name": "极连云",
+  "aliases": [
+    "Jilian Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 14,
+  "establishedYear": 2023,
+  "affiliateURL": "https://guangs.jlyvipaff.com/#/?code=VM1rKGUu",
+  "couponCodes": [
+    {
+      "code": "ji8888",
+      "discount": "专属折扣",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "BGP隧道中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥18/月 (100GB)",
+  "minMonthlyPrice": 18,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "极连云基础版",
+      "billing": "月付",
+      "price": 18,
+      "traffic": "100GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 18,
+      "notes": "品牌强调AI工具访问优化"
+    },
+    {
+      "name": "极连云尊贵版",
+      "billing": "月付",
+      "price": 32,
+      "traffic": "240GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 32,
+      "notes": "大带宽AI高速出口"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "40ms",
+      "download": "140Mbps",
+      "upload": "28Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持 (重点优化)",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "品牌资料重点宣称覆盖AI工具访问场景",
+    "18元100GB主流定价"
+  ],
+  "verifiedFeatures": [
+    "ChatGPT及主流AI对话流畅，无频繁阻断"
+  ],
+  "strengths": [
+    "AI访问针对性优化，节点出口纯净度较好",
+    "18元月付门槛友好"
+  ],
+  "limitations": [
+    "品牌较新，测速记录相对较少",
+    "支付方式偏单一"
+  ],
+  "riskNotes": "适合轻度AI工具用户，按月续费更稳妥。",
+  "suitableFor": "经常需要与ChatGPT、Claude进行生产力对话的轻办公人群。",
+  "unsuitableFor": "需要上百条全球专线轮换的专业工作室。",
+  "sources": [
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-02",
+  "logo": "/images/logos/极连云主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

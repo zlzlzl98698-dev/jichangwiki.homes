@@ -1,0 +1,167 @@
+{
+  "id": "firefly",
+  "slug": "firefly",
+  "name": "Firefly 萤火虫",
+  "aliases": [
+    "Firefly",
+    "萤火虫机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 10,
+  "establishedYear": 2021,
+  "affiliateURL": "https://vip02.fireflyaff.com/#/?code=2n7VURre",
+  "couponCodes": [
+    {
+      "code": "firefly",
+      "discount": "8折优惠码",
+      "condition": "新用户可用；季付9折/半年付85折/年付8折"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "IPLC专线",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "IPLC专线",
+    "原生IP出口"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "nodeCount": "50+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥8/月 (年付¥96折算) 或月付¥25 (150GB)",
+  "minMonthlyPrice": 8,
+  "paymentMethods": [
+    "支付宝",
+    "USDT"
+  ],
+  "plans": [
+    {
+      "name": "Firefly年付版",
+      "billing": "年付",
+      "price": 96,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 8,
+      "notes": "年付折算¥8/月，入门轻量"
+    },
+    {
+      "name": "Firefly Lite",
+      "billing": "月付",
+      "price": 25,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 25,
+      "notes": "IPLC专线接入，原生IP支持"
+    },
+    {
+      "name": "Firefly Plus",
+      "billing": "月付",
+      "price": 45,
+      "traffic": "300GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 45,
+      "notes": "大带宽AI与流媒体专线"
+    },
+    {
+      "name": "Firefly Blaze",
+      "billing": "月付",
+      "price": 85,
+      "traffic": "600GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 85,
+      "notes": "团队协作大流量"
+    },
+    {
+      "name": "Firefly Nova",
+      "billing": "月付",
+      "price": 150,
+      "traffic": "1000GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 150,
+      "notes": "极速满血出口"
+    },
+    {
+      "name": "Firefly不限时",
+      "billing": "一次性付费",
+      "price": 100,
+      "traffic": "100GB不过期",
+      "period": "不过期",
+      "pricePerMonth": "不限时",
+      "notes": "一次性付费不过期"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IPLC",
+      "latency": "26ms",
+      "download": "280Mbps",
+      "upload": "50Mbps",
+      "date": "2026-08-09",
+      "status": "vendor_data",
+      "isPeak": false
+    },
+    {
+      "region": "日本 IPLC",
+      "latency": "58ms",
+      "download": "190Mbps",
+      "upload": "40Mbps",
+      "date": "2026-08-09",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "支持",
+    "netflix": "全区",
+    "disney": "全区",
+    "youtube": "4K流畅",
+    "tiktok": "原生解锁"
+  },
+  "claimedFeatures": [
+    "IPLC + VLESS原生IP架构",
+    "8年运维团队背书",
+    "不限速不限设备",
+    "免翻墙访问官方网站"
+  ],
+  "verifiedFeatures": [
+    "多档付费周期及不限时套餐齐全",
+    "支持新用户8折与USDT加密支付"
+  ],
+  "strengths": [
+    "IPLC专线配合原生IP，解锁ChatGPT/Gemini/TikTok体验优秀",
+    "6档套餐跨度大，且有¥100不限时与¥96年付轻量包",
+    "免翻墙备用域名维护到位"
+  ],
+  "limitations": [
+    "不支持微信直接付款（支持支付宝和USDT）",
+    "“不限速不限设备”属于商家宣传，实际上限受制于物理带宽"
+  ],
+  "riskNotes": "宣称8年团队属于商家营销表达，实际服务按月付或年付常规方式选购。",
+  "suitableFor": "对IPLC专线有硬性要求、使用ChatGPT/Gemini/TikTok频繁、以及喜欢不限时流量包的用户。",
+  "unsuitableFor": "只能使用微信付款且不愿换支付宝/USDT的用户。",
+  "sources": [
+    "Firefly官方品牌库资料 (2026-08-09)",
+    "32家品牌清单记录"
+  ],
+  "verifiedAt": "2026-08-09",
+  "updatedAt": "2026-11-16",
+  "logo": "/images/logos/flyingbird.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

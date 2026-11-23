@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "机场官网防伪鉴别与备用域名验证指南：防钓鱼山寨站与防失联永久发布页";
+const description = "全面防范假冒主流机场的仿冒钓鱼网站。教您通过 SSL 证书指纹、官方 Telegram 发布渠道与防跑路永久发布页精准识别官方正版入口。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"机场品牌","url":"/brands/"},{"name":"official","url":"/brands/official/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/brands/official/","url":"https://jichangwiki.homes/brands/official/","name":"机场官网防伪鉴别与备用域名验证指南：防钓鱼山寨站与防失联永久发布页","description":"全面防范假冒主流机场的仿冒钓鱼网站。教您通过 SSL 证书指纹、官方 Telegram 发布渠道与防跑路永久发布页精准识别官方正版入口。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"机场品牌","item":"https://jichangwiki.homes/brands/"},{"@type":"ListItem","position":3,"name":"机场官网防伪鉴别与备用域名验证指南：防钓鱼山寨站与防失联永久发布页","item":"https://jichangwiki.homes/brands/official/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么很多机场的官网域名过一段时间就会发生变化？","acceptedAnswer":{"@type":"Answer","text":"因为在中国大陆境内，公共宽带运营商会定期根据黑名单，将科学上网机场的官网前台域名加入 DNS 污染和 SNI 阻断列表。为了让国内未翻墙的新老用户能够正常续费和拉取订阅，机场团队必须定期更换或启用新的“免翻墙备用镜像域名”。只要您的账号数据完整保留，属于正常的防封策略。"}},{"@type":"Question","name":"我之前存的机场官网打不开了，是不是代表机场跑路了？","acceptedAnswer":{"@type":"Answer","text":"先不要轻易下结论！请先检查您的代理客户端里的节点是否还能正常翻墙。如果现有节点依然能正常高速上网，仅仅是官网前台打不开，说明只是前端域名遭遇了国内 GFW 拦截。此时您只需挂上代理再次打开该域名，或者联系官方客服获取最新前台地址即可。"}},{"@type":"Question","name":"在百度搜出来的“某某机场中文官网”到底能不能信？","acceptedAnswer":{"@type":"Answer","text":"绝大多数不能信！国内搜索引擎对海外代理服务缺乏严格的广告资质审查机制，黑产团队仅需几百元就可以买下关键词竞价。那些在标题里自称“中文官网”、“官方唯一指定入口”的页面，绝大部分是带毒的假冒镜像站。"}},{"@type":"Question","name":"怎么判断一个 Telegram 官方频道是不是山寨的？","acceptedAnswer":{"@type":"Answer","text":"看三点：第一看频道创建年份，真大厂的频道历史消息可以往前翻两三年以上；第二看历史互动，正规频道有真实用户的表情表态和公告更新；第三看置顶消息里的官方主域名，与假冒站给出的个人收款钱包核对是否吻合。"}},{"@type":"Question","name":"光速云的官方域名如何保障长期稳定防失联？","acceptedAnswer":{"@type":"Answer","text":"光速云建立了多活智能调度网络，部署了覆盖全球的 Anycast 备用节点集群。当某条访问通道遭遇污染时，云端调度中心能在数秒内将流量自动牵引至备用免翻节点，同时拥有长效运营的官方公告渠道，确保用户资产与连接永不失联。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么很多机场的官网域名过一段时间就会发生变化？","a":"因为在中国大陆境内，公共宽带运营商会定期根据黑名单，将科学上网机场的官网前台域名加入 DNS 污染和 SNI 阻断列表。为了让国内未翻墙的新老用户能够正常续费和拉取订阅，机场团队必须定期更换或启用新的“免翻墙备用镜像域名”。只要您的账号数据完整保留，属于正常的防封策略。"},{"q":"我之前存的机场官网打不开了，是不是代表机场跑路了？","a":"先不要轻易下结论！请先检查您的代理客户端里的节点是否还能正常翻墙。如果现有节点依然能正常高速上网，仅仅是官网前台打不开，说明只是前端域名遭遇了国内 GFW 拦截。此时您只需挂上代理再次打开该域名，或者联系官方客服获取最新前台地址即可。"},{"q":"在百度搜出来的“某某机场中文官网”到底能不能信？","a":"绝大多数不能信！国内搜索引擎对海外代理服务缺乏严格的广告资质审查机制，黑产团队仅需几百元就可以买下关键词竞价。那些在标题里自称“中文官网”、“官方唯一指定入口”的页面，绝大部分是带毒的假冒镜像站。"},{"q":"怎么判断一个 Telegram 官方频道是不是山寨的？","a":"看三点：第一看频道创建年份，真大厂的频道历史消息可以往前翻两三年以上；第二看历史互动，正规频道有真实用户的表情表态和公告更新；第三看置顶消息里的官方主域名，与假冒站给出的个人收款钱包核对是否吻合。"},{"q":"光速云的官方域名如何保障长期稳定防失联？","a":"光速云建立了多活智能调度网络，部署了覆盖全球的 Anycast 备用节点集群。当某条访问通道遭遇污染时，云端调度中心能在数秒内将流量自动牵引至备用免翻节点，同时拥有长效运营的官方公告渠道，确保用户资产与连接永不失联。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>防钓鱼防山寨 · 官方正品入口</span>
+        <span>·</span>
+        <span>上级主题: <a href="/brands/" class="underline hover:text-blue-800">机场品牌总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        机场官网防伪鉴别指南：正版入口与防失联完全实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        在百度搜出来的“机场官网”居然是骗钱的山寨站？充值后直接被拉黑？本文教您通过加密证书与官方发布页精准锁定正版入口。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>防伪识别核心法则 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>严禁通过百度、360 等国内搜索引擎前排带有“广告”或“赞助商”字样的链接进入任何机场官网</strong>！大量黑产团队专门花费高额推广费仿冒知名机场，界面一模一样，但用户充值后不仅无法获取节点，个人密码还会被盗取。请务必通过<strong>本站经过人工实测核验的官方直达通道（如光速云官方直达卡片）</strong>或加入官方认证的 Telegram 公告频道获取最新的永久防封发布页。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 钓鱼仿冒山寨站的常见伪装伎俩与黑产产业链
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>随着科学上网知名品牌的口碑积累，围绕知名机场（如光速云）的品牌山寨与钓鱼欺诈已经形成了高度分工的黑产链条。认清骗子的作案套路，是保护个人数字资产的第一步：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【仿冒钓鱼山寨网站黑产套路全景】</div>
+  <div>1. 域名障眼法 (Typosquatting)：注册与正版官网仅差一个字母的相似域名（如用 guangsu-cloud.top 仿冒正品）</div>
+  <div>2. 整站前端镜像克隆：利用爬虫将正版机场的前端 HTML/CSS 样式完整扒下，除登录与支付接口外外观 100% 相同</div>
+  <div>3. 投放国内竞价广告：购买“某某机场官网”、“某某机场登录”等高频搜索词，排在搜索引擎第一位截流不知情的小白</div>
+  <div>4. 支付截留与账号盗取：用户在山寨站充值后，资金直接进入骗子的个人收款码；同时用户的注册邮箱与密码被存入撞库黑客库</div>
+</div>
+<p>一旦轻信山寨站，消费者不仅面临充值资金打水漂，还可能面临常用个人密码全网泄露的连带次生灾害。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 鉴别官方正版入口的四维核验法与防失联发布页
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>无论骗子的网页克隆得多么逼真，其在网络底层特征上必然存在无法伪造的技术漏洞。通过以下四维核验法即可瞬间拆穿假冒站：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一维：核对 SSL 数字证书与历史签发记录：</strong> 正版老牌官网的 SSL 证书通常由国际知名权威机构（如 Cloudflare, Let's Encrypt, DigiCert）签发，且域名具有长期的历史颁发记录；钓鱼山寨站往往是几天前刚申请的免费短期泛域名证书；</li>
+  <li><strong>第二维：核验官方 Telegram 频道创建时间与人数：</strong> 在官网找到官方 Telegram 频道链接并点击进入。正规老牌大厂的频道创建时间在数年之前，关注人数数万，且历史公告连续可查；山寨站提供的频道往往是刚创建几天、只有几百个僵尸粉的新群；</li>
+  <li><strong>第三维：测试工单售后响应机制：</strong> 正规服务商后台拥有完整的工单系统与专业的网络工程师值班；山寨站的后台工单系统通常是摆设，提交后永久无人回复或直接提示错误；</li>
+  <li><strong>第四维：收藏正规“永久防失联发布页”：</strong> 由于国内运营商会不定期对机场官网域名进行 DNS 污染阻断，正规品牌通常会提供一个托管在 GitHub Pages 或境外抗封节点的“永久发布页”，永远动态指引最新可用官网。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            官方正版入口 vs 仿冒山寨钓鱼站核心特征对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        安全特征对比与鉴别指南：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">核验对比维度</th><th class="py-3 px-4">官方正版官网 (Official)</th><th class="py-3 px-4">仿冒山寨钓鱼站 (Counterfeit)</th><th class="py-3 px-4">核验方法与操作</th><th class="py-3 px-4">安全警示等级</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">搜索引擎来源</td><td class="py-3 px-4 ">自然搜索收录 / 权威导航推荐</td><td class="py-3 px-4 ">通过竞价广告买排位强制置顶</td><td class="py-3 px-4 ">认准本站人工核验直达通道</td><td class="py-3 px-4 ">★★★★★ (极度高危)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">充值后服务交付</td><td class="py-3 px-4 ">系统自动充值，秒级下发订阅链接</td><td class="py-3 px-4 ">充值后余额为零，无任何节点可用</td><td class="py-3 px-4 ">在后台查看是否有订阅生成</td><td class="py-3 px-4 ">★★★★★</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">官方社群规模</td><td class="py-3 px-4 ">运营数年，群成员数万，历史记录连贯</td><td class="py-3 px-4 ">刚建新群，全员禁言，几乎无真实交流</td><td class="py-3 px-4 ">点击 TG 图标核验群成立日期</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">技术工单售后</td><td class="py-3 px-4 ">专业工程师全天候快速响应解答</td><td class="py-3 px-4 ">工单系统报错，或无任何人工客服</td><td class="py-3 px-4 ">发一张咨询工单实测回复速度</td><td class="py-3 px-4 ">★★★★☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">域名历史年限</td><td class="py-3 px-4 ">域名通常持有多年且持续备案/解析</td><td class="py-3 px-4 ">刚注册几天到几十天的新冷门域名</td><td class="py-3 px-4 ">通过 whois 在线工具查域名创建日</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备多重备用域名、防伪体系完善的官方正版专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        官网访问与防失联决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新用户注册</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>准备注册账号，寻找安全可靠的官网入口：</strong> 直接通过本站【百科机场】经过技术团队核验的官方直达链接进入，100% 杜绝钓鱼站风险。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">老用户遇阻</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>平时登录的机场官网突然打不开、提示连接重置：</strong> 这是本地 DNS 污染导致的。不要慌！打开客户端现有的可用节点挂上代理再次访问，或者访问其备用发布页。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">怀疑遇到假客服</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Telegram 里有人私聊自称是机场官方技术支持：</strong> 100% 是骗子！官方客服绝对不会主动发起私聊，遇到直接拉黑并举报。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">官网防伪五大核心黄金准则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>绝对不要点击国内搜索引擎前排带有“推广”字样的机场下载或注册链接；</li><li>在首次充值前，花 30 秒在 WHOIS 网站查验该域名注册年限；</li><li>注册新账号时，必须使用独立随机生成的强密码，杜绝使用网银通用密码；</li><li>随手收藏服务商的备用域名或官方 Telegram 公告频道，防止主站被墙时失联；</li><li>认准经过行业公开评测认可的标杆服务商（如光速云）。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        官网防伪高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 防伪鉴别与安全避雷推荐长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/risk/avoid-scams/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">安全避雷</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              翻墙防坑避雷完全手册：识别一分钱钓鱼、假冒官网与恶意木马客户端 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              深度解密假冒山寨站的黑产作案链条。
+            </p>
+          </a>
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">跑路预警</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              教您区分正常域名割接与真实跑路失联。
+            </p>
+          </a>
+        
+          <a href="/tutorials/client-installation/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">正版下载</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              客户端安装指引：全平台零基础正版安全安装指南 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全平台正版软件官方下载通道指南。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

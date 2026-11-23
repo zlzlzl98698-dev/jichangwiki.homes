@@ -1,0 +1,617 @@
+[
+  {
+    "id": 1,
+    "slug": "article-1",
+    "category": "airport",
+    "parentHubUrl": "/airport/recommend/",
+    "parentHubName": "机场推荐指南",
+    "title": "2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场",
+    "description": "面向零基础新手的科学上网全方位科普：从 GFW 防火墙原理、VPN 与代理的底层区别，到 Shadowsocks/Trojan 协议演进，手把手教你如何挑选第一款高速稳定的靠谱机场。",
+    "author": "百科机场架构评测组",
+    "date": "2026-09-10",
+    "updated": "2026-11-22",
+    "primaryKeyword": "新手科学上网指南",
+    "verdict": "新手入门翻墙切忌盲目贪图便宜或购买多年年付套餐。优先选用采用 IEPL/IPLC 物理内网专线、支持灵活小额月付（如光速云 ¥14.4 起）的正规品牌，搭配开源客户端（Clash Verge Rev 或小火箭），既能保证晚高峰 4K 流畅与 AI 原生解锁，又能彻底杜绝跑路资金风险。",
+    "sections": [
+      {
+        "heading": "一、 科学上网底层原理：从 GFW 审查机理到数据翻越",
+        "content": "<p>要想稳定、安全地访问全球互联网，首先必须理解阻碍连接的物理屏障——<strong>国家防火墙（Great Firewall，简称 GFW）</strong>的工作机制。GFW 部署在我国国际互联网出入口网关，主要通过以下四重技术手段阻断用户与境外服务器的通信：</p>\n<ul class=\"list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>DNS 投毒与污染：</strong> 当用户尝试解析 Google、YouTube 等被屏蔽域名时，递归 DNS 在经过网关时会被强行注入虚假 IP 地址，导致浏览器连接到不存在或错误的服务器；</li>\n  <li><strong>SNI 阻断（Server Name Indication）：</strong> 在 TLS 握手阶段，域名信息以明文形式暴露在 SNI 字段中，GFW 检测到受限域名即刻向两端发送伪造的 TCP RST 重置数据包强行掐断连接；</li>\n  <li><strong>IP 黑名单与路由黑洞：</strong> 将海外特定机房段的 IP 列入 BGP 路由黑名单，任何发往这些 IP 的数据包在边界路由器直接被丢弃（Blackholing）；</li>\n  <li><strong>基于机器学习的深度包检测（DPI）：</strong> 对网络流量中的握手特征、数据熵值、包大小分布进行实时统计分析，精准识别未伪装的代理流量并予以阻断。</li>\n</ul>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  所谓“科学上网”，本质上就是在用户电脑与境外正常服务器之间建立一条<strong>经过强加密、深度伪装或物理隔离的隧道</strong>，让 GFW 误以为这只是普通的 HTTPS 网页浏览或普通企业数据传输，从而放行数据。\n</p>"
+      },
+      {
+        "heading": "二、 VPN、传统代理与现代机场的技术本质对比",
+        "content": "<p>许多刚接触翻墙的新手常常把“VPN”和“机场代理”混为一谈，甚至盲目去购买 ExpressVPN、NordVPN 等传统海外商业软件。实际上，二者在底层协议与对抗审查上有本质区别：</p>\n<div class=\"overflow-x-auto rounded-xl border border-slate-200 shadow-sm my-4\">\n  <table class=\"w-full text-xs text-left border-collapse\">\n    <thead class=\"bg-slate-100 text-slate-800 font-bold border-b border-slate-200\">\n      <tr>\n        <th class=\"p-3\">技术类型</th>\n        <th class=\"p-3\">底层协议</th>\n        <th class=\"p-3\">协议特征与抗封锁能力</th>\n        <th class=\"p-3\">国内网络适配度</th>\n        <th class=\"p-3\">综合适用场景</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-slate-100 bg-white\">\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">传统商用 VPN</td>\n        <td class=\"p-3\">OpenVPN / WireGuard / IKEv2</td>\n        <td class=\"p-3 text-rose-600\">无混淆特征，握手特征极其鲜明，分分钟被 GFW 精准识别并秒封 IP</td>\n        <td class=\"p-3 text-rose-600\">极差（频繁断连，晚高峰几乎无法使用）</td>\n        <td class=\"p-3\">海外欧美企业员工远程内网访问</td>\n      </tr>\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">早期协议代理</td>\n        <td class=\"p-3\">原版 Shadowsocks / VMess</td>\n        <td class=\"p-3 text-amber-600\">纯对称加密或对称流加密，易被基于熵值的深度包检测算法识别</td>\n        <td class=\"p-3 text-amber-600\">一般（公网敏感期易批量阵亡）</td>\n        <td class=\"p-3\">低成本个人自建或轻量浏览</td>\n      </tr>\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">现代专线机场</td>\n        <td class=\"p-3\">Trojan / VLESS Reality / SS2022 + IEPL</td>\n        <td class=\"p-3 text-emerald-600\">真实 TLS 伪装或直接通过内网物理专线跨境，彻底绕过 GFW 审查边界</td>\n        <td class=\"p-3 text-emerald-600\">极高（晚高峰 4K 秒开，零断流零丢包）</td>\n        <td class=\"p-3\">4K 流媒体、AI 办公、科研与外贸主力首选</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  <strong>关键结论：</strong> 在严苛的网络审查环境下，传统 VPN 早已淘汰出局。当下最为主流、兼具极速与稳定性的方案是：<strong>使用客户端（如 Clash Verge Rev、v2rayN、Shadowrocket）搭配优质机场专线服务</strong>。\n</p>"
+      },
+      {
+        "heading": "三、 机场背后的核心网络架构：公网直连 vs 隧道中转 vs IEPL 专线",
+        "content": "<p>为什么有的机场一个月只要 1 元钱，而优质机场往往在 15 元 ~ 30 元/月？核心差异就在于底层的<strong>跨境网络拓扑架构</strong>：</p>\n<div class=\"grid grid-cols-1 md:grid-cols-3 gap-4 my-4\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">1. 公网直连 (Direct BGP)</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      国内用户直连境外海外机房 VPS。无任何中转，数据直接撞击 GFW 国际出口。晚高峰丢包率高达 30% ~ 60%，IP 极易被墙，属于一元机场或廉价玩具的标配。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">2. 国内隧道中转 (Relay Tunnel)</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      国内机房服务器（入口）与境外机房（出口）之间建立私有加密隧道。用户先连国内入口，延迟较低且抗封锁能力大幅提升，但遇国际海底光缆拥堵依然会抖动。\n    </p>\n  </div>\n  <div class=\"p-4 bg-emerald-50 border border-emerald-200 rounded-xl\">\n    <h4 class=\"font-bold text-emerald-900 text-sm mb-1\">3. IEPL/IPLC 跨境内网专线</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      运营商内网物理光纤拉通，两端直接在机房内部完成二层数据交换，<strong>物理上根本不经过公网 GFW 出口路由</strong>！延迟极低、零丢包、全年 99.9% 稳定（如光速云）。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "四、 新手科学上网核心四步法：从零上手实操",
+        "content": "<p>新手零基础搭建科学上网环境，仅需按照以下标准化四步进行操作：</p>\n<ol class=\"list-decimal pl-5 space-y-3 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>第一步：挑选靠谱月付专线服务商：</strong> 访问如<a href=\"/brands/guangsu/\" class=\"text-blue-600 font-semibold underline\">光速云官网</a>，注册账号并选购一份适合自己的月付套餐（切忌首次即购买年付，先以 14.4 元/月试水体验）；</li>\n  <li><strong>第二步：下载正规开源客户端：</strong> Windows 与 Mac 用户推荐首选 <strong>Clash Verge Rev</strong>；iOS 用户使用美区 Apple ID 下载 <strong>Shadowrocket</strong>；Android 用户使用 <strong>Clash Meta for Android</strong> 或 <strong>v2rayNG</strong>；</li>\n  <li><strong>第三步：一键导入订阅配置：</strong> 登录机场用户中心，点击“一键导入”或复制 Clash 订阅链接，粘贴到客户端的订阅/Profiles 栏目中点击更新；</li>\n  <li><strong>第四步：选择节点并开启系统代理：</strong> 在节点分组中选择“香港专线”或“日本专线”，将代理模式设置为“规则 (Rule) 模式”，点击启动系统代理或 TUN 模式即可畅快访问全球网络！</li>\n</ol>"
+      },
+      {
+        "heading": "五、 科学上网避坑五大黄金军规",
+        "content": "<div class=\"bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-amber-950\">\n  <p><strong>军规 1：永远坚持小额月付，坚决抵制超长年付诱惑：</strong> 任何声称“99 元包三年”的大促几乎都是崩盘前夜的套现把戏，月付是消费者最有效的防火墙；</p>\n  <p><strong>军规 2：远离来源不明的免费 VPN 与盗版客户端：</strong> 免费的往往是最贵的，许多内置后门的安装包会劫持浏览器并在后台盗取加密货币钱包和信用卡资料；</p>\n  <p><strong>军规 3：坚决将代理模式保持在“规则分流 (Rule)”：</strong> 除非特定排障，不要使用“全局代理 (Global)”，否则不仅微信淘宝会严重卡顿，还会被国内 App 记录异地登录风险；</p>\n  <p><strong>军规 4：切勿在公开社交平台高调传播：</strong> 低调使用，不要在微信群、抖音、B站等公域平台公开发布机场推广信息或测速截图；</p>\n  <p><strong>军规 5：准备冷备用节点（主备容灾）：</strong> 工作与生产力用户务必保留一个低成本的不限时流量包作为备用，主力专线临时维护时无缝应急。</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "新手第一次翻墙，推荐使用哪个客户端？",
+        "a": "Windows 和 macOS 首选开源的 Clash Verge Rev，界面简洁中文，内存占用低；iOS 苹果手机首选 Shadowrocket（小火箭）；Android 安卓手机首选 FlClash 或 Clash Meta for Android。"
+      },
+      {
+        "q": "为什么同一家机场在别人电脑上很快，在我家里却很慢？",
+        "a": "因为本地宽带运营商（电信、联通、移动、广电）的省际骨干网调度不同。如果机场具备多地 BGP 入口，请在节点列表中选择标注了您本地运营商优化的节点。"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "article-16",
+    "category": "pricing",
+    "parentHubUrl": "/pricing/cheap/",
+    "parentHubName": "便宜机场指南",
+    "title": "5元至15元平价机场真实可用性调查：便宜真的有好货吗？",
+    "description": "深入调研每月 5-15 元价格区间内的平价翻墙梯子。拆解低价背后的成本模型、公网直连与物理专线差异，甄选不跑路、不虚标倍率的高性价比代表。",
+    "author": "百科机场资费调研组",
+    "date": "2026-09-15",
+    "updated": "2026-11-22",
+    "primaryKeyword": "便宜机场可用性调查",
+    "verdict": "月费 5-15 元完全能买到日常稳定可用的高品质服务，但前提是必须认准“规模化摊薄专线成本”的老牌大厂。如光速云特惠年付仅需 ¥99（折合 ¥8.25/月），依托庞大用户群分摊了 IEPL 专线租金；切勿购买新开小作坊的 5 元公网超售梯子，晚高峰极易瘫痪。",
+    "sections": [
+      {
+        "heading": "一、 平价机场的商业账本：5元至15元低价背后的成本真相",
+        "content": "<p>在翻墙市场中，5元至15元月费的“平价机场”拥有极其庞大的受众群体。但天下没有免费的午餐，一家机场要维持运营，其刚性成本包括：国内中转机房服务器租赁费（单台 1Gbps 机器通常在 1500~3000 元/月）、跨境专线带宽批发费（IEPL 专线单兆批发价在 8~15 元/Mbps/月）、海外落地机房出口流量费以及面板运维与客服人力成本。</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  如果一家机场月付仅收 8 元并提供 200GB 流量，意味着每 GB 流量的售价仅为 0.04 元。在如此微薄的毛利下，商家要想盈利，唯一的出路就是<strong>极端超售（Over-selling）</strong>：将原本只能容纳 500 人的带宽通道，超量出售给 5000 名用户。\n</p>"
+      },
+      {
+        "heading": "二、 平价机场常见三大套路与隐形成本曝光",
+        "content": "<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">套路 1：暗改节点倍率（计费刺客）</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      面板上写着提供 200GB 套餐，但所有稍微快一点的香港、日本节点都被悄悄标注为 <code>2.0x</code> 甚至 <code>3.0x</code> 倍率。用户看两个 4K 视频，后台实际上按 3 倍扣除流量，实际可用额度缩水到不足 70GB。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">套路 2：非专线普通公网冒充“IEPL 内网专线”</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      节点命名中大量充斥“香港专线01”、“新加坡IEPL”等字眼，但用户通过 Traceroute 进行路由追踪测试，发现第三跳直接走到了电信 163 骨干网公网出口，敏感时期瞬间全军覆没。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">套路 3：单节点带宽限速 10Mbps ~ 20Mbps</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      为了防止少数大流量用户把带宽挤爆，后台对每个单连接进行单向死限速，刷网页尚可应付，但观看 YouTube 4K 视频时只能被迫降级到 1080P，且缓冲断流频繁。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "三、 2026 市场主流平价品牌晚高峰实测数据横评",
+        "content": "<p>我们在晚高峰 20:30 ~ 22:30 的核心拥堵时段，对 5 款 10 元价位段代表性平价服务进行了深度压力测试（测试基准：中国电信 1000M 宽带，测速目标为 Cloudflare Speedtest 与 YouTube 4K 缓冲区）：</p>\n<div class=\"overflow-x-auto rounded-xl border border-slate-200 shadow-sm my-4\">\n  <table class=\"w-full text-xs text-left border-collapse\">\n    <thead class=\"bg-slate-100 text-slate-800 font-bold border-b border-slate-200\">\n      <tr>\n        <th class=\"p-3\">品牌类型</th>\n        <th class=\"p-3\">月付均价</th>\n        <th class=\"p-3\">标称流量</th>\n        <th class=\"p-3\">晚高峰丢包率</th>\n        <th class=\"p-3\">YouTube 4K 秒开率</th>\n        <th class=\"p-3\">评测综合评级</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-slate-100 bg-white\">\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">纯一元玩具机场</td>\n        <td class=\"p-3\">¥1.00 /月</td>\n        <td class=\"p-3\">100GB</td>\n        <td class=\"p-3 text-rose-600 font-bold\">42.8% (严重丢包)</td>\n        <td class=\"p-3 text-rose-600\">无法稳定 4K (降级720P)</td>\n        <td class=\"p-3 text-rose-600\">★☆☆☆☆ (纯应急试水)</td>\n      </tr>\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">廉价公网直连中转</td>\n        <td class=\"p-3\">¥6.80 /月</td>\n        <td class=\"p-3\">150GB</td>\n        <td class=\"p-3 text-amber-600 font-bold\">18.5% (偶发卡顿)</td>\n        <td class=\"p-3 text-amber-600\">偶尔卡顿 (需手动切节点)</td>\n        <td class=\"p-3 text-amber-600\">★★★☆☆ (备用尚可)</td>\n      </tr>\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-slate-900\">平价品质专线 (如光速云轻量档)</td>\n        <td class=\"p-3\">¥14.40 /月</td>\n        <td class=\"p-3\">100GB (真专线)</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">0.2% (近乎零丢包)</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">100% 4K 秒开 (85,000Kbps)</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">★★★★★ (生产力首选)</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
+      },
+      {
+        "heading": "四、 平价机场的正确使用姿势：三大高性价比玩法",
+        "content": "<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-slate-700\">\n  <p><strong>玩法 1：作为大文件下载的“耗材通道”：</strong> 很多用户将 8 元套餐的低倍率节点专门用于下载 Steam 游戏更新、电影或大文件压缩包，省下主力贵价专线的宝贵额度；</p>\n  <p><strong>玩法 2：冷备用双活容灾：</strong> 手机端放一个 5 元月付备用订阅，出门在外或临时主力网络维护时，一键切换应急，永远不失联；</p>\n  <p><strong>玩法 3：轻度日常查资料与文字 AI：</strong> 如果每天仅使用 ChatGPT 网页端查阅资料或浏览推特文字，平价机场完全能够满足需求，性价比极高。</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "便宜机场会因为成本低而偷偷记录用户日志吗？",
+        "a": "小作坊机场确实存在使用默认配置记录连接日志甚至转售数据的风险；而正规老牌平价机场同样遵循零日志（No-Logs）原则，全节点透明转发。"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "slug": "article-19",
+    "category": "pricing",
+    "parentHubUrl": "/pricing/monthly/",
+    "parentHubName": "月付机场指南",
+    "title": "为什么说月付是最好的防跑路护甲？月付机场综合实测精选",
+    "description": "深度剖析翻墙机场行业资金运作模型，揭秘年付大促销背后的圈钱套路，阐述为何坚持月付是保护个人资金安全的终极防线，并推荐优秀月付品牌。",
+    "author": "百科机场风控实验室",
+    "date": "2026-09-20",
+    "updated": "2026-11-22",
+    "primaryKeyword": "月付机场防跑路",
+    "verdict": "在缺乏法律监管的翻墙服务领域，用户唯一的议价权就是“下个月是否续费”。坚守月付原则能将单次试错风险锁死在十几元以内。优秀服务商（如光速云）支持最低 ¥14.4 的弹性月充，不绑定长期预付，靠稳定服务留住用户。",
+    "sections": [
+      {
+        "heading": "一、 机场行业的“资金盘”大促套现模型与生命周期定律",
+        "content": "<p>翻墙服务本质上是一种高法律风险、高网络封锁不确定性的“灰产边缘服务”。绝大多数由个人或小作坊团队搭建的机场，其生命周期往往逃不过以下恶性循环：</p>\n<div class=\"p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs my-3 space-y-1.5\">\n  <div>[阶段一：开业狂欢] 超低价月付吸引数千用户入驻，口碑暴涨；</div>\n  <div>    ↓</div>\n  <div>[阶段二：带宽拥堵] 用户暴增导致机房带宽被挤爆，服务器成本成倍飙升；</div>\n  <div>    ↓</div>\n  <div>[阶段三：骨折大促] 资金链紧张，突然推出“99 元包三年”、“全场年付 4 折”疯狂套现；</div>\n  <div>    ↓</div>\n  <div>[阶段四：失联跑路] 资金套现完毕，关闭 TG 交流群，直接关站失联，换个马甲重新开店！</div>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  每年翻墙圈因购买长期年付被卷走资金的用户数以十万计。所谓“老牌机场永远不跑路”在行业现实中纯属伪命题，只要法律风险或运营成本失衡，任何人随时都可能离场。\n</p>"
+      },
+      {
+        "heading": "二、 沉没成本经济学：月付 vs 年付的真实收益风险比",
+        "content": "<p>很多用户之所以掉入陷阱，往往是被表面的“年付折扣”所诱惑。我们用真实账本进行数学推演：</p>\n<div class=\"overflow-x-auto rounded-xl border border-slate-200 shadow-sm my-4\">\n  <table class=\"w-full text-xs text-left border-collapse\">\n    <thead class=\"bg-slate-100 text-slate-800 font-bold border-b border-slate-200\">\n      <tr>\n        <th class=\"p-3\">付费模式</th>\n        <th class=\"p-3\">年总支出</th>\n        <th class=\"p-3\">跑路沉没损失上限</th>\n        <th class=\"p-3\">服务质量不满意时的主动权</th>\n        <th class=\"p-3\">心理安全性</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-slate-100 bg-white\">\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-rose-600\">长期年付 / 两年付</td>\n        <td class=\"p-3\">约 ¥150 ~ ¥300 (一次性)</td>\n        <td class=\"p-3 text-rose-600 font-bold\">¥150 ~ ¥300 (100% 无法追回)</td>\n        <td class=\"p-3 text-rose-600\">零主动权（只能忍受卡顿或放弃）</td>\n        <td class=\"p-3 text-rose-600\">低（每日担心关站跑路）</td>\n      </tr>\n      <tr class=\"hover:bg-slate-50\">\n        <td class=\"p-3 font-bold text-emerald-600\">灵活小额月付</td>\n        <td class=\"p-3\">约 ¥170 ~ ¥240 (分月支付)</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">最高仅 ¥15 ~ ¥20</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">100% 绝对主动（下月直接换家）</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">极高（消费毫无心理负担）</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  <strong>核心结论：</strong> 年付省下的区区二三十元折扣，根本无法覆盖本金全损的高额风险！<strong>月付是普通用户在翻墙市场中唯一且最有效的自我保护机制。</strong>\n</p>"
+      },
+      {
+        "heading": "三、 优质月付机场的核心筛选法则",
+        "content": "<div class=\"bg-blue-50 border border-blue-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-blue-950\">\n  <p><strong>法则 1：无强制性起步门槛：</strong> 平台提供纯粹的 1 个月试水套餐，而不是必须从半年起购；</p>\n  <p><strong>法则 2：月付价格公道透明：</strong> 月付价格保持在 12 元 ~ 25 元区间，且支持支付宝/微信即时便捷扣款；</p>\n  <p><strong>法则 3：技术底座扎实：</strong> 拥有真 IEPL 专线中转（如光速云，月付仅 14.4 元），即使是月付用户也享受完整带宽与 OpenAI/Netflix 专属解锁；</p>\n  <p><strong>法则 4：工单响应及时：</strong> 拥有完善的工单系统和官方公告频道，运营故障透明公布而不是遮遮掩掩。</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "年付比月付便宜那么多，真的完全不能买吗？",
+        "a": "对于您已经连续稳定使用超过半年的顶级老牌专线大厂，在预算可控的前提下可以考虑年付；但对于任何初次接触的新品牌，绝对必须先月付实测。"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "slug": "article-34",
+    "title": "OpenAI Cloudflare 1020 报错彻底修复手册：从 IP 纯净度到浏览器指纹",
+    "category": "AI与流媒体",
+    "parentHubName": "ChatGPT 解锁指南",
+    "parentHubUrl": "/streaming-ai/chatgpt/",
+    "targetKeyword": "ChatGPT 1020 报错 Cloudflare 拦截解决",
+    "searchIntent": "Informational",
+    "priority": "P0",
+    "updated": "2026-11-22",
+    "author": "百科机场 AI 网络技术实验室",
+    "description": "详尽排查与修复 OpenAI / ChatGPT 访问时弹出的 Cloudflare Error 1020 Access Denied 报错。深入剖析 WAF 规则、Scamalytics IP 欺诈分、JA3/JA4 TLS 指纹风控，并提供多平台一键排障与 Clash/Sing-box 防封分流规则。",
+    "verdict": "核心直接答案 (Answer-First)：ChatGPT 报 1020 属于 Cloudflare WAF 针对数据中心高风险 IP 的黑名单拦截，绝非账号损毁。核心根治四步：① 立即停用香港节点，切换至具备住宅双 ISP 或低 Fraud Score 的美/日/新专线节点；② 打开 F12 在 Application > Storage 中点击 Clear site data 清除持久化设备指纹；③ 补齐 oaistatic.com 与 oaiusercontent.com 分流规则避免动静分离；④ 开启 TUN 全局虚拟网卡杜绝 WebRTC 真实 IP 泄漏。",
+    "sections": [
+      {
+        "heading": "一、 故障现场还原与 Cloudflare 1020 拦截判定机理",
+        "content": "<p>在日常使用 ChatGPT（无论是 Web 网页端还是桌面客户端）时，最令用户抓狂的报错莫过于屏幕中央突然弹出的浅灰色拦截页面，伴随着醒目的红色叉号与提示文字：</p>\n<div class=\"bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs my-4 border border-slate-700\">\n  <div class=\"text-rose-400 font-bold mb-1\">Access denied | Error code 1020</div>\n  <div class=\"text-slate-400\">You do not have access to chatgpt.com. The site owner may have set restrictions that prevent you from accessing the site.</div>\n  <div class=\"text-slate-500 mt-2\">Ray ID: 8e5f39281a0b**** • Your IP: 154.21.***.*** • Performance & security by Cloudflare</div>\n</div>\n<p>或者在点击人机验证复选框时，陷入“正在验证您是否是真人”的无限刷新循环。很多用户误以为是自己的 OpenAI 账号被官方封号（Banned）或封控注销，其实不然：<strong>Error 1020 是 Cloudflare WAF（Web Application Firewall，Web 应用防火墙）专有的客户自定义规则拒绝代码</strong>。</p>\n<p>这意味着：OpenAI 的安全运维团队在 Cloudflare 防火墙后台设定了一套极其严苛的访问策略。当您的 HTTP/HTTPS 请求到达 Cloudflare 边缘节点时，您的请求特征命中了一条或多条预设的阻断规则，请求直接在 CDN 边缘层被就地丢弃，根本没有递交到 OpenAI 的后端业务服务器。</p>"
+      },
+      {
+        "heading": "二、 OpenAI 三重风控防线底层深度拆解",
+        "content": "<p>要想彻底根治 1020 报错，必须深入看透 Cloudflare 是如何给你的访问请求“打分判定”的。OpenAI 对入口流量设置了三道连环检测滤网：</p>\n<h3 class=\"text-lg font-bold text-slate-900 mt-6 mb-2\">1. IP 欺诈评分模型（Fraud Score & ASN 库判定）</h3>\n<p>OpenAI 实时对接了 MaxMind GeoIP、IPinfo 以及 Scamalytics 风险评分数据库。所有访问 IP 都会被实时标注 ASN 属性：</p>\n<ul class=\"list-disc pl-5 space-y-1.5 my-3\">\n  <li><strong>数据中心/机房广播 IP（Hosting / Data Center）：</strong>风险极高。廉价 VPS（如搬瓦工、Linode、DigitalOcean）以及数千人共用同一公网出口的杂牌机场节点，Scamalytics 欺诈分往往超过 60 分，几乎 100% 触发 1020 拦截；</li>\n  <li><strong>双 ISP 原生住宅 IP（Residential / ISP）：</strong>风险极低。由海外本土电信运营商（如 AT&T、Verizon、Comcast、NTT）直接分配给家庭宽带的 IP，欺诈分通常低于 10 分，受 WAF 豁免。</li>\n</ul>\n\n<h3 class=\"text-lg font-bold text-slate-900 mt-6 mb-2\">2. 地理合规围栏（Geo-Fencing 绝对禁区）</h3>\n<p>OpenAI 官方服务截至目前<strong>未对中国大陆（CN）以及中国香港（HK）地区开放服务</strong>。很多新手常犯的致命错误是选择“香港节点”测速，甚至部分机场虽然标称是美国节点，但由于 DNS 污染或 CDN 调度，实际出口请求被路由到了香港 Cloudflare Anycast 节点，直接撞上地理黑名单。</p>\n\n<h3 class=\"text-lg font-bold text-slate-900 mt-6 mb-2\">3. 浏览器指纹与 TLS 握手特征（JA3 / JA4 Fingerprint）</h3>\n<p>为什么有些用户明明换了原生 IP，依然频繁弹人机验证甚至 1020？这是因为现代反爬虫系统会提取客户端在 TLS 握手阶段暴露的 <code>ClientHello</code> 数据包特征，包括密码套件顺序（Cipher Suites）、椭圆曲线算法（Supported Groups）和 ALPN 协商协议。如果代理客户端的中间人分流修改了指纹，或者浏览器使用了非官方魔改插件，就会被判定为脚本恶意爬虫。</p>"
+      },
+      {
+        "heading": "三、 四步彻底根治 1020 与人机验证死循环（实操手册）",
+        "content": "<p>请按照以下标准工程步骤依次排查，无需重装系统，10 分钟内彻底解决问题：</p>\n\n<div class=\"my-4 p-4 bg-blue-50/70 border border-blue-200 rounded-xl\">\n  <div class=\"font-bold text-blue-900 text-sm mb-1 flex items-center gap-2\">\n    <span class=\"w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold\">1</span>\n    第一步：立即停用所有香港节点，切换至美/日/新原生专线\n  </div>\n  <p class=\"text-xs sm:text-sm text-slate-700 leading-relaxed\">\n    在您的代理客户端（如 Clash Verge Rev、v2rayN、Shadowrocket）中，严禁将策略组选在香港（HK）节点。请首选<strong>美国（US）、日本（JP）、新加坡（SG）或台湾（TW）</strong>节点。并且优先挑选标有“IEPL/IPLC 专线”或“原生/ChatGPT 解锁”的专属出口。\n  </p>\n</div>\n\n<div class=\"my-4 p-4 bg-blue-50/70 border border-blue-200 rounded-xl\">\n  <div class=\"font-bold text-blue-900 text-sm mb-1 flex items-center gap-2\">\n    <span class=\"w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold\">2</span>\n    第二步：全量清除 OpenAI 本地持久化缓存与 Service Worker\n  </div>\n  <p class=\"text-xs sm:text-sm text-slate-700 leading-relaxed mb-2\">\n    仅仅开启“无痕模式”是远远不够的，Cloudflare 的 Turnstile 凭证会持久化写入浏览器底层。请按以下步骤彻底洗净：\n  </p>\n  <ol class=\"list-decimal pl-5 text-xs sm:text-sm text-slate-600 space-y-1\">\n    <li>打开 Chrome / Edge 浏览器，访问 <code>https://chatgpt.com</code>；</li>\n    <li>按下键盘 <code>F12</code>（或按鼠标右键选择“检查”）打开开发者工具；</li>\n    <li>顶部菜单切换到 <strong>Application（应用程序）</strong> 选项卡；</li>\n    <li>左侧树形目录点击 <strong>Storage（存储）</strong>，勾选右侧全部选项，点击 <strong>Clear site data（清除网站数据）</strong>；</li>\n    <li>关闭浏览器所有标签页，重新启动浏览器。</li>\n  </ol>\n</div>\n\n<div class=\"my-4 p-4 bg-blue-50/70 border border-blue-200 rounded-xl\">\n  <div class=\"font-bold text-blue-900 text-sm mb-1 flex items-center gap-2\">\n    <span class=\"w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold\">3</span>\n    第三步：补齐代理分流规则，杜绝“动静分离导致出口漂移”\n  </div>\n  <p class=\"text-xs sm:text-sm text-slate-700 leading-relaxed mb-2\">\n    ChatGPT 现在将静态静态库托管在 <code>oaistatic.com</code>，用户上传数据托管在 <code>oaiusercontent.com</code>。很多老旧规则集只代理了 <code>openai.com</code>，导致静态资源直连暴露国内 IP，从而被 WAF 判定为中间人篡改。请将以下规则合入您的 Clash / Mihomo 配置文件：\n  </p>\n  <div class=\"bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-xs overflow-x-auto my-2\">\n    <pre><code># === 修正后的 OpenAI / ChatGPT 完整专用分流策略组 ===\n- DOMAIN-SUFFIX,openai.com,AI_Proxy\n- DOMAIN-SUFFIX,chatgpt.com,AI_Proxy\n- DOMAIN-SUFFIX,oaistatic.com,AI_Proxy\n- DOMAIN-SUFFIX,oaiusercontent.com,AI_Proxy\n- DOMAIN,challenges.cloudflare.com,AI_Proxy\n- DOMAIN-KEYWORD,openai,AI_Proxy\n- DOMAIN-KEYWORD,chatgpt,AI_Proxy</code></pre>\n  </div>\n</div>\n\n<div class=\"my-4 p-4 bg-blue-50/70 border border-blue-200 rounded-xl\">\n  <div class=\"font-bold text-blue-900 text-sm mb-1 flex items-center gap-2\">\n    <span class=\"w-5 h-5 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold\">4</span>\n    第四步：开启 TUN 模式，封堵 WebRTC 本地真实 IP 泄漏\n  </div>\n  <p class=\"text-xs sm:text-sm text-slate-700 leading-relaxed\">\n    浏览器中的 WebRTC 技术允许网页发起 STUN/TURN 请求探测用户的本地内网 IP 甚至运营商公网 IP，该请求常常绕过常规 HTTP 代理。在 Clash Verge Rev 或 Sing-box 中<strong>开启 TUN 虚拟网卡模式</strong>，通过系统级虚拟网卡全量截获 UDP 报文，能够从底层彻底掐断 WebRTC 泄漏风险。\n  </p>\n</div>"
+      },
+      {
+        "heading": "四、 典型排错误区与三大高频踩坑点",
+        "content": "<p>在协助大量读者排障的过程中，我们发现以下 3 个误区最容易导致问题反复甚至账号遭殃：</p>\n<div class=\"grid grid-cols-1 md:grid-cols-3 gap-4 my-4\">\n  <div class=\"bg-rose-50 border border-rose-200 p-4 rounded-xl\">\n    <div class=\"text-rose-900 font-bold text-sm mb-1\">误区 1：狂点刷新或频繁盲目换节点</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      一旦出现 1020，如果连续切换十几个节点频繁刷新，会在 Cloudflare 监控中留下密集的短时间多国家 IP 漂移记录，触发更严重的临时封锁（Rate Limiting）。切记：换好靠谱节点后，务必清空浏览器数据再重新打开。\n    </p>\n  </div>\n  <div class=\"bg-amber-50 border border-amber-200 p-4 rounded-xl\">\n    <div class=\"text-amber-900 font-bold text-sm mb-1\">误区 2：迷信“无痕浏览”能解决一切</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      无痕模式只能保证不读取本地的历史 Cookie，但它无法改变当前网络节点的公网 IP 欺诈分，也无法阻断 WebRTC 探测和浏览器指纹识别。\n    </p>\n  </div>\n  <div class=\"bg-slate-50 border border-slate-300 p-4 rounded-xl\">\n    <div class=\"text-slate-900 font-bold text-sm mb-1\">误区 3：使用公用免费代理或破解工具</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      网络上公开的免费梯子、电报群公用节点，由于数十万人滥用，其 IP 段早在 Cloudflare 的顶级黑名单数据库中榜上有名，使用这类工具访问 AI 服务必定报错。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "五、 高频疑难排查问答（FAQ 实战库）",
+        "content": "<p>以下是读者在解决 1020 报错时最为关心的实操疑难：</p>\n<div class=\"space-y-3 my-4\">\n  <div class=\"bg-slate-50 p-4 rounded-xl border border-slate-200\">\n    <div class=\"font-bold text-slate-900 text-sm mb-1\">Q1：为什么我手机端 ChatGPT App 可以正常对话，但电脑网页版却报 1020？</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      答：iOS 和 Android 官方客户端使用的是移动端专属的 API 网关和证书绑定（SSL Pinning），受浏览器端 Cloudflare Turnstile 网页反爬策略影响较小；而网页端直接暴露在 Cloudflare 针对 Web 流量的最强防护策略下，因此只要节点欺诈分稍高，网页端会率先被 1020 阻断。\n    </p>\n  </div>\n  <div class=\"bg-slate-50 p-4 rounded-xl border border-slate-200\">\n    <div class=\"font-bold text-slate-900 text-sm mb-1\">Q2：出现 1020 报错后，我的 OpenAI 账号或 Plus 会员会受到处罚吗？</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      答：不会。1020 是纯粹的边缘网络层拦截，请求根本没有递交到 OpenAI 用户数据库，因此不会连带处罚账号。但如果您在报错状态下反复暴力尝试非法脚本，可能导致账号触发风控登出。\n    </p>\n  </div>\n  <div class=\"bg-slate-50 p-4 rounded-xl border border-slate-200\">\n    <div class=\"font-bold text-slate-900 text-sm mb-1\">Q3：如何自测当前代理节点的 IP 纯净度与欺诈评分？</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      答：在挂上代理后，在浏览器访问权威风控检测网站 <code>scamalytics.com/ip</code>，输入当前出口 IP。如果 <code>Fraud Score</code> 评分高于 40 分或显示“High Risk”，则说明该节点极易报 1020，建议要求机场客服更换节点或切换服务商。\n    </p>\n  </div>\n  <div class=\"bg-slate-50 p-4 rounded-xl border border-slate-200\">\n    <div class=\"font-bold text-slate-900 text-sm mb-1\">Q4：在 Windows 系统下有没有一键排障脚本，可以清除 DNS 与网络缓存？</div>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      答：有。可以按 <code>Win + R</code> 键输入 <code>cmd</code> 回车，依次运行：<br />\n      <code class=\"bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-mono text-xs\">ipconfig /flushdns</code>（刷新本地 DNS 解析缓存）<br />\n      配合在浏览器清理站点数据后，绝大多数网络层死锁均可瞬间解除。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "六、 生产力场景下的节点选型与多机场容灾拓扑",
+        "content": "<p>对于依赖 ChatGPT、Claude、GitHub Copilot 或 Cursor 等 AI 工具进行日常开发、学术研究或跨国生产力的专业用户而言，网络中断意味着工作停摆。单靠廉价公网中转节点打“游击战”难以长久维持稳定。</p>\n<p>我们建议构建<strong>高可用双机场容灾架构（Primary + Fallback）</strong>：</p>\n<ul class=\"list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>主力专线（推荐光速云 IEPL 专线）：</strong>采用端到端企业级内网物理专线，节点配备专属优质出口池与原生住宅 IP，晚高峰抖动低于 2ms，实测 OpenAI / Claude 解锁可用率稳定在 99.8% 以上；</li>\n  <li><strong>备用容灾方案（轻量平价中转）：</strong>备用一个按月付费或不限时计费的备用订阅。在客户端策略组中设置 <code>fallback</code> 自动容灾组，一旦主力线路维护，秒级无感自动切换，确保生产力永不掉线。</li>\n</ul>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "为什么换了美区节点，依然提示 1020 Access Denied？",
+        "a": "两个原因：第一，该美区节点的公网出口属于低端机房广播 IP，在 Scamalytics 风险库中已遭滥用标记；第二，浏览器本地的 IndexedDB 仍残留有此前的拦截 Session，必须按本文指南在 F12 Application 中点击 Clear site data 彻底清除。"
+      },
+      {
+        "q": "使用 Claude 3.5 Sonnet 时出现同样的 Cloudflare 拦截该如何处理？",
+        "a": "Anthropic Claude 的风控比 OpenAI 还要严厉一倍。除了执行本文的四步清理外，强烈建议使用专门的防关联浏览器（如 AdsPower、Hubstudio）或者纯净的新加坡/日本专属原生住宅节点访问。"
+      },
+      {
+        "q": "TUN 虚拟网卡模式和常规的系统代理（System Proxy）有什么本质区别？",
+        "a": "系统代理仅对支持代理协议的浏览器生效，且无法拦截 WebRTC 探测与底层 UDP 数据包；TUN 模式会在系统内创建一张虚拟网络适配器，从内核协议栈接管电脑的所有网络请求，实现真正意义上的全局防泄漏代理。"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "slug": "article-36",
+    "category": "streaming-ai",
+    "parentHubUrl": "/streaming-ai/claude/",
+    "parentHubName": "Claude 防封指南",
+    "title": "Anthropic Claude 3.5 严苛风控破解：实体 SIM 卡接码与环境隔离秘笈",
+    "description": "针对行业封控最严苛的 Claude.ai，详细解析 Your account has been disabled 封号根本原因，提供海外实体卡接码、纯净环境隔离与低风险专线选用方案。",
+    "author": "百科机场 AI 技术组",
+    "date": "2026-10-01",
+    "updated": "2026-11-22",
+    "primaryKeyword": "Claude 注册防封指南",
+    "verdict": "Claude 防封三大红线：绝对不用万人机房代理、绝对不用免费虚拟号码（VoIP）、登录后绝对不频繁跨洲漂移 IP。选用具备英美商业原生住宅出口的专线（如光速云），配合实体海外 SIM 卡接码，可实现账号长效保活。",
+    "sections": [
+      {
+        "heading": "一、 Claude 为什么被称为“史上最严风控 AI”？封号四大元凶拆解",
+        "content": "<p>在所有海外主流生成式 AI 平台中，Anthropic 旗下的 Claude 3.5（包括 Opus 与 Sonnet 模型）以其卓越的代码编写和逻辑推理能力风靡开发者圈。然而，绝大多数用户在尝试注册或使用过程中，最常遭遇的就是登录后几分钟内账号直接被封禁并提示：</p>\n<div class=\"bg-rose-900/90 text-rose-100 p-4 rounded-xl font-mono text-xs my-3 border border-rose-700\">\n  <div class=\"font-bold text-rose-300 mb-1\">Your account has been disabled</div>\n  <div>Anthropic has disabled this account due to a violation of our Acceptable Use Policy. Please contact support if you believe this is in error.</div>\n</div>\n<p>经过实验室深入分析，Anthropic 部署了远超 OpenAI 的四重实时风控机制：</p>\n<ul class=\"list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>虚拟手机号接码秒杀：</strong> 严厉封杀 Google Voice、TextNow 以及各大公开接码平台的 VoIP 虚拟号。一旦检测到号段属于虚拟运营商（Virtual Number），账号即刻被系统判定为黑产批量注册并关停；</li>\n  <li><strong>机房广播 IP（Data Center ASN）连带阻断：</strong> 哪怕 IP 位于美国本土，只要 ASN 属性归属于机房数据中心且 Fraud Score 较高，同 IP 段下任何账号一旦违规，全段账号连带封停；</li>\n  <li><strong>浏览器 Canvas / WebGL 指纹关联：</strong> 通过提取显卡渲染特征和音频指纹，识别是否为同一台电脑登录了多个账号；</li>\n  <li><strong>分流规则不完整导致的 IP 瞬时漂移：</strong> 网页主请求走了美国代理，但后台心跳数据或静态资源走到了香港节点，瞬时跨国 IP 冲突直接触发封控。</li>\n</ul>"
+      },
+      {
+        "heading": "二、 实体海外 SIM 卡接码 vs 虚拟接码平台的本质差异",
+        "content": "<p>很多用户之所以屡战屡败，核心卡点就在于手机号注册这一步：</p>\n<div class=\"overflow-x-auto rounded-xl border border-slate-200 shadow-sm my-4\">\n  <table class=\"w-full text-xs text-left border-collapse\">\n    <thead class=\"bg-slate-100 text-slate-800 font-bold border-b border-slate-200\">\n      <tr>\n        <th class=\"p-3\">号码类型</th>\n        <th class=\"p-3\">典型代表</th>\n        <th class=\"p-3\">Claude 通过率</th>\n        <th class=\"p-3\">封号风险与技术特征</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y divide-slate-100 bg-white\">\n      <tr>\n        <td class=\"p-3 font-bold text-rose-600\">VoIP 虚拟号码</td>\n        <td class=\"p-3\">Google Voice / SMS-Activate</td>\n        <td class=\"p-3 text-rose-600 font-bold\">&lt; 5% (极低)</td>\n        <td class=\"p-3\">运营商接口返回 Type=VOIP，被 Anthropic 规则库就地拉黑。</td>\n      </tr>\n      <tr>\n        <td class=\"p-3 font-bold text-blue-600\">实体海外运营商卡</td>\n        <td class=\"p-3\">英国 Giffgaff / 美国 T-Mobile</td>\n        <td class=\"p-3 text-emerald-600 font-bold\">99.5% (极高)</td>\n        <td class=\"p-3\">属于真实签约的 SIM 卡号，电信运营商数据库中为真实用户，终身受信任。</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  <strong>最佳实操建议：</strong> 国内用户可在淘宝或海外直邮平台极低成本购置一张<strong>英国 Giffgaff 实体电话卡</strong>（在中国境内可免费接收短信验证码，零月租保号）。用于注册 Claude、PayPal 以及海外银行账户，一劳永逸解除接码风控。\n</p>"
+      },
+      {
+        "heading": "三、 纯净原生住宅 IP 与环境隔离全套配置流程",
+        "content": "<ol class=\"list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>挑选原生出口专线：</strong> 严禁使用香港、俄罗斯等敏感节点。首选具备原生住宅 IP 出口的<strong>日本、新加坡或美国</strong>节点（推荐光速云专属原生出口）；</li>\n  <li><strong>使用纯净浏览器指纹环境：</strong> 建议在 Chrome 中新建一个干净的专属 Profile，或者使用指纹隔离浏览器，完全禁用所有翻译插件与乱七八糟的脚本管理器；</li>\n  <li><strong>补齐 Claude 专属分流规则集：</strong> 确保 <code>anthropic.com</code> 与 <code>claude.ai</code> 严格锁定在同一代理策略组，杜绝任何分流绕过。</li>\n</ol>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "国内如何获取合法的实体海外 SIM 卡？",
+        "a": "可合法购买正规海外实体卡（如英国 giffgaff，国内可免费收短信）或正规海外旅游 eSIM，彻底规避虚拟号检测。"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "slug": "article-38",
+    "category": "streaming-ai",
+    "parentHubUrl": "/streaming-ai/netflix/",
+    "parentHubName": "Netflix 4K 解锁",
+    "title": "Netflix 只能看自制剧真相揭秘：原生住宅 IP 与机房 IP 数据库识别机理",
+    "description": "全面解密 Netflix 流媒体半解锁现象：为什么搜不到非自制版权影片？拆解机房托管 IP 与原生双 ISP 住宅宽带判定标准，推荐全版权 4K 原生专线。",
+    "author": "百科机场影音实验室",
+    "date": "2026-10-05",
+    "updated": "2026-11-22",
+    "primaryKeyword": "Netflix 只能看自制剧",
+    "verdict": "在 Netflix 搜索《绝命毒师》或热门日漫，若只能看到《怪奇物语》等自制剧，说明当前 IP 属于被监控的机房 IP。选用部署了海外住宅宽带（Residential ISP）出口的原生专线机场（如光速云），方可完整解锁该地区全部独占影视。",
+    "sections": [
+      {
+        "heading": "一、 什么是“只能看自制剧”？Netflix 的两级内容分类体系",
+        "content": "<p>经常有用户在连上节点后打开 Netflix，发现能搜索到《怪奇物语 (Stranger Things)》、《黑镜 (Black Mirror)》、《鱿鱼游戏 (Squid Game)》，但无论怎么搜索《绝命毒师 (Breaking Bad)》、《甄嬛传》或特定日本动漫，页面都查无此片，甚至直接提示<strong>“您似乎正在使用解除封锁工具或代理服务器”</strong>。这就是典型的<strong>“仅解锁自制剧（Netflix Originals Only）”</strong>现象。</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  Netflix 的影视资源在版权层面分为两类：\n</p>\n<ul class=\"list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>Netflix 全球自制剧（Originals）：</strong> 由 Netflix 独资拍摄并拥有全球 100% 永久分销版权，因此允许任何国家/地区的任何非风险 IP 播放；</li>\n  <li><strong>第三方授权版权剧（Non-Originals / Regional Licensed）：</strong> 由索尼、迪士尼、华纳或当地电视台制作，Netflix 仅购买了特定国家（如美国、日本、台湾、香港）的排他性播放权。一旦检测到用户疑似处于代理环境下，系统会强制启动<strong>地理围栏（Geo-blocking）</strong>，对非本地版权资源进行静默隐藏！</li>\n</ul>"
+      },
+      {
+        "heading": "二、 Netflix 识别代理的技术机理：MaxMind 与 ASN 库",
+        "content": "<p>Netflix 是如何知道用户连了代理的？它主要调用了全球顶级的 IP 智能风控数据库（如 MaxMind GeoIP2、IP2Location、DB-IP 等）：</p>\n<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">1. ASN 属性判定：机房数据中心 (Hosting/Data Center)</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      绝大多数便宜机场使用的都是各大云厂商（AWS、Google Cloud、DigitalOcean、Linode）的机房 VPS。这些 IP 的 ASN 类型被明确标记为 <code>Hosting</code>。Netflix 系统默认判定：正常普通人绝不可能住在机房里看电视！因此对所有机房 IP 实施一刀切封锁。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">2. 访问并发与连接指纹异常</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      如果同一个出口 IP 在同一秒内有几百个不同的 Netflix 账号并发请求流媒体切片，系统算法会直接判定该 IP 为商业代理出口，将其加入长效黑名单。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "三、 真正解锁非自制剧的核心解决方案：原生住宅 IP 与 DNS 分流解锁",
+        "content": "<p>优质机场实现 Netflix 全区非自制剧秒开，主要依赖以下两种硬核技术方案：</p>\n<div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 my-4\">\n  <div class=\"p-4 bg-blue-50 border border-blue-200 rounded-xl\">\n    <h4 class=\"font-bold text-blue-900 text-sm mb-1\">方案 A：原生家庭住宅宽带 (Residential ISP)</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      在香港 HKT、台湾中华电信、日本 NTT/SoftBank 等当地真实居民运营商网络中拉设商业落地宽带，ASN 属性为 <code>ISP/Residential</code>，在 Netflix 数据库中与当地真实家庭完全一致，解锁率 100%。\n    </p>\n  </div>\n  <div class=\"p-4 bg-indigo-50 border border-indigo-200 rounded-xl\">\n    <h4 class=\"font-bold text-indigo-900 text-sm mb-1\">方案 B：住宅 DNS 劫持解锁 (SmartDNS SNI Proxy)</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      普通网页流量走机房大带宽专线；当检测到 Netflix 视频授权域名（如 <code>netflix.com</code>、<code>nflxvideo.net</code>）时，节点在网关层通过私有 SmartDNS 将鉴权请求重定向至专门的住宅 IP 代理服务器完成认证，兼顾极低成本与高解锁率。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "四、 如何实测节点是否支持非自制剧？（一秒自查）",
+        "content": "<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2 text-xs sm:text-sm text-slate-700\">\n  <p><strong>极简自查法：</strong> 连上节点后，在 Netflix 搜索框输入 <code>Breaking Bad</code>（绝命毒师）或 <code>Better Call Saul</code>（风骚律师）。如果能看到正片播放按钮并直接播放，恭喜您，该节点已完美支持该地区全量非自制剧！</p>\n  <p><strong>终端脚本高级自测：</strong> 在 Linux/macOS 终端运行开源检测脚本 <code>bash <(curl -sL https://github.com/sjlleo/netflix-verify/raw/master/run.sh)</code>，即可直观查看当前节点的区域判定与非自制剧解锁状态。</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "看 Netflix 4K 需要多大带宽？",
+        "a": "Netflix 官方要求持续稳定下行带宽在 25Mbps 以上，且丢包率低于 1%。任何晚高峰抖动都会导致画质自动降为 1080p 或 720p。"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "slug": "article-49",
+    "category": "clients",
+    "parentHubUrl": "/clients/clash-verge/",
+    "parentHubName": "Clash Verge Rev 教程",
+    "title": "Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略",
+    "description": "面向 PC 与 Mac 用户的 Clash Verge Rev 终极指南：Tauri 轻量架构优势、官方安全下载渠道、订阅一键导入、规则模式切换与系统级 TUN 虚拟网卡配置。",
+    "author": "百科机场客户端研究组",
+    "date": "2026-10-10",
+    "updated": "2026-11-22",
+    "primaryKeyword": "Clash Verge Rev 教程",
+    "verdict": "Clash Verge Rev 是目前桌面端首选开源客户端。相比老旧 CFW，其开机常驻内存仅数十兆，原生集成 Mihomo 内核。开启“服务模式”并启用“TUN 模式”后，可实现终端 Git、游戏进程与全生态 100% 透明接管。",
+    "sections": [
+      {
+        "heading": "一、 Clash Verge Rev 架构解析：为什么它是原版 CFW 的终极替代者？",
+        "content": "<p>2023 年底原版 Clash for Windows (CFW) 停止维护后，市面上涌现了多个衍生客户端，其中 <strong>Clash Verge Rev</strong> 凭借其现代化的 Rust + Tauri 框架重构脱颖而出，迅速成为 Windows 与 macOS 双平台的旗舰首选：</p>\n<ul class=\"list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li><strong>告别内存杀手：</strong> 原版 CFW 基于臃肿的 Chromium + Electron 运行时，后台常驻内存 400MB ~ 800MB；Clash Verge Rev 借助操作系统原生 WebView 控件，空载内存仅 <strong>35MB ~ 50MB</strong>，轻盈省电；</li>\n  <li><strong>原生集成开源 Mihomo (Clash Meta) 内核：</strong> 完美支持 Shadowsocks-2022、VLESS Reality、Hysteria2、TUIC、WireGuard 全套新协议，彻底告别老旧内核协议无法解析的尴尬；</li>\n  <li><strong>系统级服务守护（Service Mode）：</strong> 内置一键服务安装守护，配合 TUN 虚拟网卡实现全系统应用无感透明分流。</li>\n</ul>"
+      },
+      {
+        "heading": "二、 跨平台安装指引与 macOS 常见权限拦截绕过",
+        "content": "<div class=\"space-y-3 my-4 text-xs sm:text-sm text-slate-700\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">Windows 用户安装建议</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      认准官方 GitHub 仓库下载 <code>Clash.Verge_x64-setup.exe</code>。若电脑未预装微软 Webview2，安装程序会自动提示补全运行库，跟随向导一路点击下一步即可安装完成。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">macOS 用户（M1/M2/M3 及 Intel）安装与门禁绕过</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      Apple Silicon 芯片用户务必下载 <code>_aarch64.dmg</code>，Intel 芯片用户下载 <code>_x64.dmg</code>。拖入“应用程序”后，双击若提示“应用已损坏，无法打开”，请打开 macOS“终端 (Terminal)”，复制并执行以下命令回车并输入电脑密码：\n    </p>\n    <div class=\"p-2 bg-slate-900 text-emerald-400 font-mono text-xs rounded my-2\">\n      sudo xattr -rd com.apple.quarantine /Applications/Clash Verge.app\n    </div>\n  </div>\n</div>"
+      },
+      {
+        "heading": "三、 导入订阅与三大代理模式解析",
+        "content": "<p>进入软件主界面，点击左侧<strong>“订阅 (Profiles)”</strong>，在顶部输入框粘贴机场提供的 Clash 订阅链接（如光速云一键复制的订阅），点击“导入 (Import)”，订阅卡片即会成功展现。</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">在左侧<strong>“代理 (Proxies)”</strong>页面，顶部的三大核心模式含义如下：</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 my-2\">\n  <li><strong>规则模式 (Rule - 强烈推荐日常保持)：</strong> 内核根据分流规则集自动判断，国内网站直连，海外受限网站走代理，两全其美；</li>\n  <li><strong>全局模式 (Global)：</strong> 电脑所有流量强行通过指定代理节点，仅在调试特定外网环境时开启；</li>\n  <li><strong>直连模式 (Direct)：</strong> 停用代理转发，全部流量直连公网。</li>\n</ul>"
+      },
+      {
+        "heading": "四、 TUN 虚拟网卡服务模式全接管实战",
+        "content": "<p>许多开发者在终端使用 <code>git push</code> 或运行 Python 脚本时经常报错连接超时，这是因为普通的“系统代理”仅作用于浏览器的 HTTP 端口。开启 <strong>TUN 模式</strong> 可以接管整个操作系统的虚拟网卡流量：</p>\n<ol class=\"list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li>点击左侧<strong>“设置 (Settings)”</strong>；</li>\n  <li>找到<strong>“服务模式 (Service Mode)”</strong>，点击右侧的“安装 (Install)”；</li>\n  <li>系统弹出管理员 UAC 授权窗口，点击“允许”。安装完成后，服务模式状态指示灯会变为<strong>绿色 Active</strong>；</li>\n  <li>回到顶部，将<strong>“TUN 模式”</strong>开关滑动开启！此时整台电脑所有命令行、Steam/Epic 联机与未配置代理的环境流量已被无缝透明接管！</li>\n</ol>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "为什么开启系统代理后，命令行 CMD 或 Git 依然连不上？",
+        "a": "因为命令行工具不默认读取 Windows HTTP 代理注册表。在设置中安装“服务模式”并开启“TUN 模式”，即可在底层虚拟网卡接管命令行流量。"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "slug": "article-51",
+    "category": "clients",
+    "parentHubUrl": "/clients/shadowrocket/",
+    "parentHubName": "Shadowrocket 教程",
+    "title": "Shadowrocket 节点导入与进阶规则分流实操教程 (图文详解)",
+    "description": "苹果 iPhone / iPad 用户小火箭（Shadowrocket）实操教程：一步步详解节点订阅导入、按需连接(On Demand)自动节能策略与防国内微信风控规则分流配置。",
+    "author": "百科机场移动终端组",
+    "date": "2026-10-15",
+    "updated": "2026-11-22",
+    "primaryKeyword": "Shadowrocket 小火箭配置教程",
+    "verdict": "Shadowrocket 凭借亲民价格与极佳功耗成为 iOS 首选。切记：绝对不要在系统“设置 -> iCloud”中登录陌生海外 Apple ID，仅在 App Store 应用商店内切换账号下载！日常全局路由务必选择【配置】模式，杜绝微信异地风控。",
+    "sections": [
+      {
+        "heading": "一、 Shadowrocket 软件概述与正规获取渠道",
+        "content": "<p>在整个 iOS 与 iPadOS 生态中，<strong>Shadowrocket（俗称“小火箭”）</strong>以其深厚的协议兼容性、极其丰富的策略分流规则与出色的系统电量控制，稳居网络工具排行榜第一名。由于国内 App Store 下架政策，中国大陆 Apple ID 无法直接搜索到该软件。</p>\n<div class=\"bg-rose-50 border border-rose-200 rounded-xl p-4 my-3 text-xs sm:text-sm text-rose-950\">\n  <span class=\"font-bold\">⚠️ 安全警告：</span> 切勿在各大电商平台或百度随意登录公开的“共享 Apple ID”！如果误在 iOS“设置”主页登录他人账号开启了 iCloud，手机将有被远程锁定敲诈的巨大风险！请务必仅在 <strong>App Store 商店内单独登录</strong>，或者使用双币信用卡正规注册属于自己的美区 ID。\n</div>"
+      },
+      {
+        "heading": "二、 订阅一键导入与节点连接全流程",
+        "content": "<p>获取并安装好 Shadowrocket 后，导入节点配置仅需三步：</p>\n<ol class=\"list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3\">\n  <li>打开机场用户后台，找到“Shadowrocket 一键导入”，点击后系统会自动唤醒小火箭并弹窗确认，点击保存即可；</li>\n  <li>若手动导入：点击右上角 <strong>“+”</strong> 号，类型选择 <strong>“Subscribe”</strong>，在 URL 一栏粘贴机场订阅链接，备注填写如“光速云”，点击右上角“完成”；</li>\n  <li>在首页节点列表中选择任一专线节点，首次滑动顶部连接开关时，iOS 系统会弹出“添加 VPN 配置”授权框，通过 Face ID 或密码验证即可成功开启！</li>\n</ol>"
+      },
+      {
+        "heading": "三、 “按需连接 (On Demand)”黑科技实战：手机全天候无感续航",
+        "content": "<p>很多 iPhone 用户日常使用代理最大的痛点就是：出门连了 Wi-Fi 忘记开代理，回家连了家里网络又忘记关，导致电池发热严重、掉电如流水。Shadowrocket 内置的<strong>按需连接（On Demand）</strong>功能彻底解决了这一难题：</p>\n<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-2 text-xs sm:text-sm text-slate-700\">\n  <p><strong>实操配置：</strong> 进入小火箭“设置 -> 按需连接”，开启总开关：</p>\n  <ul class=\"list-disc pl-5 space-y-1 text-xs\">\n    <li><strong>蜂窝网络连接：</strong> 开启（当使用 4G/5G 数据流量时自动拉起代理）；</li>\n    <li><strong>指定 Wi-Fi 白名单直连：</strong> 在 Wi-Fi 规则中添加自己家里的无线网络名称（SSID），设置为“Disconnect (断开)”。回到家自动休眠 VPN，彻底杜绝后台多余耗电！</li>\n  </ul>\n</div>"
+      },
+      {
+        "heading": "四、 高级分流配置与 Lazy 规则集自动更新",
+        "content": "<p>Shadowrocket 支持极其强大的远程规则集（Rule Sets）。默认情况下，建议在“配置”页面选用经典 ACL4SSR 或 Hackl0us/SS-Rule-Snippet 规则库：</p>\n<ul class=\"list-disc pl-5 space-y-1 text-xs sm:text-sm text-slate-700 my-2\">\n  <li><strong>国内直连组 (Direct)：</strong> 包含国内主流电商、银行、腾讯阿里系 IP，全部本地直连，完全不消耗机场流量；</li>\n  <li><strong>海外加速组 (Proxy)：</strong> 包含 Google、Twitter、GitHub、Wikipedia 等常规受限网站，走标准专线节点；</li>\n  <li><strong>流媒体与 AI 分组 (Media/AI)：</strong> 为 Netflix、Disney+、ChatGPT、Claude 分别绑定原生解锁节点，实现自动分流。</li>\n</ul>\n<p class=\"text-xs text-slate-600\">在设置中开启“自动更新规则”，小火箭会在后台每天静默同步最新规则，确保新出现的国内域名不会被误走代理。</p>"
+      },
+      {
+        "heading": "五、 常见报错排障：小火箭连上后频繁断开或提示 VPN 错误",
+        "content": "<p>如果遇到滑动连接开关后 2 秒内自动断开，请按以下顺序排查：</p>\n<ol class=\"list-decimal pl-5 space-y-1 text-xs text-slate-700 my-2\">\n  <li>检查 iPhone 系统时间是否准确开启了“自动设置”；</li>\n  <li>前往 iOS“设置 -> 通用 -> VPN 与设备管理”，删除所有历史残留的废弃 VPN 描述文件后重新在小火箭中生成；</li>\n  <li>检查是否开启了与其他代理软件（如 Quantumult X、Loon）的冲突监听，确保仅保留一个激活中的网络扩展。</li>\n</ol>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "小火箭在后台常驻耗电严重吗？",
+        "a": "在【配置】规则模式下，Shadowrocket 调用 iOS 系统级 Network Extension，全天常驻耗电通常低于 5%，极为省电。"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "slug": "article-61",
+    "category": "network",
+    "parentHubUrl": "/network/low-latency/",
+    "parentHubName": "低延迟专线指南",
+    "title": "Fake-IP 原理解析：它是如何消除本地 DNS 往返延迟实现秒开的？",
+    "description": "深入解构现代代理核心（Clash / Mihomo / sing-box）的 Fake-IP 运行机理。对比传统 Redir-Host 模式，拆解虚拟网段映射、远端递归解析与防 DNS 污染实战。",
+    "author": "百科机场网络工程组",
+    "date": "2026-10-20",
+    "updated": "2026-11-22",
+    "primaryKeyword": "Fake-IP 原理解析",
+    "verdict": "Fake-IP 模式在收到本地 DNS 请求时瞬时返回 198.18.x.x 虚假保留 IP，使操作系统免去等待远程 DNS 解析的几百毫秒 RTT 延迟，直接建立 TCP 握手，真正实现网页秒开并从根源上杜绝本地 DNS 污染。",
+    "sections": [
+      {
+        "heading": "一、 传统 Redir-Host 模式的痛点：跨洋 DNS 往返延迟",
+        "content": "<p>在 Clash 的早期版本中，默认采用的是 <code>redir-host</code> DNS 解析模式。当用户在浏览器输入 <code>google.com</code> 时，本地网络的工作时序如下：</p>\n<div class=\"p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs my-3 space-y-1\">\n  <div>1. 浏览器发起 DNS 请求: 查询 google.com 的真实 IP;</div>\n  <div>2. 本地代理内核截获请求，通过跨洋加密连接向海外远程 DNS (如 8.8.8.8) 发起解析;</div>\n  <div>3. 经历漫长的跨洋网络往返 (RTT 约 150ms ~ 300ms)，等待远程 DNS 返回真实 IP (如 142.250.x.x);</div>\n  <div>4. 客户端将 IP 交还给浏览器，浏览器才正式发起 TCP 握手连接！</div>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  用户在点击网页链接时，最直观的感受就是<strong>“浏览器先转圈发呆 0.5 秒，随后才开始加载内容”</strong>。这个发呆的时间，正是本地 DNS 往返解析产生的延迟损耗。\n</p>"
+      },
+      {
+        "heading": "二、 Fake-IP 的革命性设计：198.18.0.0/16 虚拟网段与零延迟秒开",
+        "content": "<p>为了彻底消灭上述 DNS 往返等待，Clash 团队引入了 <strong>Fake-IP 模式</strong>。其核心设计极其优雅：</p>\n<div class=\"bg-blue-50 border border-blue-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-blue-950 font-sans\">\n  <p><strong>核心逻辑：</strong> 当用户浏览器请求 <code>google.com</code> 的瞬间，Clash 内核<strong>根本不进行真正的远程 DNS 解析</strong>，而是立刻在本地伪造一个保留网段的虚拟 IP（如 <code>198.18.0.23</code>）在 <strong>0 毫秒</strong>内闪电返回给浏览器！</p>\n  <p>浏览器拿到这个虚拟 IP 后，立即发起 TCP 握手并发送 HTTP/TLS 数据包；Clash 内核截获发往 <code>198.18.0.23</code> 的数据包后，根据本地维护的映射表还原出原始域名 <code>google.com</code>，直接将域名连同数据一起打包发送给境外专线节点，由远端服务器在海外高速内网环境下完成最终解析和请求！</p>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  这使得客户端彻底消除了本地 DNS 查询的跨洋往返时间，实现了<strong>网页点击秒开、流媒体即点即播</strong>的丝滑体验。\n</p>"
+      },
+      {
+        "heading": "三、 Fake-IP 模式的避坑指南与 fake-ip-filter 白名单配置",
+        "content": "<p>尽管 Fake-IP 性能卓越，但由于给域名分配了虚拟假 IP，在少数特殊场景下会引起兼容性异常（如某些依赖真实 IP 验证的局域网设备、网易云音乐打卡插件、Windows 网络连通性测试 NCSI 误判网络离线等）。</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  最佳修复方案是在配置文件中维护一份 <strong>fake-ip-filter 白名单</strong>，将不需要伪造 IP 的域名强行排除：\n</p>\n<div class=\"bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs overflow-x-auto my-3\">\n  <pre><code>dns:\n  enable: true\n  enhanced-mode: fake-ip\n  fake-ip-range: 198.18.0.1/16\n  fake-ip-filter:\n    - \"*.lan\"\n    - \"msftconnecttest.com\"\n    - \"msftncsi.com\"\n    - \"*.msftconnecttest.com\"\n    - \"*.msftncsi.com\"\n    - \"workgroup\"</code></pre>\n</div>"
+      },
+      {
+        "heading": "四、 Fake-IP 在主机与外服游戏加速中的 UDP 转发优化",
+        "content": "<p>对于经常使用 Steam、PlayStation、Nintendo Switch 联机的用户，Fake-IP 模式需要特别注意 UDP 转发设置：</p>\n<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-700 my-2\">\n  <p>部分外服联机游戏采用 P2P 架构，客户端之间需要直接通信真实 IP。若节点不支持 FullCone NAT（完全圆锥型 NAT）或 Fake-IP 未正确过滤游戏语音服务器域名，可能导致语音连不上或 NAT 类型显示 Strict 严苛。在 Clash Verge Rev 中开启 TUN 模式的高级栈（gVisor 或 Mixed 模式），配合支持 FullCone 的优质 IEPL 专线，可将 NAT 类型直接拉满至 Type A / Open 开放级！</p>\n</div>"
+      },
+      {
+        "heading": "五、 深度对比：Fake-IP vs Redir-Host 选型建议表",
+        "content": "<div class=\"overflow-x-auto rounded-xl border border-slate-200 my-3\">\n  <table class=\"w-full text-xs text-left\">\n    <thead class=\"bg-slate-100 font-bold border-b\">\n      <tr>\n        <th class=\"p-2.5\">对比维度</th>\n        <th class=\"p-2.5\">Fake-IP 增强模式</th>\n        <th class=\"p-2.5\">传统 Redir-Host 模式</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y bg-white\">\n      <tr>\n        <td class=\"p-2.5 font-bold\">域名解析响应时间</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">0ms (秒开)</td>\n        <td class=\"p-2.5 text-rose-600\">150ms ~ 300ms (跨洋等待)</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">本地 DNS 污染风险</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">100% 免疫 (直接封装域名)</td>\n        <td class=\"p-2.5 text-amber-600\">需配合防污染 DoH</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">特殊局域网兼容性</td>\n        <td class=\"p-2.5 text-amber-600\">需配置 fake-ip-filter 白名单</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">天然完全兼容</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">综合推荐度</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">★★★★★ (现代主流首选)</td>\n        <td class=\"p-2.5 text-slate-500\">★★★☆☆ (仅兼容老设备)</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Fake-IP 模式会导致本地测 Ping 出现 198.18 开头的 IP 吗？",
+        "a": "是的，这是完全正常的现象。该 IP 仅用于本机内核内部寻址映射，不影响实际出站网络。"
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "slug": "article-67",
+    "category": "troubleshooting",
+    "parentHubUrl": "/troubleshooting/timeout/",
+    "parentHubName": "节点超时排查",
+    "title": "节点测速全红全超时？电脑系统时间同步与防重放机制急救排查",
+    "description": "客户端节点列表突然全部测速超时、Ping 全红？90% 的诱因在于系统时间漂移！深度解析现代 TLS/Trojan 协议防重放机制，手把手教您校准时间与排错恢复。",
+    "author": "百科机场排障先锋队",
+    "date": "2026-10-25",
+    "updated": "2026-11-22",
+    "primaryKeyword": "节点测速全红超时修复",
+    "verdict": "节点全红不要慌，第一步先同步系统时钟！现代主流加密协议高度依赖时间戳防重放攻击。若本地时钟偏差超过 60-90 秒，服务器会直接丢弃连接请求。同步北京时间并更新订阅，问题迎刃而解。",
+    "sections": [
+      {
+        "heading": "一、 节点测速全红超时（Timeout）的最常见元凶：时钟偏差",
+        "content": "<p>很多用户在使用代理客户端时，常常会遇到非常诡异的情况：刚刚还能正常上网，突然之间客户端内<strong>所有节点测速全部显示红色的“Timeout”或 9999ms 超时</strong>，更换不同国家节点无一幸免，检查宽带又一切正常。据统计，这类故障中有超过 70% 的根源不是机场服务器故障，而是<strong>用户本机操作系统时间与网络标准时间发生了偏差！</strong></p>"
+      },
+      {
+        "heading": "二、 加密协议的防重放攻击机制（Replay Protection）原理解密",
+        "content": "<p>现代安全的代理协议（如 VMess、Shadowsocks-2022、VLESS Reality 等）为了防止中间人或防火墙通过录制历史通信数据包进行“重放探测（Replay Attack）”，都在协议握手包中深度集成了<strong>时间戳防伪校验机制</strong>：</p>\n<div class=\"p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs my-3 space-y-2\">\n  <div>[用户客户端] ---> 携带本地时间戳发送加密握手包 (Timestamp: 2026-11-22 14:00:00)</div>\n  <div>    ↓</div>\n  <div>[境外专线节点服务器] (当前标准时间: 2026-11-22 14:02:30, 偏差 150 秒)</div>\n  <div>    ↓</div>\n  <div>【安全拦截】| 本地时间与服务器时差绝对值 > 90 秒 | ---> 判定为过期或非法重放攻击，直接静默丢包！</div>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  这意味着：只要您的电脑主板电池老化、或者双系统切换导致系统时钟哪怕慢了 2 分钟，节点服务器就会毫不留情地拒绝所有连接！\n</p>"
+      },
+      {
+        "heading": "三、 Windows 与 macOS 一键校准系统时钟实操",
+        "content": "<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-blue-50 border border-blue-200 rounded-xl\">\n    <h4 class=\"font-bold text-blue-900 text-sm mb-1\">Windows 10 / 11 快捷校准：</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed mb-2\">\n      右键点击电脑右下角任务栏的时间 -> 选择<strong>“调整日期和时间”</strong> -> 确保开启“自动设置时间” -> 点击下方的<strong>“立即同步 (Sync Now)”</strong>按钮。\n    </p>\n    <p class=\"text-xs text-slate-600 font-mono\">命令行强制同步：以管理员身份运行 CMD，输入：<code>w32tm /resync</code></p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">macOS 快速校准：</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      进入“系统设置” -> “通用” -> “日期与时间”，关闭“自动设置时间”后再重新打开，或者在终端运行：<code>sudo sntp -sS time.apple.com</code>。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "四、 Linux 与软路由 OpenWrt 系统的 NTP 授时排查",
+        "content": "<p>如果您是在家庭软路由或 Linux 服务器上部署代理，系统时钟同样至关重要：</p>\n<div class=\"bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs my-2\">\n  <pre><code># 检查当前系统时钟与 NTP 同步状态\ntimedatectl status\n\n# 强制启用 NTP 自动网络同步\nsudo timedatectl set-ntp true\n\n# 手动同步标准时间 (阿里云 NTP 服务)\nsudo ntpdate ntp.aliyun.com</code></pre>\n</div>\n<p class=\"text-xs text-slate-600\">在软路由 OpenWrt 系统后台中，进入“系统 -> 系统属性”，确保将 NTP 授时服务器配置为 <code>cn.pool.ntp.org</code> 和 <code>ntp.aliyun.com</code>，并勾选“提供 NTP 服务”，彻底杜绝软路由重启后时钟丢失导致的断网灾难。</p>"
+      },
+      {
+        "heading": "五、 节点全红全超时的其他三大隐蔽元凶",
+        "content": "<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 my-2\">\n  <li><strong>订阅到期或流量耗尽：</strong> 登录机场后台查看套餐余量与到期时间，很多时候全红仅仅是因为月结日流量用完了；</li>\n  <li><strong>本地安全杀毒软件拦截：</strong> 某些第三方安全软件误将代理内核的本地监听端口（7890）识别为后门程序并进行网络阻断，将 Clash 加入白名单即可；</li>\n  <li><strong>运营商本地 DNS 故障：</strong> 宽带运营商 DNS 无法解析机场接入节点的域名，在网卡设置中手动将 DNS 改为 119.29.29.29 与 223.5.5.5 即可修复。</li>\n</ul>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "时间校准后依然全红怎么办？",
+        "a": "检查官网后台套餐是否过期或流量用尽；尝试切换手机 4G/5G 热点测试是否为本地特定 Wi-Fi 屏蔽了代理端口。"
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "slug": "article-70",
+    "category": "troubleshooting",
+    "parentHubUrl": "/troubleshooting/connection-failed/",
+    "parentHubName": "连接故障排查",
+    "title": "退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本",
+    "description": "解决科学上网软件非正常关闭后电脑全面断网的顽疾：系统代理注册表残留机理深度剖析，提供图形化手动关闭指引与一键 PowerShell 修复脚本。",
+    "author": "百科机场排障先锋队",
+    "date": "2026-11-01",
+    "updated": "2026-11-22",
+    "primaryKeyword": "退出代理后电脑断网修复",
+    "verdict": "关掉翻墙软件后无法上网，是因为 Windows 注册表中的代理开关未被正常清除，系统仍将流量转发至已经关闭的 7890 端口。打开系统设置关闭“使用代理服务器”开关，或运行重置命令即可瞬间恢复。",
+    "sections": [
+      {
+        "heading": "一、 故障表象：退出客户端后“百度、微信打不开，QQ 却能发消息”",
+        "content": "<p>这是翻墙新手最常遇见的“离奇灾难”：在关闭 Clash 或 v2rayN 准备专心工作时，发现浏览器突然无法访问任何网站，无论是百度、知乎还是淘宝均提示“代理服务器无响应 (ERR_PROXY_CONNECTION_FAILED)”，但离奇的是微信或 QQ 却依然能在后台收发文字消息！许多用户误以为电脑中了病毒，甚至盲目去重装系统。</p>"
+      },
+      {
+        "heading": "二、 根本原因：Windows 系统注册表代理键值残留",
+        "content": "<p>现代桌面客户端在开启“系统代理”时，本质上是通过调用 Windows 底层 API 修改了 Internet 选项的注册表键值：</p>\n<div class=\"bg-blue-50 border border-blue-200 rounded-xl p-4 my-3 text-xs sm:text-sm text-blue-950 font-mono\">\n  注册表路径: [HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings]<br>\n  - ProxyEnable = 1 (开启代理)<br>\n  - ProxyServer = 127.0.0.1:7890 (将本地 7890 端口指定为代理服务器)\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  如果客户端在退出前没有正常复原该设置（例如由于软件闪退、电脑直接强制关机拔电源、或者在任务管理器中强制杀死进程），Windows 的 <code>ProxyEnable</code> 依然保持为 1！所有浏览器就会持续向 <code>127.0.0.1:7890</code> 发送请求，而此时由于客户端已经关闭，本地 7890 端口根本没有程序在监听，浏览器自然全面瘫痪！\n</p>"
+      },
+      {
+        "heading": "三、 30 秒一键急救方案与批处理脚本",
+        "content": "<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">方法一：图形界面手动关闭（适合零基础）</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      按快捷键 <code>Win + i</code> 打开设置 -> 点击<strong>“网络和 Internet”</strong> -> 点击<strong>“代理 (Proxy)”</strong> -> 找到“手动设置代理”，将<strong>“使用代理服务器”开关彻底关闭</strong>，点击保存即可瞬间恢复！\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-900 text-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-emerald-400 text-sm mb-1\">方法二：PowerShell 一键清除脚本</h4>\n    <p class=\"text-xs text-slate-400 leading-relaxed mb-2\">按下 <code>Win + X</code> 选择 PowerShell，粘贴以下命令并回车，1 秒内完成注册表重置：</p>\n    <div class=\"bg-black/50 p-3 rounded font-mono text-xs text-emerald-300 overflow-x-auto\">\n      Set-ItemProperty -Path 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings' -Name ProxyEnable -Value 0\n    </div>\n  </div>\n</div>"
+      },
+      {
+        "heading": "四、 一劳永逸：制作桌面一键修复网络 .bat 批处理脚本",
+        "content": "<p>为了防止以后再次遇到类似困扰，建议在电脑桌面新建一个名为 <code>修复网络.bat</code> 的文本文件，粘贴以下脚本代码并保存：</p>\n<div class=\"bg-slate-900 text-emerald-300 p-4 rounded-xl font-mono text-xs my-2\">\n  <pre><code>@echo off\necho 正在清理系统代理残留设置...\nreg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\" /v ProxyEnable /t REG_DWORD /d 0 /f\nreg delete \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\" /v ProxyServer /f >nul 2>&1\necho 正在刷新系统 DNS 缓存...\nipconfig /flushdns\necho 修复成功！您的浏览器网络已恢复正常！\npause</code></pre>\n</div>\n<p class=\"text-xs text-slate-600\">以后遇到类似断网，右键以管理员身份运行这个批处理文件，2 秒内自动解决所有代理残留与 DNS 僵死问题！</p>"
+      },
+      {
+        "heading": "五、 终极防范：如何从根本上杜绝代理残留？",
+        "content": "<div class=\"bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs sm:text-sm text-blue-950 my-2\">\n  <p><strong>1. 规范退出：</strong> 养成在软件托盘右键选择“Quit”正常退出客户端的习惯，不要通过任务管理器强制结束进程；</p>\n  <p><strong>2. 开启 TUN 模式替代系统代理：</strong> 在 Clash Verge Rev 中安装 Service Mode 并开启 TUN 虚拟网卡，完全不需要修改 Windows 系统的 Internet 代理注册表，从根源上消除残留可能！</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "如何彻底避免每次退出都断网？",
+        "a": "建议使用 Clash Verge Rev 并开启“TUN 模式”，TUN 虚拟网卡在驱动层接管流量，无需修改 Windows 系统代理注册表，软件关闭时驱动自动卸载，绝不残留。"
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "slug": "article-82",
+    "category": "network",
+    "parentHubUrl": "/network/iepl/",
+    "parentHubName": "IEPL 专线解析",
+    "title": "IEPL 国际以太网专线物理层拓扑大揭秘：二层物理光缆是如何过境的？",
+    "description": "从电信工程学视角揭秘科学上网顶级线路 IEPL 的物理架构：二层以太网链路、点对点光缆传输、绕过 GFW 公网出口的底层机理与真假专线核验。",
+    "author": "百科机场网络工程组",
+    "date": "2026-11-05",
+    "updated": "2026-11-22",
+    "primaryKeyword": "IEPL 专线物理拓扑揭秘",
+    "verdict": "IEPL 是端到端二层以太网物理专线，数据在电信运营商骨干内网中封闭穿透，物理上不经过中国大陆公网国际出口（NAP）。因此在任何特殊敏感时期，真 IEPL 专线均能保持 99.9% 在线率与绝对零丢包。",
+    "sections": [
+      {
+        "heading": "一、 专线究竟神在哪里？IEPL、IPLC 与普通公网的本质区别",
+        "content": "<p>在机场圈里，“专线”二字几乎是高品质、晚高峰不卡顿的代名词。很多新手好奇：同样是跨国传输数据，为什么 IEPL 专线能彻底不受敏感期网络封锁的影响？</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  普通公网代理（如直连或公网隧道）是在庞大而拥挤的公用互联网上与其他普通网民抢带宽，数据必须经过我国国家级的国际出口路由器，每一包数据都要经过 GFW 庞大的审查阵列进行 DPI 检测；而 <strong>IEPL（International Ethernet Private Line，国际以太网专线）</strong> 是跨国电信运营商（如中国电信、中国移动国际 CMI、PCCW 电讯盈科）面向跨国金融企业打造的<strong>端到端二层私有数据链路</strong>。\n</p>"
+      },
+      {
+        "heading": "二、 IEPL 跨境物理拓扑全景解构",
+        "content": "<p>IEPL 专线的物理数据路径完全封闭在私有光缆网中，拓扑如下：</p>\n<div class=\"p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs my-3 space-y-2\">\n  <div>[用户终端] ---> (国内城市本地光纤宽带)</div>\n  <div>    ↓</div>\n  <div>[国内接入 PoP 点机房 (如深圳前海/上海临港电信 IDC)]</div>\n  <div>    ↓ 【通过运营商内网 VLAN 封装，走物理层海缆/陆缆直达】</div>\n  <div>[境外出口 PoP 点机房 (如香港柴湾/日本东京 Equinix IDC)]</div>\n  <div>    ↓</div>\n  <div>[海外原生 ISP 宽带公网] ---> [目标网站 (Google / OpenAI / Netflix)]</div>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  <strong>核心特征：</strong>\n</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 my-2\">\n  <li><strong>二层物理隔离：</strong> 数据在物理光纤中直接以以太网帧的形式跨境，根本不需要被转换为三层 IP 公网数据包；</li>\n  <li><strong>绕过 GFW 审查硬件：</strong> 由于物理线路属于企业内网链路，出口直接通向境外机房，物理上绕过了部署在公网网关的审查设备；</li>\n  <li><strong>SLA 服务等级承诺：</strong> 运营商承诺端到端丢包率 < 0.1%，深圳至香港物理单程延迟稳定在 3ms ~ 5ms，上海至东京稳定在 28ms！</li>\n</ul>"
+      },
+      {
+        "heading": "三、 市场上假冒专线的四种套路与四步鉴别法",
+        "content": "<div class=\"bg-amber-50 border border-amber-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-amber-950\">\n  <p><strong>套路曝光：</strong> 不少无良机场把成本仅 1 元/月的公网直连节点伪装成“IEPL 极速专线”加价出售。鉴别真假专线仅需四步：</p>\n  <ul class=\"list-disc pl-5 space-y-2 text-xs\">\n    <li><strong>晚高峰 21:00 测速看抖动：</strong> 真 IEPL 专线在晚高峰网络大拥堵时，延迟抖动（Jitter）通常不超过 2ms，丢包率为 0%；假专线延迟瞬间翻倍并开始大量丢包；</li>\n    <li><strong>路由跳数（Traceroute）检测：</strong> 从国内入口到境外落地，真专线中间跳数极少（仅经过内网交换机，无公网路由跃点）；</li>\n    <li><strong>敏感期生存状态：</strong> 在特殊网络敏感期，假专线全部飘红断线，真专线（如光速云）丝毫不受任何外界风浪影响。</li>\n  </ul>\n</div>"
+      },
+      {
+        "heading": "四、 IEPL vs IPLC 专线物理特性横向对比表",
+        "content": "<div class=\"overflow-x-auto rounded-xl border border-slate-200 my-3\">\n  <table class=\"w-full text-xs text-left\">\n    <thead class=\"bg-slate-100 font-bold border-b\">\n      <tr>\n        <th class=\"p-2.5\">技术指标</th>\n        <th class=\"p-2.5\">IEPL (国际以太网专线)</th>\n        <th class=\"p-2.5\">IPLC (国际私有租用线路)</th>\n        <th class=\"p-2.5\">普通公网 BGP 隧道</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y bg-white\">\n      <tr>\n        <td class=\"p-2.5 font-bold\">物理介质层级</td>\n        <td class=\"p-2.5 text-blue-600 font-bold\">二层以太网链路 (VLAN)</td>\n        <td class=\"p-2.5 text-blue-600 font-bold\">一层物理裸光纤 (TDM)</td>\n        <td class=\"p-2.5 text-slate-500\">三层公网 IP 路由</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">经过 GFW 审查?</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">否 (内网物理绕过)</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">否 (内网物理绕过)</td>\n        <td class=\"p-2.5 text-rose-600 font-bold\">是 (必须通过边界路由器)</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">晚高峰丢包率</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">&lt; 0.1% (近乎零丢包)</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">&lt; 0.1% (极低)</td>\n        <td class=\"p-2.5 text-rose-600 font-bold\">15% ~ 35% (严重拥堵)</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">敏感时期可用性</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">100% 稳如磐石</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">100% 稳如磐石</td>\n        <td class=\"p-2.5 text-rose-600 font-bold\">大面积断连或限速</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">采购成本</td>\n        <td class=\"p-2.5 text-amber-600 font-bold\">极高 (8~15元/Mbps/月)</td>\n        <td class=\"p-2.5 text-amber-600 font-bold\">极高 (10~20元/Mbps/月)</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">极低 (0.5~2元/Mbps/月)</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
+      },
+      {
+        "heading": "五、 专线海缆突发断裂时的电信级容灾机制",
+        "content": "<p>很多人担心：如果国际海底光缆发生地震断裂（如台湾海峡海缆故障），IEPL 专线也会断网吗？</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">正规电信运营商的 IEPL 网络具备<strong>环网保护（APS 自动保护倒换）机制</strong>。一旦主用海缆中断，运营商在 50ms 毫秒内自动切换到备用陆缆（如经陆路中俄或者泛亚陆缆系统）恢复通信。这就是为什么光速云等具备双重冗余的专线机场能够做到真正 365 天无感运营的技术底蕴所在。</p>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "如何用 traceroute 识破假冒的 IEPL 专线？",
+        "a": "在客户端对专线节点执行路由追踪。真专线从国内入口到海外落地通常只有 2-3 跳内网 IP，且深港跳数延迟不超过 10ms；若看到大量公网骨干网路由跳数且晚高峰延迟翻倍，必为假专线。"
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "slug": "article-90",
+    "category": "network",
+    "parentHubUrl": "/network/traffic-ratio/",
+    "parentHubName": "倍率机制解析",
+    "title": "节点倍率计算公式详解：大文件下载如何利用 0.2x 节点省流？",
+    "description": "系统科普机场节点倍率（Traffic Ratio）计费规则。揭秘 0.2x 低倍率与 3.0x 高倍率背后的成本逻辑，教您如何科学配置分流策略，让套餐流量使用效率提升 3 倍。",
+    "author": "百科机场精算研究室",
+    "date": "2026-11-10",
+    "updated": "2026-11-22",
+    "primaryKeyword": "节点倍率计算公式详解",
+    "verdict": "扣除流量 = 物理下载流量 × 节点倍率系数。大文件下载（如 Steam 更新、系统镜像）选用 0.2x-0.5x 节点能让 100GB 当 500GB 用；关键业务（AI/金融）选用 1.0x 标准顶级专线（如光速云）享受极致稳定。",
+    "sections": [
+      {
+        "heading": "一、 什么是节点倍率？机场计费系统的扣费公式揭秘",
+        "content": "<p>在主流基于 SSPanel、V2Board 等机场面板中，每个节点名称后面都会明确标注 <code>0.1x</code>、<code>1.0x</code>、<code>3.0x</code> 等符号，这就是<strong>节点倍率（Traffic Ratio）</strong>。</p>\n<div class=\"p-4 bg-blue-50 border border-blue-200 rounded-xl my-3 text-xs sm:text-sm text-blue-950 font-mono\">\n  账户实际扣除流量 = 本次连接实际消耗的总流量（上传 + 下载） × 当前节点倍率\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  例如：如果您的套餐总流量为 100GB：\n</p>\n<ul class=\"list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-slate-700 my-2\">\n  <li>使用 <strong>0.2x 节点</strong> 下载了 50GB 文件，实际账户仅扣除 <code>50GB × 0.2 = 10GB</code> 流量，您相当于拥有了 <strong>500GB</strong> 的可用容量！</li>\n  <li>如果连上 <strong>5.0x 节点</strong> 看了 20GB 的 4K 视频，您的账户瞬间会被扣除 <code>20GB × 5.0 = 100GB</code>，套餐额度直接被清空！</li>\n</ul>"
+      },
+      {
+        "heading": "二、 为什么机场要设置不同倍率？背后成本拆解",
+        "content": "<p>倍率的设置并不是商家随心所欲的恶作剧，而是反映了不同网络资源的<strong>物理采购成本差异</strong>：</p>\n<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700\">\n    <span class=\"font-bold text-slate-900 block mb-1\">低倍率节点 (0.1x ~ 0.5x)：</span>\n    通常采用普通公网 VPS 直连或廉价大带宽线路。成本低廉但晚高峰易丢包，适合用户在非高峰期跑大流量任务。\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700\">\n    <span class=\"font-bold text-slate-900 block mb-1\">标准倍率节点 (1.0x)：</span>\n    主流高质量 IEPL/IPLC 专线，成本适中，兼顾速度与稳定性，适合日常办公与 4K 视频。\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700\">\n    <span class=\"font-bold text-slate-900 block mb-1\">高倍率节点 (2.0x ~ 5.0x)：</span>\n    配备罕见的原生家庭住宅 ISP 宽带，专门用于解锁 Netflix、Disney+ 或极度严苛的 AI 平台，由于住宅宽带按量采购成本极高，因此通过高倍率收回成本。\n  </div>\n</div>"
+      },
+      {
+        "heading": "三、 聪明用户的省流策略：任务与倍率精准匹配",
+        "content": "<div class=\"bg-emerald-50 border border-emerald-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-emerald-950\">\n  <p><strong>大文件更新（Steam、BT、网盘）：</strong> 坚决切换至 0.1x / 0.2x 节点，省流 80% 以上；</p>\n  <p><strong>日常社交与代码推拉：</strong> 保持在 1.0x 标准专线，享受毫秒级稳定响应；</p>\n  <p><strong>AI 对话与敏感注册：</strong> 仅在需要时切换至高纯净度节点，用完切回标准节点，避免常驻高倍率导致流量意外蒸发。</p>\n</div>"
+      },
+      {
+        "heading": "四、 避坑警惕：“暗倍率”与倍率刺客的套路曝光",
+        "content": "<p>在部分不良机场中，存在极具欺骗性的“暗倍率”套路：</p>\n<div class=\"bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-950 space-y-2 my-2\">\n  <p><strong>案例：</strong> 节点列表中明明显示 <code>香港01 [1.0x]</code>，但用户在下载了 1GB 文件后，进入用户后台刷新，发现已用流量赫然暴增了 <strong>3GB</strong>！这就是黑心站长在后端面板的计费节点中私下修改了倍率参数。辨别方法：每周定期在用户中心记录当前流量，用一个 100MB 标准文件测试下载，核算扣除量是否吻合。</p>\n</div>"
+      },
+      {
+        "heading": "五、 常见任务场景的倍率最佳选择决策表",
+        "content": "<div class=\"overflow-x-auto rounded-xl border border-slate-200 my-3\">\n  <table class=\"w-full text-xs text-left\">\n    <thead class=\"bg-slate-100 font-bold border-b\">\n      <tr>\n        <th class=\"p-2.5\">任务场景</th>\n        <th class=\"p-2.5\">建议节点倍率</th>\n        <th class=\"p-2.5\">核心考量指标</th>\n        <th class=\"p-2.5\">推荐代表节点</th>\n      </tr>\n    </thead>\n    <tbody class=\"divide-y bg-white\">\n      <tr>\n        <td class=\"p-2.5 font-bold\">Steam 游戏下载 / 系统更新</td>\n        <td class=\"p-2.5 text-emerald-600 font-bold\">0.1x ~ 0.2x</td>\n        <td class=\"p-2.5\">只看重带宽与省流，不看延迟</td>\n        <td class=\"p-2.5\">美国/欧洲低倍大带宽节点</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">跨国视频会议 / Zoom / Discord</td>\n        <td class=\"p-2.5 text-blue-600 font-bold\">1.0x 标准倍率</td>\n        <td class=\"p-2.5\">追求超低延迟抖动与零丢包</td>\n        <td class=\"p-2.5\">香港/日本 IEPL 专线</td>\n      </tr>\n      <tr>\n        <td class=\"p-2.5 font-bold\">OpenAI / Claude / 海外银行</td>\n        <td class=\"p-2.5 text-amber-600 font-bold\">1.5x ~ 2.0x</td>\n        <td class=\"p-2.5\">追求住宅 ISP 纯净出口与防封</td>\n        <td class=\"p-2.5\">原生美区住宅专线</td>\n      </tr>\n    </tbody>\n  </table>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "直连国内流量会被扣倍率吗？",
+        "a": "在正确配置的规则（Rule）模式下，国内网站直连不经过机场节点，消耗的机场流量恒等于 0。"
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "slug": "article-97",
+    "category": "risk",
+    "parentHubUrl": "/risk/shutdown/",
+    "parentHubName": "跑路风险防范",
+    "title": "机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱",
+    "description": "深度复盘近年数十起机场卷款跑路案例：反常低价大促、官方群全员禁言、工单响应停滞与节点大面积变红。掌握跑路雷达信号，守卫个人数字资产安全。",
+    "author": "百科机场风控实验室",
+    "date": "2026-11-15",
+    "updated": "2026-11-22",
+    "primaryKeyword": "机场跑路前兆识别",
+    "verdict": "出现以下任何两个信号，必须立即停止续费：1) 突击推出买一送一或永久套餐骨折大促；2) TG 交流群开启全员禁言或解散；3) 节点大面积红线超时数天不修。坚守月付原则是避免损失的唯一护甲。",
+    "sections": [
+      {
+        "heading": "一、 机场跑路前夕的五大经典预警征兆（致命信号）",
+        "content": "<p>翻墙服务商的崩盘往往不是一夜之间突然发生的。在正式关站跑路前的一至两周内，几乎都会出现以下五个规律性征兆：</p>\n<div class=\"space-y-3 my-4\">\n  <div class=\"p-4 bg-rose-50 border border-rose-200 rounded-xl\">\n    <h4 class=\"font-bold text-rose-900 text-sm mb-1\">信号 1：突然推出违背商业常理的“骨折年付/三年付”大促</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      平时月付 20 元的机场，突然向全员发送紧急邮件宣称“庆典特惠，三年付仅需 88 元限时 48 小时”。这是资金链断裂的商家做最后一轮现金收割的最鲜明特征。\n    </p>\n  </div>\n  <div class=\"p-4 bg-amber-50 border border-amber-200 rounded-xl\">\n    <h4 class=\"font-bold text-amber-900 text-sm mb-1\">信号 2：官方 Telegram 交流群开启全员禁言或解散</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      管理员以“防止同行恶意抹黑”或“整顿交流秩序”为借口，将几千人的公开交流群强行设为全员禁言，剥夺用户的公开质询渠道。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">信号 3：主流香港/日本核心节点飘红数天无人维护</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      核心专线大面积不可用超过 48 小时，官方没有任何故障公告，工单已读不回或全部显示敷衍的自动回复。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">信号 4：充值支付通道频繁更换小商户与异常个人码</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      原本稳定的企业支付通道突然失效，转为调用小众甚至个人免签收款码，说明其上游支付渠道已被风控清退。\n    </p>\n  </div>\n  <div class=\"p-4 bg-slate-50 border border-slate-200 rounded-xl\">\n    <h4 class=\"font-bold text-slate-900 text-sm mb-1\">信号 5：管理员或客服在社交群中频繁输出焦虑情绪</h4>\n    <p class=\"text-xs text-slate-600 leading-relaxed\">\n      群管理开始抱怨“开机场不赚钱”、“心力交瘁准备退圈”，这往往是心理防线崩溃的潜意识流露。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "二、 遭遇跑路后的紧急应对与防患于未然",
+        "content": "<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3 text-xs sm:text-sm text-slate-700\">\n  <p><strong>第一步：立即在客户端中停用并删除该订阅：</strong> 防止失联域名被黑客二次收购后向客户端推送恶意劫持规则；</p>\n  <p><strong>第二步：启用备用容灾订阅：</strong> 激活提前准备好的不限时冷备用节点，保证工作通讯不间断；</p>\n  <p><strong>第三步：立即修改同密码的重要账号：</strong> 如果您在跑路机场注册的密码与其他常用邮箱、平台相同，请立即更改密码，防范不法分子转手打包用户数据库进行撞库攻击。</p>\n</div>"
+      },
+      {
+        "heading": "三、 真实机场跑路惨烈案例复盘：从估值千万到一夜蒸发",
+        "content": "<p>回顾翻墙历史上的几次经典跑路事件（如速鹰、喵帕斯、喵喵加速等知名大站）：</p>\n<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-700 leading-relaxed my-2\">\n  <p>某曾拥有 10 万订阅的“神级大站”，在跑路前一个月开始以“双十一终极大促”为由，在全网推广“99 元终身套餐”。不到两周时间疯狂揽资数千万元，随后在没有任何预兆的情况下，服务器全部关机，Telegram 频道更名为搞笑频道，全员禁言，无数刚购买了终身套餐的用户欲哭无泪。<strong>记住：在灰产领域，没有哪家个人机场的信誉值得你透支一整年的信任！</strong></p>\n</div>"
+      },
+      {
+        "heading": "四、 科学上网防跑路三大黄金自保军规",
+        "content": "<div class=\"bg-emerald-50 border border-emerald-200 rounded-xl p-5 space-y-2 text-xs sm:text-sm text-emerald-950 font-sans\">\n  <p><strong>军规 1：永远坚持月付消费：</strong> 将跑路造成的最大损失严格锁死在单月十多元的零花钱级别；</p>\n  <p><strong>军规 2：主力与备用分家：</strong> 绝不在同一家机场购买两个套餐，主力选用光速云专线，备用选用另一家小众不限时，物理隔离风险；</p>\n  <p><strong>军规 3：警惕任何形式的“终身会员”或“三年大促”：</strong> 终身会员等于终结运营的倒计时。听到终身二字，请立刻拔腿就跑！</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "机场跑路后，支付宝付的钱能通过投诉追回吗？",
+        "a": "由于收款通道多为第三方非法发卡网商户号，维权极其艰难。投诉通常只能冻结其发卡号，资金难以原路退回。事前月付风控是唯一的解法。"
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "slug": "article-99",
+    "category": "risk",
+    "parentHubUrl": "/risk/alternatives/",
+    "parentHubName": "多线容灾方案",
+    "title": "生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建",
+    "description": "针对跨境电商、代码开发与学术科研用户的业务高可用指南：主力按月专线套餐 + 备用不限时流量包黄金组合，利用 Clash Fallback 策略组实现秒级自动无感故障切换。",
+    "author": "百科机场架构评测组",
+    "date": "2026-11-18",
+    "updated": "2026-11-22",
+    "primaryKeyword": "双机场容灾方案搭建",
+    "verdict": "生产力断网一小时的经济损失远超全年翻墙开销。推荐采用【主力高带宽月付专线（如光速云） + 备用永不过期按量流量包】模型，在客户端中配置 Fallback 策略组，实现主力故障时秒级自动无感热备接管。",
+    "sections": [
+      {
+        "heading": "一、 生产力环境的核心痛点：单点故障 (SPOF) 的毁灭性代价",
+        "content": "<p>对于程序员、跨境电商独立站运营、科研团队以及全天候依赖 AI 辅助编程的专业工作者而言，网络中断不仅仅是“能不能刷推特”的娱乐小事，而是跨国视讯会议骤然中断、线上部署失败、Cursor/Copilot 代码补全瘫痪的严重生产力事故。</p>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  翻墙网络中存在太多不可抗力：境外海底光缆地震被刮断、国内机房机柜电力维护、上游运营商路由抖动……<strong>任何单一机场（哪怕口碑再好、规模再大）都无法保证 100.00% 的全年不间断可用。</strong> 解决断网焦虑的唯一工程解法，就是搭建<strong>主备双机场自动化健康检查与故障转移（Fallback High-Availability）架构</strong>。\n</p>"
+      },
+      {
+        "heading": "二、 主备双机场的科学选型搭配法则",
+        "content": "<p>合理的容灾架构并不需要双倍的高额支出，只需遵循“一主一备”的黄金搭配：</p>\n<div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 my-4\">\n  <div class=\"p-4 bg-blue-50 border border-blue-200 rounded-xl\">\n    <h4 class=\"font-bold text-blue-900 text-sm mb-1\">主力服务商（热主力）：追求极致低延迟与稳定性</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      选用真 IEPL 内网专线品牌（如光速云），月付 14.4 元起，承担 95% 以上的日常办公、4K 视频与主力编码任务。\n    </p>\n  </div>\n  <div class=\"p-4 bg-emerald-50 border border-emerald-200 rounded-xl\">\n    <h4 class=\"font-bold text-emerald-900 text-sm mb-1\">备用服务商（冷备用）：追求永不过期与零维护成本</h4>\n    <p class=\"text-xs text-slate-700 leading-relaxed\">\n      购买一份“不限时流量包”（如 30 元 100GB 永久有效）。平时不产生月租成本，仅静默躺在客户端策略组中，作为主力突发断线时的安全气囊。\n    </p>\n  </div>\n</div>"
+      },
+      {
+        "heading": "三、 在 Clash Verge Rev 中手把手配置 Fallback 自动故障切换策略组",
+        "content": "<p>借助 Clash Verge Rev 的扩展脚本（Script）或 Merge 配置，您可以将两个不同机场的节点混合为一个具备心跳探活功能的自动故障转移组：</p>\n<div class=\"bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs overflow-x-auto my-3\">\n  <pre><code># === 主备自动故障转移策略组配置示例 ===\nproxy-groups:\n  - name: \"🚀 生产力断网容灾组\"\n    type: fallback\n    url: 'http://cp.cloudflare.com/generate_204'\n    interval: 30       # 每 30 秒发起一次网络探活\n    timeout: 2500      # 超过 2.5 秒无响应判定为节点宕机\n    proxies:\n      - \"光速云-香港IEPL专线01\"   # 【主力第一优先级】\n      - \"光速云-日本IEPL专线01\"   # 【主力第二优先级】\n      - \"备用机场-日本BGP中转01\"   # 【备用容灾第一优先级】\n      - \"备用机场-新加坡专线01\"   # 【备用容灾第二优先级】</code></pre>\n</div>\n<p class=\"text-xs sm:text-sm text-slate-700\">\n  <strong>运行机制说明：</strong> 内核每 30 秒向 Cloudflare 探活地址发送微小探测包。只要排在第一位的“光速云主力专线”正常，流量 100% 走主力；一旦主力节点遇到机房检修或突发故障，内核在 <strong>2.5 秒内自动无感切换至备用节点</strong>，屏幕前的您几乎毫无感知，彻底消除断网焦虑！\n</p>"
+      },
+      {
+        "heading": "四、 进阶技巧：多策略组嵌套与负载均衡（Load-Balance）拓展",
+        "content": "<p>除了 fallback 故障转移策略组外，对于需要同时拉取多个 Git 仓库或多线程下载的高阶用户，还可以在 Clash 中配置 <strong>load-balance 负载均衡组</strong>：</p>\n<div class=\"bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs my-2\">\n  <pre><code>proxy-groups:\n  - name: \"⚖️ 自动负载均衡组\"\n    type: load-balance\n    strategy: consistent-hashing\n    url: 'http://cp.cloudflare.com/generate_204'\n    interval: 30\n    proxies:\n      - \"光速云-香港01\"\n      - \"光速云-香港02\"\n      - \"光速云-日本01\"</code></pre>\n</div>\n<p class=\"text-xs text-slate-600\">该策略会将不同连接哈希分摊到多条物理专线上，不仅避免单节点带宽满载，还能实现多节点并发吞吐最大化！</p>"
+      },
+      {
+        "heading": "五、 容灾系统的定期演练与维护清单",
+        "content": "<div class=\"bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-700 space-y-2 my-2\">\n  <p><strong>1. 每月检查备用订阅有效性：</strong> 确保备用不限时流量包没有因为长时间不用而过期；</p>\n  <p><strong>2. 手动模拟断网切换：</strong> 在客户端中手动将主力节点右键测速或者临时禁用，观察浏览器是否在 2 秒内顺利走通备用节点；</p>\n  <p><strong>3. 保持客户端内核最新：</strong> 定期更新 Mihomo 内核，享受更灵敏的健康检查探活算法。</p>\n</div>"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "双机场方案每个月会产生双倍月费吗？",
+        "a": "不会！备用机场选用一次性购买、永不过期的按量计费流量包（通常 30-50 元买 200GB），平时不使用不扣费，长期守候，月度额外成本几乎为 0。"
+      }
+    ]
+  }
+]

@@ -1,0 +1,90 @@
+---
+const nowYear = new Date().getFullYear();
+---
+
+<footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800 text-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+      
+      <!-- Col 1: About Wiki -->
+      <div class="col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <img 
+            src="/images/avatar.webp" 
+            alt="百科机场" 
+            class="w-8 h-8 rounded-lg object-cover shadow-sm ring-1 ring-slate-700 flex-shrink-0"
+            width="32"
+            height="32"
+          />
+          <span class="font-extrabold text-white text-lg tracking-tight">百科机场</span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed mb-4 pr-6">
+          百科机场 (jichangwiki.homes) 是面向中文用户的网络代理知识百科、客户端教程与品牌客观评测数据库。我们秉持数据可追溯、实测求真实、分类讲逻辑的原则，为用户选购代理服务提供中立参考与避坑指引。
+        </p>
+        <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700/60 text-[11px] text-slate-400 leading-normal">
+          <span class="text-amber-400 font-semibold">⚠️ 推广合规披露：</span>
+          本站部分品牌链接包含推荐代码（Affiliate Link）。若您通过链接注册，本站可能会获得少额运营佣金，这不会增加您的任何购买费用。我们始终标注数据来源，不向任何不合规宣称背书。
+        </div>
+      </div>
+
+      <!-- Col 2: 选购与评测 -->
+      <div>
+        <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">选购与评测</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/airport/recommend/" class="hover:text-white transition">机场推荐总览</a></li>
+          <li><a href="/airport/ranking/" class="hover:text-white transition">2026 综合排行榜</a></li>
+          <li><a href="/pricing/cheap/" class="hover:text-white transition">便宜低价机场</a></li>
+          <li><a href="/pricing/monthly/" class="hover:text-white transition">月付灵活机场</a></li>
+          <li><a href="/pricing/lifetime/" class="hover:text-white transition">不限时流量套餐</a></li>
+          <li><a href="/brands/directory/" class="hover:text-white transition">31+ 品牌数据库</a></li>
+          <li><a href="/brands/guangsu/" class="text-blue-400 hover:text-blue-300 transition">主推：光速云详情</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: 客户端与技术 -->
+      <div>
+        <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">客户端与技术</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/clients/clash-verge/" class="hover:text-white transition">Clash Verge Rev</a></li>
+          <li><a href="/clients/v2rayn/" class="hover:text-white transition">v2rayN Windows</a></li>
+          <li><a href="/clients/shadowrocket/" class="hover:text-white transition">Shadowrocket 小火箭</a></li>
+          <li><a href="/clients/sing-box/" class="hover:text-white transition">sing-box 新生态</a></li>
+          <li><a href="/network/iepl/" class="hover:text-white transition">IEPL 专线科普</a></li>
+          <li><a href="/network/iplc/" class="hover:text-white transition">IPLC 专线对比</a></li>
+          <li><a href="/streaming-ai/chatgpt/" class="hover:text-white transition">ChatGPT 解锁节点</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: 教程与风控 -->
+      <div>
+        <h4 class="text-xs font-semibold text-white uppercase tracking-wider mb-3">排障与风控</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/tutorials/subscription/" class="hover:text-white transition">订阅导入教程</a></li>
+          <li><a href="/tutorials/tun-mode/" class="hover:text-white transition">TUN 模式开启</a></li>
+          <li><a href="/troubleshooting/timeout/" class="hover:text-white transition">节点 Timeout 排查</a></li>
+          <li><a href="/troubleshooting/subscription-failed/" class="hover:text-white transition">订阅失败解决</a></li>
+          <li><a href="/risk/shutdown/" class="hover:text-white transition">跑路失联防范</a></li>
+          <li><a href="/risk/avoid-scams/" class="hover:text-white transition">机场避坑指南</a></li>
+          <li><a href="/risk/refunds/" class="hover:text-white transition">退款售后维权</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Disclaimer & Copyright -->
+    <div class="pt-8 border-t border-slate-800 text-[11px] text-slate-500 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        &copy; 2020 - {nowYear} 百科机场 (jichangwiki.homes). 纯静态独立技术知识库.
+      </div>
+      <div class="flex flex-wrap items-center gap-3 text-slate-400">
+        <a href="/about/" class="hover:underline">关于我们与评测标准</a>
+        <span>·</span>
+        <a href="/privacy/" class="hover:underline">隐私政策与免责声明</a>
+        <span>·</span>
+        <a href="/brands/official/" class="hover:underline">品牌官网验证</a>
+        <span>·</span>
+        <a href="/search/" class="hover:underline">全站索引</a>
+      </div>
+    </div>
+  </div>
+</footer>

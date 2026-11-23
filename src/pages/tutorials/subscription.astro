@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "订阅导入指南：Windows、Mac、iOS、Android 全平台一键配置与防泄露实战";
+const description = "全面解决科学上网初学者‘怎么把机场节点放进软件里’的难题。涵盖 Base64 订阅链接转换、API 自动拉取、自动更新定时任务及防泄露安全规范。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"使用教程","url":"/tutorials/"},{"name":"subscription","url":"/tutorials/subscription/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/tutorials/subscription/","url":"https://jichangwiki.homes/tutorials/subscription/","name":"订阅导入指南：Windows、Mac、iOS、Android 全平台一键配置与防泄露实战","description":"全面解决科学上网初学者‘怎么把机场节点放进软件里’的难题。涵盖 Base64 订阅链接转换、API 自动拉取、自动更新定时任务及防泄露安全规范。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"使用教程","item":"https://jichangwiki.homes/tutorials/"},{"@type":"ListItem","position":3,"name":"订阅导入指南：Windows、Mac、iOS、Android 全平台一键配置与防泄露实战","item":"https://jichangwiki.homes/tutorials/subscription/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"导入订阅时提示“格式无法解析 (Invalid Format)”怎么解决？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为复制了不兼容的订阅类型。例如，在 Clash 客户端中直接导入了纯 Base64 单节点链接，或在仅支持 V2Ray 的客户端中导入了 YAML 格式。请在机场后台确认是否点击了对应客户端的专属按钮（如“复制 Clash 订阅”）。"}},{"@type":"Question","name":"为什么每次导入成功后，节点测速依然全红超时？","acceptedAnswer":{"@type":"Answer","text":"订阅导入成功仅代表成功下载了节点元数据列表，并不代表网络已经打通。节点全红 90% 是因为本地电脑系统时间偏差超过 90 秒，导致加密握手失败；或是客户端的本地代理端口被其他网络软件占用。"}},{"@type":"Question","name":"换了一台新电脑，旧电脑的订阅需要解绑吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。订阅链接是基于云端套餐配额管理的，换新电脑只需在新设备上重新下载客户端并粘贴订阅链接导入即可。只要同一时刻在线使用的设备数不超过套餐限制，无需做任何解绑操作。"}},{"@type":"Question","name":"有些机场提供托管转换服务，是否安全？","acceptedAnswer":{"@type":"Answer","text":"像光速云这种正规大型机场在自身边缘 CDN 部署的原生订阅分发 API 是完全安全可信的。需要警惕的是网上陌生人搭建的免费公开在线转换网页，那类工具存在保存用户订阅记录的隐患。"}},{"@type":"Question","name":"为什么在机场官网改了密码后，客户端订阅就更新不了了？","acceptedAnswer":{"@type":"Answer","text":"很多机场为了安全起见，在用户修改登录密码时会自动触发安全机制，将现有的订阅鉴权 Token 强制作废。此时您只需重新登录机场后台复制最新的订阅链接，在客户端中替换原有的 URL 即可恢复。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"导入订阅时提示“格式无法解析 (Invalid Format)”怎么解决？","a":"这通常是因为复制了不兼容的订阅类型。例如，在 Clash 客户端中直接导入了纯 Base64 单节点链接，或在仅支持 V2Ray 的客户端中导入了 YAML 格式。请在机场后台确认是否点击了对应客户端的专属按钮（如“复制 Clash 订阅”）。"},{"q":"为什么每次导入成功后，节点测速依然全红超时？","a":"订阅导入成功仅代表成功下载了节点元数据列表，并不代表网络已经打通。节点全红 90% 是因为本地电脑系统时间偏差超过 90 秒，导致加密握手失败；或是客户端的本地代理端口被其他网络软件占用。"},{"q":"换了一台新电脑，旧电脑的订阅需要解绑吗？","a":"不需要。订阅链接是基于云端套餐配额管理的，换新电脑只需在新设备上重新下载客户端并粘贴订阅链接导入即可。只要同一时刻在线使用的设备数不超过套餐限制，无需做任何解绑操作。"},{"q":"有些机场提供托管转换服务，是否安全？","a":"像光速云这种正规大型机场在自身边缘 CDN 部署的原生订阅分发 API 是完全安全可信的。需要警惕的是网上陌生人搭建的免费公开在线转换网页，那类工具存在保存用户订阅记录的隐患。"},{"q":"为什么在机场官网改了密码后，客户端订阅就更新不了了？","a":"很多机场为了安全起见，在用户修改登录密码时会自动触发安全机制，将现有的订阅鉴权 Token 强制作废。此时您只需重新登录机场后台复制最新的订阅链接，在客户端中替换原有的 URL 即可恢复。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>从零上手第一课 · 全平台订阅导入</span>
+        <span>·</span>
+        <span>上级主题: <a href="/tutorials/" class="underline hover:text-blue-800">使用教程总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        订阅导入指南：全平台客户端一键配置与自动更新实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        购买了机场套餐却不知道怎么导入节点？本文带您 3 分钟打通各大操作系统的订阅导入、定时自动更新与防泄密安全体系。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>订阅导入核心要领 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>订阅链接（Subscription URL）是您在代理软件中连接机场全部节点的数字身份证与密钥</strong>。请务必使用客户端内的“一键导入”或“新建订阅 URL”功能，切勿手动逐个录入单个节点参数。推荐桌面端优先使用 <strong>Clash Verge Rev（Windows/macOS）</strong>，移动端推荐 <strong>Shadowrocket（iOS）</strong> 或 <strong>v2rayNG / FlClash（Android）</strong> 导入光速云订阅，即可实现节点自动更新与规则智能分流。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 订阅链接的工作原理与数据流转拓扑
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>要想规范管理代理节点，首先需要理解订阅链接在技术底层的运作机理。很多初学者误以为订阅链接本身就是一个代理节点，其实不然：<strong>订阅链接本质是一个带有唯一鉴权 Token 的动态配置分发 API 地址</strong>。当您的客户端向该地址发起 HTTP GET 请求时，机场的中心分发服务器会根据您的客户端请求头（User-Agent）动态生成适配该软件的节点列表与分流规则。</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【订阅链接请求与本地解析流转流程】</div>
+  <div>[用户客户端 (Clash / 小火箭)]</div>
+  <div>  │  (发起 HTTP/HTTPS GET 请求，携带专有 User-Agent: ClashMeta 或 Shadowrocket)</div>
+  <div>  ▼</div>
+  <div>[机场订阅下发服务器 / 边缘 CDN]</div>
+  <div>  │  (服务器根据 Token 验证套餐有效期、剩余流量，并根据 User-Agent 动态组装配置)</div>
+  <div>  ▼</div>
+  <div>[网络传输返回报文] (Base64 加密字符串 或 标准 YAML/JSON 配置文件)</div>
+  <div>  │  (客户端在本地内存解密报文，加载 Proxies 节点集群与 Rules 分流规则)</div>
+  <div>  ▼</div>
+  <div>[本地代理内核激活] ---> (节点列表刷新完毕，自动进入规则分流监听状态)</div>
+</div>
+<p>现代优质机场通常提供<strong>聚合订阅接口</strong>，能够根据客户端软件自动返回 Clash、Sing-box 或 SIP002 等适配协议格式。由于专线机房的入口 IP 与接入端口会根据网络抗干扰策略进行动态热更新，因此必须开启客户端的<strong>“定时自动更新”</strong>功能，确保本地节点列表永远保持最新。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 Windows、Mac、iOS、Android 全平台导入四步实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>不同操作系统的主流客户端界面设计略有不同，但其核心导入逻辑完全遵循标准化流程。我们梳理了四大平台最主流软件的四步标准操作：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>Windows / macOS (Clash Verge Rev)：</strong> 登录机场后台复制“Clash 订阅链接” -> 打开软件左侧“订阅 (Profiles)”菜单 -> 在上方输入框粘贴订阅 URL -> 点击“导入 (Import)” -> 鼠标右键点击导入成功的配置卡片，将“自动更新间隔”设置为 <strong>1440 分钟（即 24 小时）</strong>，最后在“代理 (Proxies)”页面选择所需节点。</li>
+  <li><strong>iOS 苹果端 (Shadowrocket 小火箭)：</strong> 在 Safari 浏览器中登录机场后台，点击“一键导入 Shadowrocket”唤醒应用；或手动复制订阅链接后打开小火箭，右上角点击“+”号 -> 类型选择“Subscribe” -> 在 URL 栏粘贴链接并保存，软件将自动向下拉取全部节点。</li>
+  <li><strong>Android 安卓端 (v2rayNG / FlClash)：</strong> 复制通用 V2Ray 订阅或 Clash 订阅 -> 打开客户端左上角菜单进入“订阅分组设置” -> 点击右上角“+”号添加分组 -> 粘贴订阅地址并保存 -> 返回主界面点击右上角三点菜单选择“更新订阅”。</li>
+  <li><strong>订阅拉取失败排查：</strong> 若提示“下载配置超时或 403 Forbidden”，通常是本地直连网络受到 ISP DNS 污染或机场防刷 WAF 拦截。可尝试将手机切换为蜂窝移动网络再次点击更新，或在客户端设置中临时开启“允许不安全证书 (Skip Cert Verify)”。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            全平台主流客户端订阅导入方式与兼容度对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        主流科学上网工具订阅导入能力横向横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">客户端名称</th><th class="py-3 px-4">支持平台</th><th class="py-3 px-4">一键唤醒导入</th><th class="py-3 px-4">二维码扫码</th><th class="py-3 px-4">定时自动更新</th><th class="py-3 px-4">订阅格式兼容性</th><th class="py-3 px-4">新手推荐度</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Clash Verge Rev</td><td class="py-3 px-4 ">Windows / macOS / Linux</td><td class="py-3 px-4 ">完美支持</td><td class="py-3 px-4 ">支持</td><td class="py-3 px-4 ">支持 (可自定分钟)</td><td class="py-3 px-4 ">Clash YAML / Mihomo</td><td class="py-3 px-4 ">★★★★★ (PC 首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Shadowrocket</td><td class="py-3 px-4 ">iOS / iPadOS</td><td class="py-3 px-4 ">完美支持</td><td class="py-3 px-4 ">完美支持 (扫码秒拉)</td><td class="py-3 px-4 ">支持 (打开时更新)</td><td class="py-3 px-4 ">SS / Vmess / Trojan / Vless</td><td class="py-3 px-4 ">★★★★★ (iOS 首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">v2rayN</td><td class="py-3 px-4 ">Windows</td><td class="py-3 px-4 ">需手动粘贴 URL</td><td class="py-3 px-4 ">支持</td><td class="py-3 px-4 ">支持 (启动自动更新)</td><td class="py-3 px-4 ">V2Ray Base64 / Xray</td><td class="py-3 px-4 ">★★★★☆ (Windows 备选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">FlClash</td><td class="py-3 px-4 ">Android / Windows / macOS</td><td class="py-3 px-4 ">完美支持</td><td class="py-3 px-4 ">支持</td><td class="py-3 px-4 ">支持</td><td class="py-3 px-4 ">Clash / Clash Meta</td><td class="py-3 px-4 ">★★★★★ (安卓首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Sing-box</td><td class="py-3 px-4 ">全平台</td><td class="py-3 px-4 ">需配置 JSON</td><td class="py-3 px-4 ">部分支持</td><td class="py-3 px-4 ">支持</td><td class="py-3 px-4 ">Sing-box 专有 JSON</td><td class="py-3 px-4 ">★★★☆☆ (极客推荐)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        订阅下发极速稳定、支持一键唤醒的专线服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        全场景订阅导入决策树与排障指南
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新手首用</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>第一次购买机场套餐不知从何下手：</strong> 建议直接在电脑端下载 Clash Verge Rev，在手机端使用 Shadowrocket，点击机场后台的“一键导入”按钮，无需手动配置任何复杂参数。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">敏感时期</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>原节点全部超时，订阅提示更新失败：</strong> 机场可能已紧急更换接入域名。请登录机场官网用户中心，重新复制最新的订阅链接，或使用手机热点更新订阅获取可用节点。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">多设备同步</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>电脑与手机想共用同一个套餐流量：</strong> 同一条订阅链接可直接在您名下的多台设备（PC、手机、平板）中导入，系统会合并计费，只要不超出套餐的“同时在线设备数”即可。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">订阅管理与信息安全五大黄金铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>绝对不要将自己的订阅链接公开发布在论坛、群聊或截图晒单，订阅 URL 包含私有鉴权 Token，他人获取后可直接耗尽您的全部流量；</li><li>定期保持订阅自动更新（建议设置为每天或每两天自动刷新一次），以便及时拉取运营商最新扩容的优质高速专线；</li><li>切勿使用来路不明的第三方公共“SubConverter 订阅转换”网站，避免您的核心 Token 和节点信息在转换端被恶意截流或日志记录；</li><li>若怀疑订阅链接已泄露，请立即登录机场后台点击“重置订阅信息（Reset Token）”，旧链接将瞬间失效；</li><li>导入订阅后务必确认客户端运行在“规则 (Rule)”模式，切忌盲目开启全局代理，避免消耗宝贵的专线流量访问国内网站。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        订阅导入高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 订阅与客户端进阶教程长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-1/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">新手必读</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              2026年新手翻墙科学上网终极防坑指南：从零认识代理、协议与机场 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全方位零基础入门手册，带您搞懂订阅与代理的底层关系。
+            </p>
+          </a>
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              在桌面软件中可视化应用高级配置与订阅管理。
+            </p>
+          </a>
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障指引</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              订阅拉取成功后节点不通的系统级自愈方案。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

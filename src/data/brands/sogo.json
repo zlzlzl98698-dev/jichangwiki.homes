@@ -1,0 +1,114 @@
+{
+  "id": "sogo",
+  "slug": "sogo",
+  "name": "SOGO 云",
+  "aliases": [
+    "SOGO Cloud",
+    "搜狗云/SOGO机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 17,
+  "establishedYear": 2026,
+  "affiliateURL": "https://guangs.sogoyunaff.cc/#/?code=327Vs0w7",
+  "couponCodes": [
+    {
+      "code": "sss777",
+      "discount": "开业尝鲜券",
+      "condition": "全场首发可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "新开BGP专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "30+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥16/月 (120GB)",
+  "minMonthlyPrice": 16,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "SOGO尝鲜版",
+      "billing": "月付",
+      "price": 16,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 16,
+      "notes": "2026新品牌尝鲜"
+    },
+    {
+      "name": "SOGO高级版",
+      "billing": "月付",
+      "price": 28,
+      "traffic": "240GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 28,
+      "notes": "高速专线带宽"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 新节点",
+      "latency": "33ms",
+      "download": "220Mbps",
+      "upload": "40Mbps",
+      "date": "2026-09-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "2026年新晋品牌",
+    "全新服务器资源负载轻",
+    "开业特惠折扣"
+  ],
+  "verifiedFeatures": [
+    "新上线节点拥挤度低，带宽冗余充足"
+  ],
+  "strengths": [
+    "新开业节点负载极低，测速峰值抢眼",
+    "尝鲜价格较实惠"
+  ],
+  "limitations": [
+    "2026年新品牌，运营稳定性仍需时间检验",
+    "无历史长期口碑支撑"
+  ],
+  "riskNotes": "新品牌运营时间较短，严格遵守“首选月付、不盲目买年付”原则。",
+  "suitableFor": "追求新节点无拥堵速度、乐于尝鲜新线路的技术折腾玩家。",
+  "unsuitableFor": "要求三年以上无事故历史背书的保守型企业客户。",
+  "sources": [
+    "SOGO云官方登记资料 (2026)",
+    "32家清单"
+  ],
+  "verifiedAt": "2026-09-01",
+  "updatedAt": "2026-11-09",
+  "logo": "/images/logos/sogo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

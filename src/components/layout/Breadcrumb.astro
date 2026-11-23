@@ -1,0 +1,45 @@
+---
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Schema for breadcrumbs
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.url, 'https://jichangwiki.homes').href
+  }))
+};
+---
+
+<nav aria-label="Breadcrumb" class="py-3 text-xs md:text-sm text-slate-500">
+  <ol class="flex flex-wrap items-center gap-1.5 list-none p-0 m-0">
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="flex items-center gap-1.5">
+          {index > 0 && <span class="text-slate-400">/</span>}
+          {isLast ? (
+            <span class="text-slate-800 font-medium" aria-current="page">{item.name}</span>
+          ) : (
+            <a href={item.url} class="text-slate-600 hover:text-blue-600 transition-colors">
+              {item.name}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</nav>

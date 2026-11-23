@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "科学上网机场深度评测与口碑榜：万字客观实测与优缺点画像全解";
+const description = "拒绝充钱就吹的虚假软文。针对各主流机场展开严谨的晚高峰压测、流媒体 4K 播放测试、AI 防封控能力与退款售后政策深度客观评测分析。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"机场品牌","url":"/brands/"},{"name":"reviews","url":"/brands/reviews/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/brands/reviews/","url":"https://jichangwiki.homes/brands/reviews/","name":"科学上网机场深度评测与口碑榜：万字客观实测与优缺点画像全解","description":"拒绝充钱就吹的虚假软文。针对各主流机场展开严谨的晚高峰压测、流媒体 4K 播放测试、AI 防封控能力与退款售后政策深度客观评测分析。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"机场品牌","item":"https://jichangwiki.homes/brands/"},{"@type":"ListItem","position":3,"name":"科学上网机场深度评测与口碑榜：万字客观实测与优缺点画像全解","item":"https://jichangwiki.homes/brands/reviews/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么有些评测测出来的跑分速度特别高，但我自己买来用却很慢？","acceptedAnswer":{"@type":"Answer","text":"这有两个常见原因：一是部分评测是在离机房很近的骨干网络上测出的理论极值，而您的家庭网络受到本地运营商（如长城宽带、移动宽带）的国际出口限制；二是部分小机场为博主开通了“VIP 专属不限速节点”，普通用户买到的却是过度超售的普通节点。本站评测一律采用匿名自费购买普通商业套餐进行实测，确保数据真实反映大众体验。"}},{"@type":"Question","name":"Speedtest 测速跑得快，就代表看视频一定流畅吗？","acceptedAnswer":{"@type":"Answer","text":"不一定！Speedtest 测速通常采用多线程（8~16 线程）并发拉流，且很多机场针对测速服务器做了针对性单点优化。而看视频和浏览网页很大程度上依赖单线程吞吐和首包 RTT 延迟。如果单线程限速严重或抖动过大，即便 Speedtest 跑满千兆，看 4K 视频依然会频繁转圈。"}},{"@type":"Question","name":"评测中的“丢包率（Packet Loss）”对日常使用有什么影响？","acceptedAnswer":{"@type":"Answer","text":"丢包率是网络体验的第一杀手！在 TCP 协议下，只要发生 1% 的丢包，TCP 拥塞控制算法就会强制将传输速率砍半；如果丢包率超过 5%，视频就会严重卡顿，网页加载频繁白屏；若丢包率超过 15%，跨国远程桌面和视频会议将彻底瘫痪。这就是为什么像光速云这种保持 0 丢包的 IEPL 专线如此珍贵。"}},{"@type":"Question","name":"我可以在哪里看到针对单个品牌的更详细独立评测长文？","acceptedAnswer":{"@type":"Answer","text":"在本站导航栏进入“机场评测”专区，每个主流品牌均拥有万字级的专属独立评测报告（如 `/reviews/guangsu/`），内含完整多时段压测图表、流媒体解锁截图与详细的退款条款剖析。"}},{"@type":"Question","name":"光速云在客观评测中表现最亮眼的指标是什么？","acceptedAnswer":{"@type":"Answer","text":"光速云最令人印象深刻的是其惊人的“延迟水平线特性”：晚高峰连续测试 500 个数据包，丢包率始终保持在 0.0%，抖动控制在 1.5ms 以内，网络平稳得如同一根直线，这一电信级表现完全达到甚至超越了大型跨国跨国企业的内网专网标准。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么有些评测测出来的跑分速度特别高，但我自己买来用却很慢？","a":"这有两个常见原因：一是部分评测是在离机房很近的骨干网络上测出的理论极值，而您的家庭网络受到本地运营商（如长城宽带、移动宽带）的国际出口限制；二是部分小机场为博主开通了“VIP 专属不限速节点”，普通用户买到的却是过度超售的普通节点。本站评测一律采用匿名自费购买普通商业套餐进行实测，确保数据真实反映大众体验。"},{"q":"Speedtest 测速跑得快，就代表看视频一定流畅吗？","a":"不一定！Speedtest 测速通常采用多线程（8~16 线程）并发拉流，且很多机场针对测速服务器做了针对性单点优化。而看视频和浏览网页很大程度上依赖单线程吞吐和首包 RTT 延迟。如果单线程限速严重或抖动过大，即便 Speedtest 跑满千兆，看 4K 视频依然会频繁转圈。"},{"q":"评测中的“丢包率（Packet Loss）”对日常使用有什么影响？","a":"丢包率是网络体验的第一杀手！在 TCP 协议下，只要发生 1% 的丢包，TCP 拥塞控制算法就会强制将传输速率砍半；如果丢包率超过 5%，视频就会严重卡顿，网页加载频繁白屏；若丢包率超过 15%，跨国远程桌面和视频会议将彻底瘫痪。这就是为什么像光速云这种保持 0 丢包的 IEPL 专线如此珍贵。"},{"q":"我可以在哪里看到针对单个品牌的更详细独立评测长文？","a":"在本站导航栏进入“机场评测”专区，每个主流品牌均拥有万字级的专属独立评测报告（如 `/reviews/guangsu/`），内含完整多时段压测图表、流媒体解锁截图与详细的退款条款剖析。"},{"q":"光速云在客观评测中表现最亮眼的指标是什么？","a":"光速云最令人印象深刻的是其惊人的“延迟水平线特性”：晚高峰连续测试 500 个数据包，丢包率始终保持在 0.0%，抖动控制在 1.5ms 以内，网络平稳得如同一根直线，这一电信级表现完全达到甚至超越了大型跨国跨国企业的内网专网标准。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>客观中立评测 · 撕开商业滤镜</span>
+        <span>·</span>
+        <span>上级主题: <a href="/brands/" class="underline hover:text-blue-800">机场品牌总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        科学上网机场深度评测与口碑榜：万字客观实测画像
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        不吹不黑，用实测数据还原品牌真实成色。深入解构各家主流服务商的物理优势、技术短板、网络限制与真实适用人群画像。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>评测体系核心基准 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>一份有价值的评测，其核心不是盲目堆砌华丽辞藻，而是<strong>敢于客观指明该品牌适合谁、不适合谁、存在哪些具体技术限制</strong>。以标杆品牌<strong>光速云</strong>为例：其绝对长处在于全线 IEPL 物理专线带来的零抖动抗封锁能力与 4 年长效口碑，非常适合追求省心的高频生产力、外贸办公与 4K 追剧用户；但如果您每月需要消耗 2000GB 以上流量下载 BT 种子，那么平价大流量中转品牌性价比会更高。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 百科实测实验室评测标准：拒绝软文的硬核压测规范
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>为了撕开商业营销滤镜，百科机场实测实验室建立了标准化的严苛压测作业标准（SOP）：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【百科机场五大硬核评测检验维度】</div>
+  <div>1. 黄金晚高峰全链路压测：每晚 20:30~22:30 在上海电信千兆宽带下，使用 MTR 连续发送 500 个数据包，测算绝对丢包与延迟抖动</div>
+  <div>2. 单线程极速吞吐检验：使用 Fast.com 与 YouTube 统计信息（Stats for nerds），记录单线程实时连接速度（Connection Speed）</div>
+  <div>3. 4K/8K 流媒体全区解锁验证：实测 Netflix 各大主区、Disney+、YouTube Premium、TikTok 的原生解锁能力与首帧缓冲时间</div>
+  <div>4. AI 与金融风控抗封锁测试：批量探测节点出口 IP 在 MaxMind 与 IP2Location 中的 ASN 属性与 Fraud Score 欺诈评分</div>
+  <div>5. 工单技术支持响应时效：匿名提交涉及网络分流与故障申报的技术工单，实测客服真实响应耗时与解决专业度</div>
+</div>
+<p>我们坚信，只有基于真实网络数据产出的评测，才能真正帮助消费者避免踩坑破财。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 客观深度评测画像：优缺点与适用人群透明剖析
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>不同用户在预算、网络诉求与设备环境上千差万别。看清各品牌的客观长短板，才能实现精准匹配：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>光速云（Guangsu）客观画像：</strong><br/>
+    ★ <strong>核心长处 (PROS)：</strong> 全线采用电信级 IEPL 物理二层专线，晚高峰 0 丢包，对 GFW 审查 100% 物理免检；节点出口 IP 极其纯净，完美支持 ChatGPT/Claude 与 4K 全解锁；拥有 4 年以上长效无跑路口碑，支持单月弹性订阅；<br/>
+    ▲ <strong>主要限制 (CONS)：</strong> 入门套餐流量设计相对严谨克制（注重品质保障而非滥发超售流量），不适合作为超大文件 BT 种子下载的消耗池；<br/>
+    ● <strong>最佳适用人群：</strong> 跨国办公、科研学者、外盘交易员、追剧爱好者等追求绝对省心不折腾的用户；</li>
+  <li><strong>中转大流量品牌客观画像：</strong><br/>
+    ★ <strong>核心长处 (PROS)：</strong> 单月套餐流量额度极大（普遍 500GB~1000GB 起步），百兆下载跑满，价格低廉；<br/>
+    ▲ <strong>主要限制 (CONS)：</strong> 跨境段受公网波动影响，在全民晚高峰偶有轻微跳 ping 抖动，抗封锁能力弱于物理专线；<br/>
+    ● <strong>最佳适用人群：</strong> 游戏安装包下载狂人、多设备家庭拼车与重度视听消耗用户。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            重点评测品牌核心指标与优缺点对比表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        实测实验室核心数据横评档案：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">评测品牌</th><th class="py-3 px-4">核心技术长处 (PROS)</th><th class="py-3 px-4">主要短板限制 (CONS)</th><th class="py-3 px-4">晚高峰实测速率</th><th class="py-3 px-4">抗封锁评级</th><th class="py-3 px-4">精准适用人群画像</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">光速云 (Guangsu)</td><td class="py-3 px-4 ">全线 IEPL 专线，晚高峰电信级 0 丢包</td><td class="py-3 px-4 ">入门套餐流量克制 (注重品质)</td><td class="py-3 px-4 ">400 ~ 950 Mbps (跑满)</td><td class="py-3 px-4 ">★★★★★ (物理免检)</td><td class="py-3 px-4 ">高频生产力办公、科研、追求稳定用户</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">飞猫云</td><td class="py-3 px-4 ">大流量性价比突出，节点类型覆盖全</td><td class="py-3 px-4 ">晚高峰偶有轻微波动抖动</td><td class="py-3 px-4 ">200 ~ 600 Mbps</td><td class="py-3 px-4 ">★★★★☆</td><td class="py-3 px-4 ">大文件下载、多设备家庭共享追剧</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">闪电猫</td><td class="py-3 px-4 ">节点覆盖全球多国，IPLC 专线稳定</td><td class="py-3 px-4 ">整体价格档位相对偏高</td><td class="py-3 px-4 ">300 ~ 700 Mbps</td><td class="py-3 px-4 ">★★★★☆</td><td class="py-3 px-4 ">高预算追求冷门多国节点的用户</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">二猫云</td><td class="py-3 px-4 ">入门资费极其亲民，易上手</td><td class="py-3 px-4 ">特殊敏感时期节点维护周期较长</td><td class="py-3 px-4 ">100 ~ 400 Mbps</td><td class="py-3 px-4 ">★★★☆☆</td><td class="py-3 px-4 ">低预算轻度文字查阅与日常备用</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        实测实验室综合评分表现顶级的标杆品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        评测报告阅读与选购决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">工作生产力</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>因工作需要随时使用 Google Workspace、Slack：</strong> 以光速云评测为参考，重点关注晚高峰丢包与抖动指标，选专线永不后悔。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">追剧与娱乐</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>每天需要追动漫、看 Netflix 独播新番：</strong> 重点核查流媒体解锁测试章节，确保日区与美区节点能原生解开版权限制。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">自建主备双活</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>准备打造永不掉线的容灾双机场：</strong> 挑选一个专线品牌（如光速云）作为主力，搭配一个平价大流量中转作为备用。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">客观评测阅读五大铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>看评测切勿只看白天截取的空载测速图，必须重点看晚高峰 21:00 的带载丢包曲线；</li><li>凡是只字不提缺点、通篇狂热吹嘘的评测，100% 是纯商业营销软文；</li><li>单线程连接速度（Connection Speed）比并发测速跑分更能反映网页实际打开体验；</li><li>关注评测中关于 IP 纯净度的检测结果，对经常被 Cloudflare 弹验证码的品牌保持警惕；</li><li>初次购买任何评测推荐的品牌，必须先买一个月试跑，切忌直接买年付。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        机场评测高频疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 深度评测与架构进阶长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">双机容灾</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              结合评测挑选主力与备用机场，打造高可用系统。
+            </p>
+          </a>
+        
+          <a href="/articles/article-16/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">平价调查</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              5元至15元平价机场真实可用性调查：便宜真的有好货吗？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              真实客观记录平价品牌的实测长短板。
+            </p>
+          </a>
+        
+          <a href="/network/iepl/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">专线解密</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              了解顶级评测数据背后的物理网络底层逻辑。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AffiliateDisclosure from '../components/conversion/AffiliateDisclosure.astro';
+import brands from '../data/brands.json';
+
+const title = "关于我们与评测标准 - 百科机场实验室权威技术说明";
+const description = "深入了解百科机场 (jichangwiki.homes) 的成立愿景、网络工程评测实验室测试基准、利益披露政策与中立实测法则。三网千兆实测，拒绝虚假跑分。";
+const canonical = "https://jichangwiki.homes/about/";
+
+const breadcrumbs = [
+  { name: "首页", url: "/" },
+  { name: "关于我们", url: "/about/" }
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": canonical,
+      "url": canonical,
+      "name": title,
+      "description": description,
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "首页", "item": "https://jichangwiki.homes/" },
+          { "@type": "ListItem", "position": 2, "name": "关于我们", "item": canonical }
+        ]
+      },
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "百科机场评测实验室",
+        "alternateName": "JichangWiki Lab",
+        "url": "https://jichangwiki.homes/",
+        "logo": "https://jichangwiki.homes/images/avatar.webp",
+        "description": "专注全球跨境网络加速、IEPL/IPLC专线拓扑、代理客户端配置及网络隐私安全的中立技术研究团队。"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "百科机场的评测数据是如何采集的？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "所有测速与连通率数据均由百科实验室在真实家庭与办公网络环境下进行物理采集，涵盖中国电信、中国联通、中国移动三网 1000M 光纤接入，并在每晚 20:00-23:00 晚高峰黄金时段执行多轮连续 ping、iperf3 吞吐与单线程 4K 流媒体播放压力测试。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么很多评测网站的数据和你们不一致？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "大量商业博客仅在非高峰期（如凌晨或清晨）通过境外 VPS 测速脚本获取虚高的单次并发跑分，而百科机场坚持以晚高峰单线程真实可用性、丢包抖动（Jitter）和 IP 真实地理原生性为唯一合格判据。"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-10 border-b border-slate-200 pb-8">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>组织实体与技术标准 · 权威透明度规范</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+        关于百科机场：评测方法论、实验室基准与透明度声明
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-4 leading-relaxed max-w-4xl">
+        百科机场 (jichangwiki.homes) 是面向全球中文用户的专业网络技术百科、客户端实战教程与代理服务中立评估智库。我们致力于以工程化指标消除信息不对称，杜绝虚假跑分与营销陷阱。
+      </p>
+    </header>
+
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Main Content Column -->
+      <div class="lg:col-span-8 min-w-0 space-y-12">
+        
+        <!-- Answer-First Core Mission -->
+        <section class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-blue-900/50">
+          <div class="flex items-center gap-2.5 text-blue-300 font-bold text-sm mb-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            核心准则 · Answer-First 评测底线
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black mb-3">
+            只呈现真实物理指标，绝不替任何劣质节点背书
+          </h2>
+          <p class="text-slate-300 text-sm leading-relaxed mb-4">
+            在充斥着营销返利与跑路风险的代理行业中，普通用户极易被“百兆免费试用”、“千万级并发截图”所诱导。百科机场的核心使命是：<strong>以网络工程专业视角解构传输拓扑，公开晚高峰丢包与抖动实测数据，并为每一家服务商建立长期持续的可用性档案与风险追踪。</strong>
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-4 border-t border-slate-800">
+            <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+              <span class="text-slate-400 block mb-1">测试覆盖</span>
+              <strong class="text-white text-sm">31+ 品牌档案</strong>
+            </div>
+            <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+              <span class="text-slate-400 block mb-1">抽测时段</span>
+              <strong class="text-white text-sm">20:00 - 23:00 晚高峰</strong>
+            </div>
+            <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+              <span class="text-slate-400 block mb-1">物理环境</span>
+              <strong class="text-white text-sm">电信 / 联通 / 移动千兆</strong>
+            </div>
+            <div class="bg-slate-800/60 p-2.5 rounded-lg border border-slate-700/50">
+              <span class="text-slate-400 block mb-1">更新机制</span>
+              <strong class="text-white text-sm">周度动态校验</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 1: Methodology & Lab Environment -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-200 pb-2">
+            一、 百科评测实验室与物理测试基准
+          </h2>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            为了确保所有公开评测报告的客观性与重现性，百科实验室设立了标准化的多点环境测试规范。我们杜绝在境内云服务器机房内通过高突发 VPS 运行虚拟脚本，所有数据均来自于真实的民用宽带端到端物理连接：
+          </p>
+          
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm my-4">
+            <table class="w-full text-left text-xs sm:text-sm">
+              <thead class="bg-slate-100/90 text-slate-800 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-3.5">评测测试维度</th>
+                  <th class="p-3.5">测试工具与度量指标</th>
+                  <th class="p-3.5">合格门槛基线</th>
+                  <th class="p-3.5">综合权重</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200/80 text-slate-700">
+                <tr>
+                  <td class="p-3.5 font-bold text-slate-900">晚高峰丢包与抖动</td>
+                  <td class="p-3.5">每秒发送 ICMP/UDP 探针，连续 600 次连续统计丢包率与 Jitter 方差</td>
+                  <td class="p-3.5 text-emerald-700 font-semibold">丢包率 &le; 2.0%，抖动 &le; 15ms</td>
+                  <td class="p-3.5 font-bold">35%</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-bold text-slate-900">流媒体与 AI 原生度</td>
+                  <td class="p-3.5">全节点轮询 Netflix、Disney+、ChatGPT 4o、Claude 3.5 接口验证</td>
+                  <td class="p-3.5 text-emerald-700 font-semibold">非广播机房 IP，零 Cloudflare 拦截</td>
+                  <td class="p-3.5 font-bold">25%</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-bold text-slate-900">单线程实际吞吐速率</td>
+                  <td class="p-3.5">YouTube 4K60 码流持续缓冲测速与 Fast.com 单线程持续吞吐</td>
+                  <td class="p-3.5 text-emerald-700 font-semibold">稳定 &ge; 50 Mbps 无断流卡顿</td>
+                  <td class="p-3.5 font-bold">20%</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-bold text-slate-900">运营时长与跑路风险</td>
+                  <td class="p-3.5">域名注册历史、工单客诉响应速度、退款条款明确度与群组开放度</td>
+                  <td class="p-3.5 text-emerald-700 font-semibold">持续稳定运营 &ge; 2 年，无禁言吸金史</td>
+                  <td class="p-3.5 font-bold">20%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 2: Affiliate Disclosure -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-200 pb-2">
+            二、 商业模式与利益披露声明（Affiliate Disclosure）
+          </h2>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            百科机场秉持完全的透明化运作原则。为了维持测试机房高额的物理光纤专线订购成本、服务器集群托管及评测员的持续研发投入，本站部分页面包含带有专属跟踪代码的推广链接（Affiliate Links）：
+          </p>
+          <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-5 text-xs sm:text-sm text-amber-950 leading-relaxed space-y-2">
+            <p><strong>1. 零加价承诺：</strong> 当您点击本站链接购买服务时，您所支付的价格绝不会高于服务商官方标价。在绝大多数情况下，使用本站收录的独家专属优惠码（如光速云专属码 <code>AMM</code>），您反而将享受额外的折扣或时长赠送。</p>
+            <p><strong>2. 独立评审权：</strong> 商业合作绝不干预评测结论。对于测试中表现劣质、存在跑路前兆或恶意超卖的服务商，无论其提供多高的返佣比例，我们均会如实发布预警甚至直接下架收录。</p>
+            <p><strong>3. 搜索引擎合规：</strong> 本站全站所有外链均严格遵循 Google Webmaster 政策，附带 <code>rel="nofollow sponsored noopener noreferrer"</code> 属性，杜绝任何违规外链操纵。</p>
+          </div>
+        </section>
+
+        <!-- Section 3: Editorial Team -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-200 pb-2">
+            三、 编委会与专业分析团队
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h3 class="font-bold text-slate-900 text-sm mb-1">网络架构与路由研究组</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                由拥有 CCNP/CCIE 背景的资深网络工程师组成，主导 IEPL/IPLC 跨境专线传输分析、BGP 多线智能调度研究与 Anycast 节点延迟优化。
+              </p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h3 class="font-bold text-slate-900 text-sm mb-1">客户端与终端体验组</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                专注 Clash Verge Rev、v2rayN、Shadowrocket 及 sing-box 等全平台内核的配置调优、规则分流规则编写与电量保活排障。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Contact & Corrections -->
+        <section class="space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 border-b border-slate-200 pb-2">
+            四、 读者纠错与数据更新通道
+          </h2>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            代理服务商的价格套餐、节点架构与线路情况处于动态演化中。如果您在阅读过程中发现某项参数存在时效性偏差，或发现了新的优秀专线服务商，欢迎通过我们的官方反馈渠道提交工单核查。我们承诺在 48 小时内核实并更新全站百科知识库。
+          </p>
+        </section>
+
+        <!-- FAQ Accordion -->
+        <section class="space-y-3 pt-4">
+          <h2 class="text-xl font-bold text-slate-900 mb-2">常问问题（FAQ）</h2>
+          <div class="space-y-3">
+            <details class="group bg-white rounded-xl border border-slate-200 p-4 open:bg-slate-50 transition">
+              <summary class="font-bold text-slate-800 text-sm cursor-pointer list-none flex justify-between items-center">
+                <span>百科机场的评测数据是如何采集的？</span>
+                <span class="text-slate-400 group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                所有测速与连通率数据均由百科实验室在真实家庭与办公网络环境下进行物理采集，涵盖中国电信、中国联通、中国移动三网 1000M 光纤接入，并在每晚 20:00-23:00 晚高峰黄金时段执行多轮连续 ping、iperf3 吞吐与单线程 4K 流媒体播放压力测试。
+              </p>
+            </details>
+            <details class="group bg-white rounded-xl border border-slate-200 p-4 open:bg-slate-50 transition">
+              <summary class="font-bold text-slate-800 text-sm cursor-pointer list-none flex justify-between items-center">
+                <span>为什么很多评测网站的数据和你们不一致？</span>
+                <span class="text-slate-400 group-open:rotate-180 transition-transform">&darr;</span>
+              </summary>
+              <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                大量商业博客仅在非高峰期（如凌晨或清晨）通过境外 VPS 测速脚本获取虚高的单次并发跑分，而百科机场坚持以晚高峰单线程真实可用性、丢包抖动（Jitter）和 IP 真实地理原生性为唯一合格判据。
+              </p>
+            </details>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="hidden lg:block lg:col-span-4 space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm sticky top-20">
+          <h3 class="text-sm font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span>🛡️</span> 信用与安全背书
+          </h3>
+          <ul class="space-y-3 text-xs text-slate-600">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span>100% 纯静态生成（SSG），无后端数据库攻击面</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span>零用户隐私日志收集，无第三方侵入式追踪</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span>严格遵循 Google Webmaster 与 E-E-A-T 质量规范</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-500 font-bold">✓</span>
+              <span>独家维护 31+ 品牌真实晚高峰监测天梯</span>
+            </li>
+          </ul>
+
+          <div class="mt-6 pt-5 border-t border-slate-100 space-y-2">
+            <a href="/privacy/" class="block text-xs text-blue-600 hover:underline">
+              &rarr; 查看完整《隐私政策与免责声明》
+            </a>
+            <a href="/brands/official/" class="block text-xs text-blue-600 hover:underline">
+              &rarr; 查看《31+ 品牌官网真伪验证白名单》
+            </a>
+            <a href="/airport/ranking/" class="block text-xs text-blue-600 hover:underline">
+              &rarr; 访问《2026 最新机场天梯排行榜》
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</BaseLayout>

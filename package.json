@@ -1,0 +1,33 @@
+{
+  "name": "jichangwiki.homes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/sync_sitemap.js && pagefind --site dist",
+    "preview": "astro preview",
+    "test": "node scripts/validate_links.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.22.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "pagefind": "^1.6.0"
+  }
+}

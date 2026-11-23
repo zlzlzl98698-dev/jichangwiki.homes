@@ -1,0 +1,306 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "不限时流量机场深度选型指南：永不过期流量包的真实价值与暗藏限制";
+const description = "全面解析不限时机场（按量付费/流量不过期）的商业逻辑：每 GB 单价核算、为什么它是最好的冷备用容灾资产、暗藏的节点倍率限制与清退规则避坑全攻略。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"价格与套餐","url":"/pricing/"},{"name":"lifetime","url":"/pricing/lifetime/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/pricing/lifetime/","url":"https://jichangwiki.homes/pricing/lifetime/","name":"不限时流量机场深度选型指南：永不过期流量包的真实价值与暗藏限制","description":"全面解析不限时机场（按量付费/流量不过期）的商业逻辑：每 GB 单价核算、为什么它是最好的冷备用容灾资产、暗藏的节点倍率限制与清退规则避坑全攻略。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"价格与套餐","item":"https://jichangwiki.homes/pricing/"},{"@type":"ListItem","position":3,"name":"不限时流量机场深度选型指南：永不过期流量包的真实价值与暗藏限制","item":"https://jichangwiki.homes/pricing/lifetime/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"不限时流量真的能一直用下去吗？机场跑路了怎么办？","acceptedAnswer":{"@type":"Answer","text":"所谓“不限时”是指在平台持续运营期间流量不会按月清零。但如果机场整体关站跑路，未用完的流量自然无法兑现。因此选购不限时包时，单次充值金额尽量不要超过 50~80 元，且优先选口碑扎实的正规老站。"}},{"@type":"Question","name":"不限时节点可以用来看 4K 视频吗？","acceptedAnswer":{"@type":"Answer","text":"技术上完全支持。但由于不限时流量单价较高，看 4K 视频每小时消耗 7~10GB，性价比不高。看视频建议在常规大流量月付节点下观看。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"不限时流量真的能一直用下去吗？机场跑路了怎么办？","a":"所谓“不限时”是指在平台持续运营期间流量不会按月清零。但如果机场整体关站跑路，未用完的流量自然无法兑现。因此选购不限时包时，单次充值金额尽量不要超过 50~80 元，且优先选口碑扎实的正规老站。"},{"q":"不限时节点可以用来看 4K 视频吗？","a":"技术上完全支持。但由于不限时流量单价较高，看 4K 视频每小时消耗 7~10GB，性价比不高。看视频建议在常规大流量月付节点下观看。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>长效备用 · 流量永不过期</span>
+        <span>·</span>
+        <span>上级主题: <a href="/pricing/" class="underline hover:text-blue-800">价格与套餐总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        不限时流量机场选型指南：长效备用的终极答案
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        平时用量极少，买月付每月浪费几十 G？本文带您算清不限时流量包的真实单价，教您如何将其打造成高可靠的断网应急安全气囊。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>不限时流量核心结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>不限时流量套餐（按量付费/永不过期包）</strong>是科学上网圈中最具战略价值的“冷备用资产”。它<strong>完全打破了 30 天月结清零的枷锁</strong>，购买一次流量（如 30 元 100GB 或 68 元 300GB），只要账号未被封禁即可持续使用数月甚至数年。特别适合<strong>平时翻墙极少的轻度轻量用户、出差备用手机，以及作为主力专线宕机时的终极容灾气囊</strong>。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 不限时流量包的商业账本：打破月度清零的底层逻辑
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>绝大多数常规机场之所以采用“按月清零”机制，是因为机房服务器租金是按月支付的刚性固定成本。如果所有用户都买不限时套餐，商家很难预测每个月的现金流与带宽消耗。</p>
+<p>为了平衡这一成本矛盾，不限时套餐在商业设计上遵循<strong>“溢价换长效”</strong>原则：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>每 GB 单价高于常规月付：</strong> 常规月付中 1GB 流量均价约为 0.08~0.15 元；而在不限时套餐中，1GB 单价通常为 <strong>0.25 元 ~ 0.45 元</strong>（例如 38 元买 100GB）；</li>
+  <li><strong>零沉没浪费优势：</strong> 对于每月仅查阅几次资料、消耗不到 5GB 流量的轻度用户，如果买 20 元月付，一年要花 240 元且 90% 流量被浪费清零；而买一份 38 元 100GB 不限时包，足够使用整整 20 个月，<strong>总实际支出节省了整整 80% 以上！</strong></li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 不限时套餐的三大暗藏限制与避坑指南
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在选购不限时流量包时，必须提前看清以下三大约束条款，避免陷入纠纷：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs sm:text-sm text-amber-950">
+    <span class="font-bold block mb-1">限制 1：休眠账户静默注销规则（长期不登录清退）</span>
+    部分平台在服务条款中隐藏规定：“若账户超过 180 天或 365 天无任何连接记录，系统将判定为废弃账户并自动回收清零”。应对方法：设置每季度日历提醒，定期连上节点产生几兆流量激活账号。
+  </div>
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">限制 2：高倍率节点快速扣流</span>
+    部分不限时机场为了防止用户跑大流量，将香港/日本核心专线标记为 <code>1.5x</code> 或 <code>2.0x</code> 倍率。扣除时按实际传输量成倍计算，100GB 实际仅能当 50GB 用。选购前务必查阅节点倍率明细。
+  </div>
+  <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs sm:text-sm text-blue-950">
+    <span class="font-bold text-blue-950 block mb-1">限制 3：设备同时在线数限制</span>
+    不限时套餐通常限制 2~3 台设备同时在线，不适合大型团队或家庭多成员同时大流量常驻。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            常规月付套餐 vs 不限时流量包综合对比表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        不同用户用量场景真实划算度精算对照：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">对比维度</th><th class="py-3 px-4">常规月付套餐 (按月清零)</th><th class="py-3 px-4">不限时流量包 (永不过期)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">流量有效期</td><td class="py-3 px-4 ">严格 30 天，到期未用自动清零</td><td class="py-3 px-4 ">长期有效，流量用完为止</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">每 GB 单价</td><td class="py-3 px-4 ">极低 (约 0.08 ~ 0.15 元/GB)</td><td class="py-3 px-4 ">稍高 (约 0.25 ~ 0.40 元/GB)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">轻度用户年支出</td><td class="py-3 px-4 ">约 180 ~ 300 元/年 (大量流量被浪费)</td><td class="py-3 px-4 ">约 30 ~ 60 元/年 (完全按需消耗)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">容灾备用价值</td><td class="py-3 px-4 ">较差 (每月需要持续付月租养号)</td><td class="py-3 px-4 ">极高 (一次购买，静默躺平作为安全气囊)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">最适配用户群体</td><td class="py-3 px-4 ">每天高频看视频、代码开发主力</td><td class="py-3 px-4 ">出差党、备用机、轻度查资料、主力断网容灾</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        提供优质不限时流量包的服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        不限时流量最佳选型决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">生产力主备容灾</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>搭配主力月付专线组建双活：</strong> 主力选用光速云月付（承担 95% 高频任务），备用配置一份不限时流量包，主力维护时自动无缝接管。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">低频学术与差旅</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>偶尔登录 Google Scholar 查文献或差旅应急：</strong> 购买一份 35 元 100GB 不限时包，可以用上一整年，彻底告别月租焦虑。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">不限时套餐使用黄金准则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>购买后务必将订阅导入客户端，并手动测试各地区节点的可用性；</li><li>配合 Clash fallback 策略组配置自动故障切换；</li><li>每季度至少使用一次，防止被系统判定为休眠账号。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        不限时流量常见疑问 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 长效容灾关联长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">容灾手把手</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              不限时作为冷备用实操配置指南。
+            </p>
+          </a>
+        
+          <a href="/articles/article-90/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">倍率优化</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点倍率计算公式详解：大文件下载如何利用 0.2x 节点省流？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              大流量消耗的精算避坑。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import comparisons from '../../data/comparisons.json';
+import brands from '../../data/brands.json';
+
+const title = '机场品牌横向深度对比与客观选型库 | 百科机场';
+const description = '百科机场独家品牌对比中心：采用同口径真实测试指标，横向对比光速云、飞猫云、二猫云、星岛梦等主流机场的专线延迟、套餐价格、流媒体解锁及适用人群。';
+const canonical = 'https://jichangwiki.homes/compare/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  'name': title,
+  'description': description,
+  'url': canonical,
+  'breadcrumb': {
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://jichangwiki.homes/' },
+      { '@type': 'ListItem', 'position': 2, 'name': '品牌对比', 'item': canonical }
+    ]
+  }
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-sm text-slate-500 mb-6 space-x-2">
+      <a href="/" class="hover:text-primary-600 transition-colors">首页</a>
+      <span>/</span>
+      <a href="/brands/" class="hover:text-primary-600 transition-colors">机场品牌</a>
+      <span>/</span>
+      <span class="text-slate-800 font-medium">品牌横向对比</span>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-12 shadow-xl border border-indigo-900/40 relative overflow-hidden">
+      <div class="max-w-4xl relative z-10">
+        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 mb-4">
+          深度决策矩阵 · 拒绝云测评
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+          机场品牌横向对比中心：同口径客观 PK
+        </h1>
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
+          两家机场价格差不多，到底该买哪一个？我们摒弃任何主观臆测，依据真实的物理专线架构、晚高峰丢包率、多端客户端便利度与真实套餐，为您呈现深度对比报告。
+        </p>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 text-sm text-slate-200">
+          <strong>💡 对比原则：</strong>坚持客观中立、标注数据来源与测试环境，不同价位绝不直接粗暴排名，帮助不同预算与需求的用户找到最适合的翻墙服务。
+        </div>
+      </div>
+    </header>
+
+    <!-- Comparisons List Grid -->
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+        <span class="w-2 h-6 bg-indigo-600 rounded-full inline-block"></span>
+        <span>热门机场对决专题列表</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {comparisons.map(item => {
+          const brandA = brands.find(b => b.id === item.brandAId || b.slug === item.brandAId);
+          const brandB = brands.find(b => b.id === item.brandBId || b.slug === item.brandBId);
+
+          return (
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center space-x-2">
+                    <span class="font-black text-slate-900">{brandA?.name || item.brandAId}</span>
+                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">VS</span>
+                    <span class="font-black text-slate-900">{brandB?.name || item.brandBId}</span>
+                  </div>
+                  <span class="text-xs text-slate-400">实测对比</span>
+                </div>
+
+                <h3 class="font-bold text-slate-900 text-base mb-3 leading-snug hover:text-indigo-600 transition-colors">
+                  <a href={`/compare/${item.slug}/`}>{item.title}</a>
+                </h3>
+
+                <p class="text-slate-600 text-xs leading-relaxed mb-4 line-clamp-3">
+                  {item.verdict}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <a href={`/compare/${item.slug}/`} class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center space-x-1">
+                  <span>查看完整 PK 报告</span>
+                  <span>→</span>
+                </a>
+                <span class="text-xs text-slate-400">含详细参数表</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Affiliate Disclosure -->
+    <AffiliateDisclosure />
+  </div>
+</BaseLayout>

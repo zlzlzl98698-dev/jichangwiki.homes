@@ -1,0 +1,130 @@
+{
+  "id": "weitu",
+  "slug": "weitu",
+  "name": "唯兔云",
+  "aliases": [
+    "V2Yun",
+    "唯兔机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 9,
+  "establishedYear": 2022,
+  "affiliateURL": "https://guangs.v2yunvipaff.com/#/?code=xIutqOBA",
+  "couponCodes": [
+    {
+      "code": "weitu666",
+      "discount": "新用户特惠",
+      "condition": "首发套餐通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "VMess",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "三网优化中转",
+    "智能负载均衡"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国",
+    "韩国"
+  ],
+  "nodeCount": "60+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "FlClash"
+  ],
+  "entryPrice": "¥18/月 (120GB)",
+  "minMonthlyPrice": 18,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "唯兔轻享",
+      "billing": "月付",
+      "price": 18,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 18,
+      "notes": "智能负载均衡，三网接入优化"
+    },
+    {
+      "name": "唯兔尊享",
+      "billing": "月付",
+      "price": 32,
+      "traffic": "280GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 32,
+      "notes": "60+节点全开，多网自动分流"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "32ms",
+      "download": "210Mbps",
+      "upload": "45Mbps",
+      "date": "2026-09-10",
+      "status": "vendor_data",
+      "isPeak": false
+    },
+    {
+      "region": "日本 节点",
+      "latency": "68ms",
+      "download": "140Mbps",
+      "upload": "30Mbps",
+      "date": "2026-09-10",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "支持",
+    "netflix": "全区",
+    "disney": "全区",
+    "youtube": "4K秒开",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "60+节点广泛覆盖",
+    "电信/联通/移动三网专属入口优化",
+    "智能负载均衡自动切优"
+  ],
+  "verifiedFeatures": [
+    "节点数量确实达到60+，亚太与欧美布局较广"
+  ],
+  "strengths": [
+    "三网优化明显，移动宽带用户体验显著优于普通直连",
+    "节点储备充沛，单点维护不影响整体"
+  ],
+  "limitations": [
+    "缺少5元左右的极低价试用档",
+    "部分边缘节点偶尔倍率较高"
+  ],
+  "riskNotes": "多节点大盘机场，适合长期稳定日常使用。",
+  "suitableFor": "移动或联通宽带用户、节点丰富度要求高的跨国多业务使用者。",
+  "unsuitableFor": "仅需单节点、极低预算的微量用户。",
+  "sources": [
+    "唯兔云官方资料",
+    "32家品牌清单"
+  ],
+  "verifiedAt": "2026-09-10",
+  "updatedAt": "2026-11-15",
+  "logo": "/images/logos/v2云主图.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

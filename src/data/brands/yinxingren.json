@@ -1,0 +1,131 @@
+{
+  "id": "yinxingren",
+  "slug": "yinxingren",
+  "name": "隐形人",
+  "aliases": [
+    "Invisible VPN",
+    "隐形人机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 27,
+  "establishedYear": 2022,
+  "affiliateURL": "https://yinxingren1.invisibleaff.com/#/?code=kcyEeoJT",
+  "couponCodes": [
+    {
+      "code": "yxr888",
+      "discount": "专属折扣",
+      "condition": "全场通用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "专有加密协议",
+    "自研客户端接入"
+  ],
+  "networkTypes": [
+    "IEPL专网",
+    "专线直连"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国",
+    "韩国",
+    "加拿大",
+    "澳大利亚"
+  ],
+  "nodeCount": "60+",
+  "clients": [
+    "官方自研客户端 (Windows/macOS/Android/iOS一键登录)"
+  ],
+  "entryPrice": "¥25/月",
+  "minMonthlyPrice": 25,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "隐形人月度会员",
+      "billing": "月付",
+      "price": 25,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 25,
+      "notes": "专有客户端一键登录，60+节点全覆盖"
+    },
+    {
+      "name": "隐形人年度尊享",
+      "billing": "年付",
+      "price": 240,
+      "traffic": "200GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "年付折算¥20/月，承诺专线SLA"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 专线",
+      "latency": "29ms",
+      "download": "240Mbps",
+      "upload": "45Mbps",
+      "date": "2026-08-25",
+      "status": "vendor_data",
+      "isPeak": false
+    },
+    {
+      "region": "日本 专线",
+      "latency": "60ms",
+      "download": "160Mbps",
+      "upload": "35Mbps",
+      "date": "2026-08-25",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持 (品牌宣称完美解锁)",
+    "claude": "支持",
+    "gemini": "支持",
+    "netflix": "全区",
+    "disney": "全区",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "60+节点超详尽部署清单",
+    "官方承诺1小时快速修复响应",
+    "全平台自研专属客户端，账号密码一键登录",
+    "不提供第三方开源客户端订阅以防止协议特征外泄"
+  ],
+  "verifiedFeatures": [
+    "确实采用纯专属客户端模式，免除第三方软件配置的繁琐",
+    "节点地域覆盖广泛度处于前列"
+  ],
+  "strengths": [
+    "完全不需要懂任何Clash规则、分流、TUN模式，下载客户端登录账号直接连",
+    "售后工单响应速度快",
+    "节点覆盖国家广"
+  ],
+  "limitations": [
+    "不提供第三方开源客户端（Clash/小火箭）订阅链接，无法与已有订阅聚合使用",
+    "对自研客户端有安全性偏见或Linux/软路由用户无法使用"
+  ],
+  "riskNotes": "“1小时修复承诺”及“完美解锁”属于商家服务承诺与宣传表述；纯专属客户端模式不适合软路由与开源软件重度依赖者。",
+  "suitableFor": "完全不想折腾任何客户端配置的纯新手小白、长辈或只在手机电脑单机使用的用户。",
+  "unsuitableFor": "使用OpenWrt软路由、坚持只用开源Clash/sing-box管理多个订阅的高阶玩家。",
+  "sources": [
+    "隐形人官方资料记录",
+    "32家品牌清单"
+  ],
+  "verifiedAt": "2026-08-25",
+  "updatedAt": "2026-11-18",
+  "logo": "/images/logos/隐形人256x256.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

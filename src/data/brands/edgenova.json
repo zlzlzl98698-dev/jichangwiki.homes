@@ -1,0 +1,151 @@
+{
+  "id": "edgenova",
+  "slug": "edgenova",
+  "name": "边缘节点 EdgeNova",
+  "aliases": [
+    "EdgeNova",
+    "极界云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 31,
+  "establishedYear": 2024,
+  "affiliateURL": "https://work.edgenovaaff.cc/#/register?code=cl3iB5YG",
+  "couponCodes": [
+    {
+      "code": "TH888",
+      "discount": "8折优惠码",
+      "condition": "新用户全场8折"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "高速直连 / IPLC",
+    "多线路自动分配"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥15/月 (限时72GB) 或¥108/年 (45GB/月)",
+  "minMonthlyPrice": 9,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付",
+    "USDT"
+  ],
+  "plans": [
+    {
+      "name": "限时月付",
+      "billing": "月付",
+      "price": 15,
+      "traffic": "72GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 15,
+      "notes": "新用户可用TH888享8折"
+    },
+    {
+      "name": "限时年付",
+      "billing": "年付",
+      "price": 108,
+      "traffic": "45GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 9,
+      "notes": "年付折算¥9/月"
+    },
+    {
+      "name": "极界·标准",
+      "billing": "月付",
+      "price": 25,
+      "traffic": "120GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 25,
+      "notes": "季付¥70/年付¥270"
+    },
+    {
+      "name": "极界·进阶",
+      "billing": "月付",
+      "price": 50,
+      "traffic": "250GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 50,
+      "notes": "季付¥145/年付¥570"
+    },
+    {
+      "name": "极界·高级",
+      "billing": "月付",
+      "price": 100,
+      "traffic": "500GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 100,
+      "notes": "年付¥1100"
+    },
+    {
+      "name": "极界·极限",
+      "billing": "月付",
+      "price": 200,
+      "traffic": "1000GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 200,
+      "notes": "年付¥2300"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 IPLC",
+      "latency": "35ms",
+      "download": "待进一步实测",
+      "upload": "待测",
+      "date": "待核实",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "待测 (厂商称支持)",
+    "claude": "待测",
+    "gemini": "待测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "待测"
+  },
+  "claimedFeatures": [
+    "高速直连与IPLC双重加持",
+    "多线路智能自动调度分配",
+    "支持新用户TH888专属8折"
+  ],
+  "verifiedFeatures": [
+    "支持支付宝、微信支付及USDT三种主流结算方式"
+  ],
+  "strengths": [
+    "支付手段极全面（国内双主流+USDT），购买非常顺畅",
+    "15元月付试错成本低，且有8折码"
+  ],
+  "limitations": [
+    "未提供按地区的独立逐项测速与AI解锁数据，需标注待测状态"
+  ],
+  "riskNotes": "具体AI与流媒体逐项实测数据待进一步补充，建议先利用新用户8折券月付体验。",
+  "suitableFor": "看重支付便利度（支持USDT/微信/支付宝）、需要IPLC直连调度的用户。",
+  "unsuitableFor": "需要详实测速报告才做决定的用户。",
+  "sources": [
+    "边缘节点EdgeNova官方资料 (2026-08-09)"
+  ],
+  "verifiedAt": "2026-08-09",
+  "updatedAt": "2026-11-15",
+  "logo": "/images/logos/edgenova_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

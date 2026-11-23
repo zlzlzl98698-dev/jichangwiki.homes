@@ -1,0 +1,325 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "连接成功但无法上网排查指南：DNS 污染、代理死锁与注册表残留自愈";
+const description = "全面解决代理软件显示连接成功且测速延迟正常，但浏览器提示‘无法连接到互联网’或微信断线的疑难杂症。详解系统代理死锁、注册表残留、Fake-IP 映射失效与 TUN 驱动冲突修复。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"故障排查","url":"/troubleshooting/"},{"name":"connection-failed","url":"/troubleshooting/connection-failed/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/troubleshooting/connection-failed/","url":"https://jichangwiki.homes/troubleshooting/connection-failed/","name":"连接成功但无法上网排查指南：DNS 污染、代理死锁与注册表残留自愈","description":"全面解决代理软件显示连接成功且测速延迟正常，但浏览器提示‘无法连接到互联网’或微信断线的疑难杂症。详解系统代理死锁、注册表残留、Fake-IP 映射失效与 TUN 驱动冲突修复。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"故障排查","item":"https://jichangwiki.homes/troubleshooting/"},{"@type":"ListItem","position":3,"name":"连接成功但无法上网排查指南：DNS 污染、代理死锁与注册表残留自愈","item":"https://jichangwiki.homes/troubleshooting/connection-failed/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么我退出了代理软件，电脑反而连百度都打不开了？","acceptedAnswer":{"@type":"Answer","text":"这是最经典的“代理残留断网”问题。软件非正常退出时，没来得及将 Windows 注册表中的“使用代理服务器”复选框取消勾选。此时系统仍在把所有流量发往 127.0.0.1:7890，而后台软件已关，导致断网。只需在 Windows 设置中手动关闭代理，或运行一键清理脚本即可。"}},{"@type":"Question","name":"什么是 DNS 死锁？如何从配置上彻底根治？","acceptedAnswer":{"@type":"Answer","text":"DNS 死锁是指客户端在查询境外上游 DNS 时，由于规则配置不当，将 DNS 查询请求也强行扔进了尚未完成握手的代理通道中。根治方法：在配置文件的 `dns:` 模块中，为 `nameserver` 指定无需代理即可直连的纯净公共 DNS（如 223.5.5.5 与 119.29.29.29），确保 DNS 流量永远直连。"}},{"@type":"Question","name":"测速节点延迟很低，但网页加载极慢甚至频繁白屏？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为商家对单线程进行了严苛限速，或者节点落地机房的出口带宽严重超售。测速 ping 包非常小因此延迟好看，但真实大流量 HTTP 请求就会严重排队丢包。选用像光速云这种不限单线程速率的高端 IEPL 专线即可解决。"}},{"@type":"Question","name":"手机连接正常，但电脑开启热点给其他设备时其他设备上不了网？","acceptedAnswer":{"@type":"Answer","text":"默认情况下，客户端仅监听本机 `127.0.0.1` 回环地址。若要让局域网其他设备共享代理，必须在客户端设置中开启“允许局域网连接 (Allow LAN)”，并在其他设备上配置电脑的局域网 IP 与端口。"}},{"@type":"Question","name":"光速云的节点在防死锁和规则分流上有何优化？","acceptedAnswer":{"@type":"Answer","text":"光速云官方下发的配置文件采用了工业级 Fake-IP 增强模式与智能防环路路由算法，国内 DNS 采用极速 Anycast 节点直连，海外解析由机房边缘网关就近处理，从根本上杜绝了 DNS 污染与代理死锁。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么我退出了代理软件，电脑反而连百度都打不开了？","a":"这是最经典的“代理残留断网”问题。软件非正常退出时，没来得及将 Windows 注册表中的“使用代理服务器”复选框取消勾选。此时系统仍在把所有流量发往 127.0.0.1:7890，而后台软件已关，导致断网。只需在 Windows 设置中手动关闭代理，或运行一键清理脚本即可。"},{"q":"什么是 DNS 死锁？如何从配置上彻底根治？","a":"DNS 死锁是指客户端在查询境外上游 DNS 时，由于规则配置不当，将 DNS 查询请求也强行扔进了尚未完成握手的代理通道中。根治方法：在配置文件的 `dns:` 模块中，为 `nameserver` 指定无需代理即可直连的纯净公共 DNS（如 223.5.5.5 与 119.29.29.29），确保 DNS 流量永远直连。"},{"q":"测速节点延迟很低，但网页加载极慢甚至频繁白屏？","a":"这通常是因为商家对单线程进行了严苛限速，或者节点落地机房的出口带宽严重超售。测速 ping 包非常小因此延迟好看，但真实大流量 HTTP 请求就会严重排队丢包。选用像光速云这种不限单线程速率的高端 IEPL 专线即可解决。"},{"q":"手机连接正常，但电脑开启热点给其他设备时其他设备上不了网？","a":"默认情况下，客户端仅监听本机 `127.0.0.1` 回环地址。若要让局域网其他设备共享代理，必须在客户端设置中开启“允许局域网连接 (Allow LAN)”，并在其他设备上配置电脑的局域网 IP 与端口。"},{"q":"光速云的节点在防死锁和规则分流上有何优化？","a":"光速云官方下发的配置文件采用了工业级 Fake-IP 增强模式与智能防环路路由算法，国内 DNS 采用极速 Anycast 节点直连，海外解析由机房边缘网关就近处理，从根本上杜绝了 DNS 污染与代理死锁。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>断网急救完全手册 · 代理死锁自愈</span>
+        <span>·</span>
+        <span>上级主题: <a href="/troubleshooting/" class="underline hover:text-blue-800">故障排查总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        连接成功但无法上网排查指南：代理死锁与网络重置完全实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        节点测速一片绿，延迟低至 40ms，但打开网页却转圈报错？本文深入剖析代理死锁机制，教您用三条命令快速自愈断网顽疾。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>连通无法上网核心结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>节点测速有延迟但打不开网页，<strong>95% 是由于系统代理注册表端口残留（如软件异常崩溃导致 127.0.0.1:7890 无法被注销）或 DNS 死锁（Fake-IP 无法回源解析）引起</strong>。第一自愈动作：在客户端中彻底关闭系统代理开关，然后在 CMD 终端运行 <code>ipconfig /flushdns</code>；若仍无法打开，运行系统代理清理脚本即可瞬间复原。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 连上节点但网页打不开：DNS 污染与代理死锁（Proxy Deadlock）
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>许多用户经常遇到这种极其困惑的现象：客户端里的节点测速显示 <code>45ms (绿色)</code>，证明本地到远程机房的 TCP 连通性完全正常，但打开 Chrome 却弹出 <code>ERR_PROXY_CONNECTION_FAILED</code> 或 <code>ERR_NAME_NOT_RESOLVED</code>。这背后的核心技术瓶颈通常由以下三大深层机制引发：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【代理死锁与流量死循环示意】</div>
+  <div>[浏览器请求: google.com]</div>
+  <div>  │  (发往本地系统代理 127.0.0.1:7890)</div>
+  <div>  ▼</div>
+  <div>[代理内核 (Clash)] 需要知道 google.com 的真实 IP 才能建立底层连接</div>
+  <div>  │  (内核向海外上游 DNS 发起查询请求)</div>
+  <div>  ▼</div>
+  <div>[规则引擎死循环 (Proxy Deadlock)]</div>
+  <div>  ★ 致命点：如果上游 DNS 查询请求本身也被分流规则判定为“需要走代理”，</div>
+  <div>     但代理节点此刻正处于握手解析等待中 —— 形成了“需要代理才能查 DNS，但查不到 DNS 就无法建代理”的死锁！</div>
+  <div>  ▼</div>
+  <div>[结果] 浏览器等待 30 秒超时，弹出无法连接到互联网。</div>
+</div>
+<p>此外，非正常关机、软件强制闪退或杀毒软件强杀进程，会导致 Windows 系统的注册表代理开关保持在“开”状态，而本地监听端口早已关闭，造成全局断网。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 连通不断流：网络协议栈彻底重置与排障四步法
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>面对“测速正常却打不开网页”的僵局，请执行以下四步彻底复位：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：清除系统注册表代理残留（一键归零）：</strong> 打开“Windows 设置 -> 网络和 Internet -> 代理”，确保“使用代理服务器”开关处于<strong>关闭</strong>状态；或在管理员 CMD 运行注册表清理命令：<code>reg delete "HKCUSoftwareMicrosoftWindowsCurrentVersionInternet Settings" /v ProxyServer /f</code>；</li>
+  <li><strong>第二步：刷新 DNS 缓存并释放 DHCP 租约：</strong> 在命令提示符中依次输入：<code>ipconfig /flushdns</code>（清空 DNS 污染缓存）并按回车，随后输入 <code>ipconfig /renew</code> 重新从路由器获取正确的网关与 DNS 配置；</li>
+  <li><strong>第三步：核查 Fake-IP 映射与直连规则：</strong> 检查客户端的模式是否被误设为了 <code>Global（全局）</code>。切换为 <code>Rule（规则）</code> 模式，确保国内流量走 DIRECT，防止国内域名在海外 DNS 超时；</li>
+  <li><strong>第四步：重置底层 Winsock 网络协议栈：</strong> 若系统曾安装过多种虚拟网卡或加速器（如迅游、UU），底层网络套接字可能遭到钩子破坏。在管理员终端运行 <code>netsh winsock reset</code> 并重启计算机，彻底恢复网络驱动纯净状态。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            测速正常却无法上网常见原因与排错对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        表象特征与底层修复对策：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">异常表象</th><th class="py-3 px-4">核心判定原因</th><th class="py-3 px-4">诊断测试手段</th><th class="py-3 px-4">针对性修复方案</th><th class="py-3 px-4">恢复耗时</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Chrome 报错 ERR_PROXY_CONNECTION_FAILED</td><td class="py-3 px-4 ">系统代理指向的端口无进程监听（旧端口残留）</td><td class="py-3 px-4 ">查看 Windows 代理设置中填写的端口</td><td class="py-3 px-4 ">关闭系统代理开关，重启客户端重新接管</td><td class="py-3 px-4 ">30 秒</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">报错 ERR_NAME_NOT_RESOLVED</td><td class="py-3 px-4 ">上游 DNS 无法解析，Fake-IP 映射断裂</td><td class="py-3 px-4 ">在终端执行 ping 223.5.5.5 测试纯 IP</td><td class="py-3 px-4 ">修改配置文件 nameserver 为 119.29.29.29</td><td class="py-3 px-4 ">1 分钟</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">国内网页秒开，所有海外网页无法访问</td><td class="py-3 px-4 ">分流规则中将海外流量误指向了失效的策略组</td><td class="py-3 px-4 ">在 Clash 核心日志查看流量命中匹配</td><td class="py-3 px-4 ">在代理面板中选择有效的国家节点</td><td class="py-3 px-4 ">15 秒</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">微信能收到文字，但打不开任何网页与图片</td><td class="py-3 px-4 ">DNS 能够解析，但 HTTP/HTTPS 端口被强行阻断</td><td class="py-3 px-4 ">检查是否开启了第三方杀毒软件 Web 防护</td><td class="py-3 px-4 ">将代理客户端加入杀毒软件防火墙白名单</td><td class="py-3 px-4 ">45 秒</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">开启 TUN 模式后电脑彻底断网</td><td class="py-3 px-4 ">虚拟网卡路由表冲突，默认网关被覆盖</td><td class="py-3 px-4 ">查看路由表 route print 查看 0.0.0.0 路由</td><td class="py-3 px-4 ">卸载服务模式重新安装最新 Wintun 驱动</td><td class="py-3 px-4 ">2 分钟</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备纯净 DNS 拓扑、分流规则精准不迷路的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        断网排障场景决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">开发者群体</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>浏览器正常，但终端 Git / Docker 持续超时：</strong> 说明系统代理仅接管了应用层。请在客户端直接开启 TUN 模式，透明接管命令行协议栈。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">网课与会议</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>腾讯会议/钉钉视频断流提示网络异常：</strong> 确认分流规则中腾讯、阿里域名走 DIRECT，严禁走境外节点绕路。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">极客用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>双网卡（WiFi + 有线）同时连接导致冲突：</strong> 禁用未使用的冗余物理网卡，防止系统默认路由度量值（Metric）混乱造成数据包发往错误接口。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">网络自愈五大黄金法则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>正常关闭电脑前，必须先在客户端托盘图标中退出软件，切忌直接拔电源或硬关机导致代理配置残留；</li><li>遇到断网先在终端 <code>ping 223.5.5.5</code>，如果连纯 IP 都不通，说明是物理宽带故障；</li><li>保持规则分流（Rule 模式），杜绝滥用 Global 全局模式；</li><li>电脑上不要同时常驻两款不同品牌的代理软件（如 Clash 与 v2rayN 同时开），端口冲突必断网；</li><li>收藏备用注册表一键清理脚本，遇到网络异常秒级复位系统网络。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        连通无法上网高频疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 深度排障与网络自愈长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-70/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障自愈</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              万字长文提供一键批处理修复脚本，彻底解决断网。
+            </p>
+          </a>
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">节点排错</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              排查节点通信握手层面的超时诱因。
+            </p>
+          </a>
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              规范配置系统代理与 TUN 模式，避免配置冲突。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

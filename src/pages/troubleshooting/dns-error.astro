@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "DNS 泄漏与解析失败排查指南：运营商劫持、Fake-IP 优化与纯净拓扑搭建";
+const description = "全面排查科学上网时遇到的 DNS 污染、DNS 泄漏与域名解析失败。详解 WebRTC 真实 IP 暴露检测、运营商 UDP 53 端口投毒机理，以及 DoH / DoT 加密解析搭建方案。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"故障排查","url":"/troubleshooting/"},{"name":"dns-error","url":"/troubleshooting/dns-error/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/troubleshooting/dns-error/","url":"https://jichangwiki.homes/troubleshooting/dns-error/","name":"DNS 泄漏与解析失败排查指南：运营商劫持、Fake-IP 优化与纯净拓扑搭建","description":"全面排查科学上网时遇到的 DNS 污染、DNS 泄漏与域名解析失败。详解 WebRTC 真实 IP 暴露检测、运营商 UDP 53 端口投毒机理，以及 DoH / DoT 加密解析搭建方案。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"故障排查","item":"https://jichangwiki.homes/troubleshooting/"},{"@type":"ListItem","position":3,"name":"DNS 泄漏与解析失败排查指南：运营商劫持、Fake-IP 优化与纯净拓扑搭建","item":"https://jichangwiki.homes/troubleshooting/dns-error/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"什么是 DNS 泄漏？为什么它比 IP 泄漏还要危险？","acceptedAnswer":{"@type":"Answer","text":"DNS 泄漏是指当您访问境外网站时，虽然流量经过了代理，但您的操作系统却把域名查询请求发给了中国境内的运营商 DNS 服务器。这不仅让本地运营商精确记录了您访问了哪些境外网站的完整日志，还会让目标网站检测到您的 DNS 归属地在中国，直接以风控名义冻结您的账号。"}},{"@type":"Question","name":"Fake-IP 模式分配的 198.18.0.x 地址打得开网页吗？","acceptedAnswer":{"@type":"Answer","text":"完全可以。`198.18.0.0/15` 是 IETF 专门分配用于网络基准测试的保留私有地址。Clash 只是在本地用这个虚拟 IP 作为占位符给浏览器交差，当数据包发到代理核心时，核心会根据内部映射表自动将其还原为真实域名发往海外机房，用户感知不到任何异常。"}},{"@type":"Question","name":"为什么访问部分国内应用时提示“网络环境异常”？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为没有将国内域名加入 `fake-ip-filter` 白名单，导致国内应用拿到了 198.18 虚拟 IP 从而触发了安全机制。只要在白名单中添加国内顶级域名，让国内服务走真实 DNS 解析即可。"}},{"@type":"Question","name":"如何彻底关闭浏览器的 WebRTC 真实 IP 泄漏？","acceptedAnswer":{"@type":"Answer","text":"在 Chrome 扩展商店搜索并安装 `WebRTC Control`，将其状态切换为蓝色（完全禁用 STUN/TURN），或者在客户端中开启 TUN 虚拟网卡模式，TUN 会直接在网卡底层将旁路 STUN 报文全部捕获，不给其直连本地网络的机会。"}},{"@type":"Question","name":"光速云如何保障用户的 DNS 解析安全？","acceptedAnswer":{"@type":"Answer","text":"光速云的所有专线节点均部署了私有递归 DNS 节点，出口 DNS 地址与落地节点机房物理 IP 100% 保持在同一个 BGP 自治系统（ASN）内，天然实现零泄漏、零污染，完美通过各大风控平台严苛检测。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"什么是 DNS 泄漏？为什么它比 IP 泄漏还要危险？","a":"DNS 泄漏是指当您访问境外网站时，虽然流量经过了代理，但您的操作系统却把域名查询请求发给了中国境内的运营商 DNS 服务器。这不仅让本地运营商精确记录了您访问了哪些境外网站的完整日志，还会让目标网站检测到您的 DNS 归属地在中国，直接以风控名义冻结您的账号。"},{"q":"Fake-IP 模式分配的 198.18.0.x 地址打得开网页吗？","a":"完全可以。`198.18.0.0/15` 是 IETF 专门分配用于网络基准测试的保留私有地址。Clash 只是在本地用这个虚拟 IP 作为占位符给浏览器交差，当数据包发到代理核心时，核心会根据内部映射表自动将其还原为真实域名发往海外机房，用户感知不到任何异常。"},{"q":"为什么访问部分国内应用时提示“网络环境异常”？","a":"这通常是因为没有将国内域名加入 `fake-ip-filter` 白名单，导致国内应用拿到了 198.18 虚拟 IP 从而触发了安全机制。只要在白名单中添加国内顶级域名，让国内服务走真实 DNS 解析即可。"},{"q":"如何彻底关闭浏览器的 WebRTC 真实 IP 泄漏？","a":"在 Chrome 扩展商店搜索并安装 `WebRTC Control`，将其状态切换为蓝色（完全禁用 STUN/TURN），或者在客户端中开启 TUN 虚拟网卡模式，TUN 会直接在网卡底层将旁路 STUN 报文全部捕获，不给其直连本地网络的机会。"},{"q":"光速云如何保障用户的 DNS 解析安全？","a":"光速云的所有专线节点均部署了私有递归 DNS 节点，出口 DNS 地址与落地节点机房物理 IP 100% 保持在同一个 BGP 自治系统（ASN）内，天然实现零泄漏、零污染，完美通过各大风控平台严苛检测。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>域名解析与防泄漏 · 纯净 DNS 指南</span>
+        <span>·</span>
+        <span>上级主题: <a href="/troubleshooting/" class="underline hover:text-blue-800">故障排查总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        DNS 泄漏与解析失败排查指南：防污染与纯净拓扑实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        明明开了代理，访问海外服务依然弹出真实所在地？或者经常遭遇域名解析失败？本文带您彻底扫清 DNS 污染与泄漏隐患。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>DNS 核心评测结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>DNS 泄漏会导致您的真实地理位置与网络足迹在目标网站面前彻底裸奔</strong>！要杜绝 DNS 泄漏与污染，最佳架构方案是：<strong>在客户端开启 Fake-IP 模式 + 加密 DNS (DoH/DoT) + 配合 TUN 虚拟网卡接管</strong>。国内域名直连国内运营商 Anycast DNS，境外域名交由代理远端机房解析，在 <code>dnsleaktest.com</code> 实测中做到 100% 零泄漏。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 DNS 污染与 DNS 泄漏机理：运营商劫持与真实 IP 暴露风险
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>DNS（域名系统）是互联网的寻址指南针。在没有防护的明文网络中，所有 DNS 查询均通过无状态、无加密的 <strong>UDP 53 端口</strong> 明文传输。这为外部审查与流量劫持留下了巨大敞口：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【DNS 污染与 DNS 泄漏发生机理对比】</div>
+  <div>■ DNS 污染 (DNS Poisoning)：</div>
+  <div>  用户电脑向境外发起 UDP 53 查询 -> GFW 旁路设备抢先伪造一个虚假的 IP (如 0.0.0.0) 返回 -> 浏览器连向错误地址报错</div>
+  <div>■ DNS 泄漏 (DNS Leak)：</div>
+  <div>  用户虽然连接了香港代理节点，但浏览海外网站时，电脑本地的 Windows 系统依然把 DNS 请求发送给了本地电信/联通 DNS！</div>
+  <div>  ★ 危害：目标网站（如海外银行、OpenAI）通过检查查询您域名的 DNS 服务器所在地，瞬间识别出您来自中国大陆，直接风控封号！</div>
+</div>
+<p>此外，浏览器内的 <strong>WebRTC 协议</strong> 在建立 P2P 音视频通道时，会绕过常规代理直接发送 STUN 探测包，这也是导致真实公网 IP 发生旁路泄漏的高危源头。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 构建防污染、防泄漏的高安全性纯净 DNS 拓扑实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>通过合理配置代理客户端内核的 DNS 引擎，可以彻底隔绝一切泄漏与污染：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>拥抱 Fake-IP 增强模式：</strong> 将客户端 DNS 模式设置为 <code>enhanced-mode: fake-ip</code>。当应用程序发起域名请求时，内核不向公网发出任何真实查询，而是直接分配一个本地专用的保留虚拟 IP（如 <code>198.18.0.1</code>）立即响应。真实 DNS 解析被延迟到代理机房在海外端完成，既消除了本地解析延迟，又物理阻断了本地泄漏；</li>
+  <li><strong>配置分流式上下游 DNS（国内走国内，国外走机房）：</strong> 在 <code>nameserver</code> 列表填入腾讯 DNSPod (<code>119.29.29.29</code>) 与阿里 DNS (<code>223.5.5.5</code>)；在 <code>fallback</code> 列表配置境外纯净 DoH 地址（如 <code>https://1.1.1.1/dns-query</code>）；</li>
+  <li><strong>利用 fallback-filter 阻止污染 IP 注入：</strong> 开启 <code>geoip: true</code> 与 <code>ipcidr: [240.0.0.0/4]</code> 过滤，一旦返回的 IP 命中 GFW 常见的伪造地址池，内核直接丢弃该虚假结果，强行回退至境外安全信道；</li>
+  <li><strong>关闭浏览器 WebRTC 泄漏风险：</strong> 在 Chrome 或 Edge 浏览器安装 <code>WebRTC Control</code> 扩展，或直接在客户端开启 TUN 模式从底层网卡全局拦截 WebRTC STUN 探测报文。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            主流 DNS 解析方案抗污染与防泄漏能力对比表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        不同 DNS 处理架构技术参数对照：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">DNS 架构方案</th><th class="py-3 px-4">抗 GFW 污染能力</th><th class="py-3 px-4">防真实 IP 泄漏等级</th><th class="py-3 px-4">首包解析延迟</th><th class="py-3 px-4">配置复杂度</th><th class="py-3 px-4">综合推荐度</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">传统本地 UDP 53 (ISP 默认)</td><td class="py-3 px-4 ">0% (完全暴露受劫持)</td><td class="py-3 px-4 ">0% (真实所在地大暴露)</td><td class="py-3 px-4 ">极低 (5ms)</td><td class="py-3 px-4 ">零配置</td><td class="py-3 px-4 ">★☆☆☆☆ (严禁用于翻墙)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">普通 DoH / DoT 加密 DNS</td><td class="py-3 px-4 ">较强 (防运营商劫持)</td><td class="py-3 px-4 ">中等 (可能被本地分流)</td><td class="py-3 px-4 ">中等 (带 TLS 握手)</td><td class="py-3 px-4 ">低</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Redir-Host 真实解析分流</td><td class="py-3 px-4 ">良好 (需配置上游分流)</td><td class="py-3 px-4 ">较好 (依赖规则完整度)</td><td class="py-3 px-4 ">较慢 (需等真实返回)</td><td class="py-3 px-4 ">中等</td><td class="py-3 px-4 ">★★★☆☆</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Fake-IP + 远程机房代解析</td><td class="py-3 px-4 ">100% 物理免疫污染</td><td class="py-3 px-4 ">100% 绝对防泄漏 (首选)</td><td class="py-3 px-4 ">极限 (本地 0ms 响应)</td><td class="py-3 px-4 ">中等 (客户端预设)</td><td class="py-3 px-4 ">★★★★★ (生产力首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">SmartDNS + AdGuard 软路由</td><td class="py-3 px-4 ">极高</td><td class="py-3 px-4 ">极高</td><td class="py-3 px-4 ">极快 (本地并发缓存)</td><td class="py-3 px-4 ">极高 (需软路由硬件)</td><td class="py-3 px-4 ">★★★★☆ (极客首选)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备边缘纯净 Anycast DNS、杜绝解析泄漏的专线服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        DNS 选型与排错决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">AI 与海外网银重度用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>登录 ChatGPT 频繁提示地区不支持：</strong> 打开 <code>dnsleaktest.com</code> 进行标准测试。如果测试结果中出现了任何中国大陆的电信/联通 DNS 节点，必须立即开启 Fake-IP 模式。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">公司局域网/内网办公</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>开启代理后无法解析内部 OA 域名：</strong> 在 Clash 配置的 fake-ip-filter 中添加公司的内网私有域名（如 <code>*.corp.local</code>），使内网域名强制回退本地真实解析。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">极致网页极速秒开</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>感觉代理连接虽然快，但点开新网页有卡顿：</strong> 开启 Fake-IP 模式，将首包解析耗时直接降为 0 毫秒，体验点击即开的丝滑感。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">DNS 安全防范五大铁律：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>定期访问 <code>dnsleaktest.com</code> 检验出站 DNS，如果出现国内运营商节点立即排查；</li><li>切勿在翻墙环境下将电脑主网卡的 DNS 静态写死为 8.8.8.8（明文 UDP 8.8.8.8 会被运营商在骨干网强行拦截抢答）；</li><li>首选原生搭载 Fake-IP 机制的现代客户端（如 Clash Verge Rev）；</li><li>配置 DNS 分流时，必须保持国内主 DNS 走直连，境外 fallback 走代理；</li><li>搭配纯净住宅落地 IP 的专线机场（如光速云），保障出口 DNS 与出口 IP 归属地绝对一致。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        DNS 故障高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 DNS 与网络安全深度长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">深度排障</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              排查因解析失败与时间错误引起的全面超时。
+            </p>
+          </a>
+        
+          <a href="/articles/article-70/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障自愈</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              退出代理后电脑微信、百度打不开？一键清理注册表代理残留脚本 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              修复因 DNS 映射断裂导致的网络打不开故障。
+            </p>
+          </a>
+        
+          <a href="/network/iepl/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">协议科普</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              IEPL 国际以太网专线深度科普：二层物理光纤内网架构实测全解析 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              了解内网专线如何从底层物理避免公网 DNS 嗅探。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

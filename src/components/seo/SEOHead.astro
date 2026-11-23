@@ -1,0 +1,133 @@
+---
+import { siteConfig } from '../../config/site';
+
+export interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  canonicalURL?: string;
+  ogImage?: string;
+  type?: 'website' | 'article' | 'product';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+  robots?: string;
+  verification?: {
+    google?: string;
+    bing?: string;
+    shenma?: string;
+    baidu?: string;
+  };
+  jsonLd?: Record<string, any> | Array<Record<string, any>>;
+}
+
+const {
+  title,
+  description,
+  keywords = ['百科机场', '机场推荐', '机场排行', 'Clash教程', 'Shadowrocket', 'IEPL专线', '光速云'],
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  ogImage = '/images/avatar.webp',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author = siteConfig.author,
+  section,
+  tags,
+  robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+  verification,
+  jsonLd
+} = Astro.props;
+
+const siteName = siteConfig.name;
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+
+// Verification Codes (Prioritize props, then fallback to siteConfig)
+const googleVerify = verification?.google || siteConfig.verification.google;
+const bingVerify = verification?.bing || siteConfig.verification.bing;
+const shenmaVerify = verification?.shenma || siteConfig.verification.shenma;
+const baiduVerify = verification?.baidu || siteConfig.verification.baidu;
+
+// Global Organization Schema
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://jichangwiki.homes/#organization',
+  name: siteName,
+  url: 'https://jichangwiki.homes/',
+  logo: 'https://jichangwiki.homes/images/avatar.webp',
+  description: siteConfig.description,
+  sameAs: []
+};
+
+// Global WebSite Schema
+const baseWebSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://jichangwiki.homes/#website',
+  name: siteName,
+  url: 'https://jichangwiki.homes/',
+  description: siteConfig.description,
+  publisher: {
+    '@id': 'https://jichangwiki.homes/#organization'
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://jichangwiki.homes/search/?q={search_term_string}',
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+const finalSchemas = jsonLd 
+  ? (Array.isArray(jsonLd) ? [orgSchema, baseWebSiteSchema, ...jsonLd] : [orgSchema, baseWebSiteSchema, jsonLd]) 
+  : [orgSchema, baseWebSiteSchema];
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords.join(', ')} />
+<meta name="author" content={author} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="zh_CN" />
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+{author && <meta property="article:author" content={author} />}
+{section && <meta property="article:section" content={section} />}
+{tags && tags.map(tag => <meta property="article:tag" content={tag} />)}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
+
+<!-- Search Engine Robots Directive -->
+<meta name="robots" content={robots} />
+<meta name="googlebot" content={robots} />
+<meta name="bingbot" content={robots} />
+<meta name="baiduspider" content={robots.includes('noindex') ? 'noindex' : 'index, follow'} />
+<meta name="yisouspider" content={robots.includes('noindex') ? 'noindex' : 'index, follow'} />
+
+<!-- Search Engine Webmaster Verification Tags (Populated when provided) -->
+{googleVerify && <meta name="google-site-verification" content={googleVerify} />}
+{bingVerify && <meta name="msvalidate.01" content={bingVerify} />}
+{shenmaVerify && <meta name="shenma-site-verification" content={shenmaVerify} />}
+{baiduVerify && <meta name="baidu-site-verification" content={baiduVerify} />}
+
+<!-- Structured Data (JSON-LD) -->
+{finalSchemas.map(schema => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

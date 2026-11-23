@@ -1,0 +1,293 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "Mihomo 跨平台通用代理核心技术文档：架构原理与高级分流指南";
+const description = "全面解读开源项目 Mihomo（原名 Clash.Meta）。深挖其核心路由调度、Fake-IP 虚拟池机制、分流规则集 Rule-Providers 及在全平台客户端中的最佳实践。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"客户端软件","url":"/clients/"},{"name":"mihomo","url":"/clients/mihomo/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/clients/mihomo/","url":"https://jichangwiki.homes/clients/mihomo/","name":"Mihomo 跨平台通用代理核心技术文档：架构原理与高级分流指南","description":"全面解读开源项目 Mihomo（原名 Clash.Meta）。深挖其核心路由调度、Fake-IP 虚拟池机制、分流规则集 Rule-Providers 及在全平台客户端中的最佳实践。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"客户端软件","item":"https://jichangwiki.homes/clients/"},{"@type":"ListItem","position":3,"name":"Mihomo 跨平台通用代理核心技术文档：架构原理与高级分流指南","item":"https://jichangwiki.homes/clients/mihomo/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Mihomo 内核会自动在后台更新吗？","acceptedAnswer":{"@type":"Answer","text":"在 Clash Verge Rev 等现代客户端中，软件设置里提供了“更新内核”按钮，点击即可一键下载官方 GitHub 最新编译版二进制文件进行替换。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"Mihomo 内核会自动在后台更新吗？","a":"在 Clash Verge Rev 等现代客户端中，软件设置里提供了“更新内核”按钮，点击即可一键下载官方 GitHub 最新编译版二进制文件进行替换。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>下一代通用核心 · Mihomo 深度文档</span>
+        <span>·</span>
+        <span>上级主题: <a href="/clients/" class="underline hover:text-blue-800">客户端软件总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        Mihomo 跨平台通用代理核心技术文档与配置规范
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        作为现代科学上网工具背后的统一技术引擎，Mihomo 彻底改写了代理内核的发展历史。本文深入剖析其内部时序与进阶配置规则。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>Mihomo 核心速查结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>Mihomo 是当前技术实力最强、协议创新最快、跨平台适配最广的开源代理网络核心</strong>。它不仅承载了 Clash Verge Rev、FlClash、OpenClash 等所有顶级客户端的运行生命线，更通过 <strong>Fake-IP 0ms 响应、Sniffer 域名嗅探与 Rule-Providers 动态规则流</strong> 彻底重构了网络代理的体验基准。选择支持 Mihomo 特性的服务商（如光速云）是保障长期稳定通畅的关键。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 Mihomo 的数据处理流水线（Pipeline）工作时序剖析
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>当一个网络数据包进入 Mihomo 内核时，它经历了一套严谨且极度优化的流水线调度：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>1. 流量接入与透明拦截：</strong> 通过本地 SOCKS5/HTTP 混合端口、系统代理、或 TUN 虚拟网卡（基于 gVisor 或 System 原生网络栈）捕获操作系统的所有网络数据；</li>
+  <li><strong>2. DNS 抢先解析与 Fake-IP 映射：</strong> 若启用 Fake-IP 模式，内核在 0 毫秒内从本地 <code>198.18.0.0/16</code> 网段返回一个伪造的虚拟 IP，并在内存中建立 <code>域名 <-> 假IP</code> 的哈希双向映射表；</li>
+  <li><strong>3. 深度协议嗅探（Sniffing）：</strong> 分析初始握手包（TLS Client Hello / HTTP Host），提取目标真实域名；</li>
+  <li><strong>4. 智能规则路由分流（Routing Engine）：</strong> 按照配置中声明的规则优先级（PROCESS-NAME -> DOMAIN -> GEOIP -> MATCH），将流量导向“直连 (DIRECT)”、“拦截 (REJECT)”或指定的专线策略组；</li>
+  <li><strong>5. 出站加密与物理跨境：</strong> 将请求封装为指定协议（SS2022 / Reality / Trojan），通过光速云等物理 IEPL 专线直达境外目标网络。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 打造高可用自动容灾策略组配置模板
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>借助 Mihomo 强大的 <code>fallback</code> 健康检查机制，您可以手把手搭建一条自动倒换的高可用线路：</p>
+<div class="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs overflow-x-auto my-3">
+  <pre><code>proxy-groups:
+  - name: "🚀 主力容灾自动切换"
+    type: fallback
+    url: 'http://cp.cloudflare.com/generate_204'
+    interval: 30
+    timeout: 2500
+    proxies:
+      - "光速云-香港IEPL专线01"   # 主用首选
+      - "备用机场-日本BGP中转01"   # 备用容灾</code></pre>
+</div>
+<p class="text-xs sm:text-sm text-slate-700">
+  内核每 30 秒执行一次网络探活。一旦主力节点发生突发中断，内核在 2.5 秒内自动无感切换至备用节点，用户端毫无察觉。
+</p>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            Mihomo 内核三大 DNS 模式深度对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        Fake-IP、Redir-Host 与标准 DNS 模式性能对比：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">DNS 运行模式</th><th class="py-3 px-4">响应延迟</th><th class="py-3 px-4">本地 DNS 污染免疫度</th><th class="py-3 px-4">复杂网络兼容性</th><th class="py-3 px-4">推荐指数</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Fake-IP 增强模式</td><td class="py-3 px-4 ">0ms (本地瞬间响应)</td><td class="py-3 px-4 ">100% 绝对免疫</td><td class="py-3 px-4 ">优秀 (需维护白名单)</td><td class="py-3 px-4 ">★★★★★ (主流默认首选)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Redir-Host 模式</td><td class="py-3 px-4 ">150ms ~ 300ms (跨洋等待)</td><td class="py-3 px-4 ">需配合 DoH 防污染</td><td class="py-3 px-4 ">天然兼容</td><td class="py-3 px-4 ">★★★☆☆ (仅兼容老设备)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">普通直连 DNS</td><td class="py-3 px-4 ">30ms</td><td class="py-3 px-4 ">0% (易受本地运营商污染)</td><td class="py-3 px-4 ">极差</td><td class="py-3 px-4 ">★☆☆☆☆ (淘汰)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        全面深度支持 Mihomo 的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        Mihomo 进阶选型场景
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">极客与开发者</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>需要最纯粹的内核调度能力：</strong> 搭配使用 Clash Verge Rev，深度定制 Merge 脚本与自定义分流规则。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">Mihomo 运行守则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>定期更新本地 GeoIP 与 GeoSite 数据库；</li><li>在 TUN 配置中优先选择 mixed 栈兼顾游戏与高并发；</li><li>维护好 fake-ip-filter 白名单保障局域网打印机与私有 IP 通畅。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        Mihomo 常见问题 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 核心关联技术手册
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-61/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">DNS深度</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Fake-IP 原理解析：它是如何消除本地 DNS 往返延迟实现秒开的？ &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              全面理解 0ms 秒开背后的核心机制。
+            </p>
+          </a>
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">容灾搭建</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              fallback 策略组完整实操。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

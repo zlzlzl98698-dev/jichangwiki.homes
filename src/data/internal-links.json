@@ -1,0 +1,56 @@
+[
+  {
+    "from": "/airport/recommend/",
+    "to": "/brands/guangsu/",
+    "anchor": "光速云综合评测与套餐",
+    "reason": "主推品牌详情承接"
+  },
+  {
+    "from": "/airport/recommend/",
+    "to": "/pricing/cheap/",
+    "anchor": "便宜低价机场清单",
+    "reason": "价格导向细分"
+  },
+  {
+    "from": "/pricing/cheap/",
+    "to": "/reviews/feimao/",
+    "anchor": "飞猫云8折优惠评测",
+    "reason": "平价代表品牌分析"
+  },
+  {
+    "from": "/pricing/monthly/",
+    "to": "/brands/guangsu/",
+    "anchor": "查看光速云套餐结构",
+    "reason": "月付与年付折算对比"
+  },
+  {
+    "from": "/clients/clash-verge/",
+    "to": "/tutorials/clash-configuration/",
+    "anchor": "Clash 规则与TUN配置实操",
+    "reason": "软件下载后配置教程"
+  },
+  {
+    "from": "/tutorials/subscription/",
+    "to": "/troubleshooting/subscription-failed/",
+    "anchor": "订阅更新失败诊断排查",
+    "reason": "操作遇到异常时引导"
+  },
+  {
+    "from": "/streaming-ai/chatgpt/",
+    "to": "/brands/guangsu/",
+    "anchor": "光速云AI解锁节点实测",
+    "reason": "AI需求落地转化"
+  },
+  {
+    "from": "/network/iepl/",
+    "to": "/brands/guangsu/",
+    "anchor": "光速云企业级IEPL架构",
+    "reason": "专线技术案例"
+  },
+  {
+    "from": "/risk/shutdown/",
+    "to": "/airport/reliable/",
+    "anchor": "避坑选购指南与老牌稳定机场",
+    "reason": "风控后承接可靠替代"
+  }
+]

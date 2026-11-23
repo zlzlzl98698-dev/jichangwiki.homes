@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "订阅更新失败排查指南：DNS 污染、WAF 拦截与 Token 失效四步恢复";
+const description = "全面解决代理客户端提示‘Failed to fetch subscription’、403 Forbidden 或下载超时的故障。剖析订阅域名被 ISP 污染、机场防刷防火墙拦截及鉴权令牌过期的根因。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"故障排查","url":"/troubleshooting/"},{"name":"subscription-failed","url":"/troubleshooting/subscription-failed/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/troubleshooting/subscription-failed/","url":"https://jichangwiki.homes/troubleshooting/subscription-failed/","name":"订阅更新失败排查指南：DNS 污染、WAF 拦截与 Token 失效四步恢复","description":"全面解决代理客户端提示‘Failed to fetch subscription’、403 Forbidden 或下载超时的故障。剖析订阅域名被 ISP 污染、机场防刷防火墙拦截及鉴权令牌过期的根因。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"故障排查","item":"https://jichangwiki.homes/troubleshooting/"},{"@type":"ListItem","position":3,"name":"订阅更新失败排查指南：DNS 污染、WAF 拦截与 Token 失效四步恢复","item":"https://jichangwiki.homes/troubleshooting/subscription-failed/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"为什么在浏览器里能打开订阅链接，但在 Clash 里却提示更新失败？","acceptedAnswer":{"@type":"Answer","text":"浏览器发起请求时携带的是标准的浏览器请求头（带有 Cookie、Accept 等丰富标识），而某些代理客户端发起的是极简的命令行 HTTP 请求。部分云防护 WAF 会将此类请求判定为恶意爬虫并阻断。解决方法是在客户端设置中开启“通过代理更新”或自定义请求头。"}},{"@type":"Question","name":"使用公开的在线“订阅转换平台”安全吗？","acceptedAnswer":{"@type":"Answer","text":"存在很大安全隐患！当您将订阅链接提交给第三方的订阅转换网站时，网站后台所有者可以轻易在日志中抓取您的真实 Token，进而盗刷您的流量甚至分析您的访问去向。推荐优先使用光速云等原生提供一键客户端下发的大型品牌。"}},{"@type":"Question","name":"订阅更新后，原来收藏的节点或自定义策略组会被冲掉吗？","acceptedAnswer":{"@type":"Answer","text":"在 Clash Verge Rev 中，如果您使用的是“订阅配置 (Remote Profile)”，每次在线更新确实会覆盖本地对该文件的修改。如果您需要保留自定义分流规则，应使用“扩展配置 (Merge/Script)”功能，将个人规则注入到订阅中，这样无论订阅如何更新，个人规则永远生效。"}},{"@type":"Question","name":"为什么提示“订阅内容为空”？","acceptedAnswer":{"@type":"Answer","text":"这通常是因为您的套餐账户已欠费停机，或者机场管理员在后台进行节点集群切割割接。登录机场官网控制台核验套餐剩余流量与有效期即可明确原因。"}},{"@type":"Question","name":"光速云的订阅分发具备哪些技术优势？","acceptedAnswer":{"@type":"Answer","text":"光速云在全球部署了由 Cloudflare Enterprise 与多地 Anycast AnyCDN 构成的多活分发网络，具备自动抵抗 DNS 污染、智能识别客户端 UA、自适应下发 Clash/Sing-box 格式配置的能力，订阅拉取成功率保持在 99.9% 以上。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"为什么在浏览器里能打开订阅链接，但在 Clash 里却提示更新失败？","a":"浏览器发起请求时携带的是标准的浏览器请求头（带有 Cookie、Accept 等丰富标识），而某些代理客户端发起的是极简的命令行 HTTP 请求。部分云防护 WAF 会将此类请求判定为恶意爬虫并阻断。解决方法是在客户端设置中开启“通过代理更新”或自定义请求头。"},{"q":"使用公开的在线“订阅转换平台”安全吗？","a":"存在很大安全隐患！当您将订阅链接提交给第三方的订阅转换网站时，网站后台所有者可以轻易在日志中抓取您的真实 Token，进而盗刷您的流量甚至分析您的访问去向。推荐优先使用光速云等原生提供一键客户端下发的大型品牌。"},{"q":"订阅更新后，原来收藏的节点或自定义策略组会被冲掉吗？","a":"在 Clash Verge Rev 中，如果您使用的是“订阅配置 (Remote Profile)”，每次在线更新确实会覆盖本地对该文件的修改。如果您需要保留自定义分流规则，应使用“扩展配置 (Merge/Script)”功能，将个人规则注入到订阅中，这样无论订阅如何更新，个人规则永远生效。"},{"q":"为什么提示“订阅内容为空”？","a":"这通常是因为您的套餐账户已欠费停机，或者机场管理员在后台进行节点集群切割割接。登录机场官网控制台核验套餐剩余流量与有效期即可明确原因。"},{"q":"光速云的订阅分发具备哪些技术优势？","a":"光速云在全球部署了由 Cloudflare Enterprise 与多地 Anycast AnyCDN 构成的多活分发网络，具备自动抵抗 DNS 污染、智能识别客户端 UA、自适应下发 Clash/Sing-box 格式配置的能力，订阅拉取成功率保持在 99.9% 以上。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>订阅拉取急救 · 四步排错法则</span>
+        <span>·</span>
+        <span>上级主题: <a href="/troubleshooting/" class="underline hover:text-blue-800">故障排查总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        订阅更新失败排查指南：DNS 污染与 WAF 拦截四步自愈
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        点击更新订阅却弹出一长串红字报错？本文系统拆解订阅下发链路上四大常见卡点，教您利用应急方案秒拉最新节点。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>订阅更新失败核心结论 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p>订阅拉取报错（如 403 Forbidden 或 Timeout）时，<strong>第一应急操作是用手机连接个人热点（移动/联通网络）再次点击更新</strong>。大部分订阅失败是因为您当前宽带的本地 DNS 将机场订阅分发域名污染阻断；若依然报错，请登录机场后台确认套餐是否欠费，并点击“重置订阅链接”以重新生成鉴权 Token。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 订阅更新失败的技术归因：DNS 污染、WAF 拦截与 Token 失效
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>客户端更新订阅是一次标准的 HTTP/HTTPS API 交互过程。该链路横跨本地网络、DNS 递归解析、跨境公网与机场边缘云防御体系，任何一个环节受阻都会导致拉取中断：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【订阅下发链路各环节阻断诱因全景】</div>
+  <div>1. 本地 DNS 解析阶段：本地运营商 DNS 将机场订阅域名解析为 127.0.0.1 或不可达 IP (DNS污染)</div>
+  <div>2. TLS 握手阶段：客户端本地证书库陈旧或缺少根 CA，提示 x509: certificate signed by unknown authority</div>
+  <div>3. 边缘 WAF 防护阶段：Cloudflare 或自建高防将客户端的特定 User-Agent 标记为黑产爬虫，返回 403 Forbidden</div>
+  <div>4. 业务鉴权阶段：用户在官网修改密码导致旧 Token 自动失效，或套餐流量超标，返回 401 Unauthorized</div>
+</div>
+<p>明确具体的错误代码和报错信息，是精准施策的第一步，切忌毫无头绪地来回重装客户端软件。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 订阅拉取失败四大应急恢复方案
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>当常规更新持续受阻时，可以按照以下四大应急手段逐一突破：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>方案一：临时挂靠现有节点更新订阅（自举更新）：</strong> 如果客户端里还有个别尚能连通的旧节点，先选中该节点并开启系统代理，随后在订阅设置中勾选“通过代理更新订阅”后再次点击拉取；</li>
+  <li><strong>方案二：切换网络出口环境绕过 DNS 污染：</strong> 将电脑连接至手机 4G/5G 热点。手机移动通信蜂窝网络的 DNS 策略通常比家用宽带或校园网更为开放，能瞬间解析出订阅服务器的真实 IP；</li>
+  <li><strong>方案三：在机场后台重置鉴权 Token：</strong> 登录机场官网用户中心，点击“重置订阅”，旧链接作废的同时系统会生成全新字符串。复制全新链接替换客户端中的旧 URL 即可解除鉴权失效；</li>
+  <li><strong>方案四：手动下载配置文件本地离线导入：</strong> 将订阅链接直接复制到浏览器地址栏中按回车。如果浏览器能下载出一个 <code>.yaml</code> 文件，直接在客户端中选择“本地文件导入 (Import Local File)”，完全跳过在线拉取环节。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            订阅更新报错代码与处置方案速查表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        高频报错类型深度拆解与对策：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">报错代码 / 现象</th><th class="py-3 px-4">底层技术机理</th><th class="py-3 px-4">影响范围</th><th class="py-3 px-4">即时处置方案</th><th class="py-3 px-4">彻底防范措施</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">403 Forbidden</td><td class="py-3 px-4 ">触发机场边缘 WAF 防火墙防刷规则</td><td class="py-3 px-4 ">特定客户端 UA</td><td class="py-3 px-4 ">联系客服加白或临时使用浏览器下载配置</td><td class="py-3 px-4 ">选择防护策略友好的大型机场</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">401 Unauthorized</td><td class="py-3 px-4 ">订阅 Token 已经过期或被后台重置</td><td class="py-3 px-4 ">该订阅全部设备</td><td class="py-3 px-4 ">登录官网重新复制最新订阅 URL</td><td class="py-3 px-4 ">定期检查个人中心账号状态</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">x509: cert expired / unknown authority</td><td class="py-3 px-4 ">系统根证书缺失或本地时间严重脱轨</td><td class="py-3 px-4 ">本地系统层</td><td class="py-3 px-4 ">校准系统时间，客户端开启“跳过证书验证”</td><td class="py-3 px-4 ">更新操作系统并安装最新根证书</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Connection Timeout / EOF</td><td class="py-3 px-4 ">订阅下发域名被本地运营商 DNS 污染</td><td class="py-3 px-4 ">特定家用宽带/校园网</td><td class="py-3 px-4 ">切换手机移动热点，或使用公共 DNS (223.5.5.5)</td><td class="py-3 px-4 ">使用机场提供的备用免翻订阅分发域名</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">Empty content / Null</td><td class="py-3 px-4 ">机场后端节点服务器暂时离线更新</td><td class="py-3 px-4 ">全网用户</td><td class="py-3 px-4 ">等待 5~10 分钟或查看官方公告群通知</td><td class="py-3 px-4 ">选择具备双活调度能力的高端机场</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备全球 CDN 多地冗余分发、订阅高可用的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        订阅排障场景决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">敏感时期风浪</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>原有订阅域名全部无法连接：</strong> 登录机场官网寻找“备用防封订阅域名”或加入 Telegram 官方公告频道获取最新紧急订阅更新发布源。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新购套餐用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>刚买完套餐导入就提示下载失败：</strong> 确认支付订单是否已经成功走完入账流程（部分虚拟货币或第三方支付有数分钟确认延迟）。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">多客户端用户</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>Clash 报错但小火箭能够更新：</strong> 说明是特定客户端的 User-Agent 被规则拦截，可在客户端高级设置中自定义 UA 为 `ClashMeta` 或通用浏览器标识。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">订阅维护五大军规：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>不要在短时间内疯狂连续点击更新按钮，极易被防火墙自动封禁 IP 24 小时；</li><li>定期登录官网查看是否有关于订阅域名变更的全局系统公告；</li><li>保存一份可用的本地离线 YAML 配置文件作为极端情况下的断网急救盘；</li><li>绝不使用来路不明的公共订阅转换工具，保护个人 Token 隐私；</li><li>订阅更新成功后，立即发起单次节点测速检验有效性。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        订阅更新高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 订阅与排障深度推荐长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-67/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">排障自愈</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              节点测速全红全超时？电脑系统时间同步与防重放机制急救排查 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              系统级自愈时间与网络连接问题。
+            </p>
+          </a>
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              掌握配置导入与扩展配置注入实战。
+            </p>
+          </a>
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">防坑指南</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              识别异常无法拉取订阅背后的服务商跑路风险。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

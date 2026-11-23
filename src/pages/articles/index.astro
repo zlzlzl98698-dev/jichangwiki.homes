@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import articles from '../../data/articles.json';
+
+const title = '科学上网深度技术文章与排障实战大全 | 百科机场';
+const description = '百科机场三级长尾深度文章智库：涵盖 Clash Verge/Shadowrocket 实操教程、ChatGPT 1020 报错解决、Netflix 4K 解锁、IEPL 专线拓扑及双机场容灾方案。';
+const canonical = 'https://jichangwiki.homes/articles/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  'name': title,
+  'description': description,
+  'url': canonical,
+  'breadcrumb': {
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': '首页', 'item': 'https://jichangwiki.homes/' },
+      { '@type': 'ListItem', 'position': 2, 'name': '深度文章智库', 'item': canonical }
+    ]
+  }
+};
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center text-sm text-slate-500 mb-6 space-x-2">
+      <a href="/" class="hover:text-primary-600 transition-colors">首页</a>
+      <span>/</span>
+      <span class="text-slate-800 font-medium">深度文章智库</span>
+    </nav>
+
+    <!-- Hero -->
+    <header class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-12 mb-12 shadow-xl border border-blue-900/40 relative overflow-hidden">
+      <div class="max-w-4xl relative z-10">
+        <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30 mb-4">
+          技术纵深 · 搜索意图精准解决
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+          科学上网技术与实战文章大全
+        </h1>
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-6">
+          面向开发者、科研人员与海外生产力用户的实战技术文库。彻底摒弃空洞营销，直击网络底层协议、客户端高级配置、AI风控突围与系统级排障。
+        </p>
+
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/15 text-sm text-slate-200">
+          <strong>📚 检索指引：</strong>所有文章均归属于对应二级专题，并提供 Answer-First 核心裁决与可验证的排查步骤。
+        </div>
+      </div>
+    </header>
+
+    <!-- Articles Grid -->
+    <section class="mb-14">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {articles.map(art => (
+          <article class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+                <span class="px-2.5 py-0.5 rounded-full font-medium bg-blue-50 text-blue-700">
+                  {art.parentHubName}
+                </span>
+                <time datetime={art.updated}>{art.updated}</time>
+              </div>
+
+              <h2 class="text-lg font-bold text-slate-900 mb-3 leading-snug hover:text-blue-600 transition-colors">
+                <a href={`/articles/${art.slug}/`}>{art.title}</a>
+              </h2>
+
+              <p class="text-slate-600 text-xs leading-relaxed mb-4 line-clamp-3">
+                {art.description}
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <a href={`/articles/${art.slug}/`} class="font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-1">
+                <span>阅读完整实操</span>
+                <span>→</span>
+              </a>
+              <span class="text-slate-400">含完整排错表</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <AffiliateDisclosure />
+  </div>
+</BaseLayout>

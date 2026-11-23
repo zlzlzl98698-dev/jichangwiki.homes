@@ -1,0 +1,330 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "备用容灾方案构建指南：主备双机场冷热切换与高可用网络实战";
+const description = "全面讲解高可用架构理念在科学上网中的实战应用。手把手教您利用 Clash Fallback 策略组搭建跨运营商、跨机房的主备双机场无感热容灾体系，实现生产力永不掉线。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"风险与替代","url":"/risk/"},{"name":"alternatives","url":"/risk/alternatives/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/risk/alternatives/","url":"https://jichangwiki.homes/risk/alternatives/","name":"备用容灾方案构建指南：主备双机场冷热切换与高可用网络实战","description":"全面讲解高可用架构理念在科学上网中的实战应用。手把手教您利用 Clash Fallback 策略组搭建跨运营商、跨机房的主备双机场无感热容灾体系，实现生产力永不掉线。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"风险与替代","item":"https://jichangwiki.homes/risk/"},{"@type":"ListItem","position":3,"name":"备用容灾方案构建指南：主备双机场冷热切换与高可用网络实战","item":"https://jichangwiki.homes/risk/alternatives/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"备用机场一个月不用，流量会不会白白浪费过期？","acceptedAnswer":{"@type":"Answer","text":"如果您担心月付备用套餐浪费，最聪明的做法是购买一份“按量计费 (Pay As You Go)”且不限有效期的纯流量包（很多机场提供 10 元包含 100GB 且永久有效的备用包）。放在客户端里常驻待命，平时不跑流量不扣费，主力断网时自动启用，性价比拉满。"}},{"@type":"Question","name":"Clash 的 Fallback 策略组切换时正在进行的下载会断吗？","acceptedAnswer":{"@type":"Answer","text":"现代基于 TCP/IP 的大文件下载工具（如 IDM、Chrome、Git）支持断点续传。在 Fallback 切换发生的一瞬间，旧连接可能会重置，但下载引擎会在 1~2 秒内自动发起重新连接并无缝走通新节点，无需重新从零下载。"}},{"@type":"Question","name":"为什么不建议用负载均衡（Load-Balance）替代主备容灾？","acceptedAnswer":{"@type":"Answer","text":"因为很多海外网站（如 Google、ChatGPT、各类网上银行）非常重视 Session 会话与客户端 IP 的一致性。负载均衡会把同一个网页内的不同资源请求分发给不同机场的 IP，导致网站安全风控疯狂报警并强制您重新登录。主备 Fallback 永远锁定在单一优质节点，只有故障时才切换，体验最平稳。"}},{"@type":"Question","name":"手机端小火箭（Shadowrocket）支持主备自动容灾吗？","acceptedAnswer":{"@type":"Answer","text":"小火箭可以通过自定义规则分组中的“自动选择”或自建策略组实现类似机制；但在移动端，更推荐手动将主力与备用节点分组置顶，遇到突发卡顿在下拉通知栏一秒手动切换，同样极其高效。"}},{"@type":"Question","name":"为什么光速云极其适合作为主备架构中的核心主力？","acceptedAnswer":{"@type":"Answer","text":"光速云本身就内置了“深圳/上海双入口 + 多条 IEPL 物理专线海缆”的内部冗余机制，本身单点可用性已经达到 99.99%。以光速云为骨干底座，整个高可用系统的稳定度将提升至接近工业级的免维护境界。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"备用机场一个月不用，流量会不会白白浪费过期？","a":"如果您担心月付备用套餐浪费，最聪明的做法是购买一份“按量计费 (Pay As You Go)”且不限有效期的纯流量包（很多机场提供 10 元包含 100GB 且永久有效的备用包）。放在客户端里常驻待命，平时不跑流量不扣费，主力断网时自动启用，性价比拉满。"},{"q":"Clash 的 Fallback 策略组切换时正在进行的下载会断吗？","a":"现代基于 TCP/IP 的大文件下载工具（如 IDM、Chrome、Git）支持断点续传。在 Fallback 切换发生的一瞬间，旧连接可能会重置，但下载引擎会在 1~2 秒内自动发起重新连接并无缝走通新节点，无需重新从零下载。"},{"q":"为什么不建议用负载均衡（Load-Balance）替代主备容灾？","a":"因为很多海外网站（如 Google、ChatGPT、各类网上银行）非常重视 Session 会话与客户端 IP 的一致性。负载均衡会把同一个网页内的不同资源请求分发给不同机场的 IP，导致网站安全风控疯狂报警并强制您重新登录。主备 Fallback 永远锁定在单一优质节点，只有故障时才切换，体验最平稳。"},{"q":"手机端小火箭（Shadowrocket）支持主备自动容灾吗？","a":"小火箭可以通过自定义规则分组中的“自动选择”或自建策略组实现类似机制；但在移动端，更推荐手动将主力与备用节点分组置顶，遇到突发卡顿在下拉通知栏一秒手动切换，同样极其高效。"},{"q":"为什么光速云极其适合作为主备架构中的核心主力？","a":"光速云本身就内置了“深圳/上海双入口 + 多条 IEPL 物理专线海缆”的内部冗余机制，本身单点可用性已经达到 99.99%。以光速云为骨干底座，整个高可用系统的稳定度将提升至接近工业级的免维护境界。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>高可用容灾架构 · 生产力永不掉线</span>
+        <span>·</span>
+        <span>上级主题: <a href="/risk/" class="underline hover:text-blue-800">风险与替代总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        备用容灾方案构建指南：主备双机场无感热容灾实战
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        跨国视频会议开到一半突然断网？关键时刻主力机场临时断缆维护？本文手把手教您搭建主备双机场自动热切换体系，断网秒级自动自愈。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>高可用架构核心哲学 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>在现代复杂的跨国网络环境中，不存在 100% 永不故障的单点系统</strong>！海缆地震切断、上游运营商突发机房割接是不可避免的物理客观规律。对于跨国办公、科研学术与金融外贸等生产力用户，<strong>唯一的破局解法是构建“主备双机场冷热容灾架构”：以高品质 IEPL 专线机场（如光速云）为主力，搭配低成本弹性套餐为备用，在客户端中利用 fallback 策略组实现秒级自动无感故障转移</strong>。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 为什么要构建双机场甚至多机场主备容灾体系？
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在企业级 IT 架构中，最核心的铁律之一就是<strong>消除单点故障（Single Point of Failure, SPOF）</strong>。许多用户虽然购买了昂贵的专线套餐，但依然把所有流量寄托在单一服务商身上。然而现实往往充满意外：</p>
+<div class="p-5 bg-slate-900 text-slate-200 rounded-2xl font-mono text-xs my-4 space-y-2 border border-slate-800">
+  <div class="text-emerald-400 font-bold mb-2">【单机场脆弱性 vs 主备双机场高可用架构对比】</div>
+  <div>[单机场脆弱架构]：</div>
+  <div>  用户办公 ---> [单一服务商] ---> (海缆事故/机房割接/被墙) ---> [全面断网！会议中断/工作停摆]</div>
+  <div>--------------------------------------------------------------------------------</div>
+  <div>[企业级双机场热容灾架构]：</div>
+  <div>  用户办公 ---> [本地客户端内核 (Mihomo/Clash)]</div>
+  <div>                  │  (自动健康探活：每 300 秒向全球探测点发心跳)</div>
+  <div>                  ├─> [主力首选]：光速云 IEPL 专线 (平时 100% 流量走专线，享受超低延迟与4K极速)</div>
+  <div>                  └─> [备用热备]：备用中转机场 (实时在线待命，主线连续 3 次超时毫秒级自动接管)</div>
+</div>
+<p>通过异构线路组合，可以彻底消除敏感时期大封锁、区域海缆中断等突发危机带来的生产力停摆损失。</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 基于 Clash Fallback 策略组的主备双机场无感热容灾配置实战
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>在 Clash Verge Rev 中，实现双机场自动无感热切换非常优雅，只需通过扩展配置（Script/Merge）定义一个容灾组：</p>
+<ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-700 my-3">
+  <li><strong>第一步：在客户端中同时导入两个订阅：</strong> 在订阅列表中导入主力机场（光速云）和备用机场的配置链接，两者分别保持独立的自动更新周期；</li>
+  <li><strong>第二步：编写 Fallback 策略组代码逻辑：</strong> 在扩展配置中添加如下高可用策略组定义：
+<pre class="bg-slate-950 p-3 rounded text-emerald-300 text-xs mt-2 mb-2 overflow-x-auto">
+- name: "生产力高可用容灾"
+  type: fallback
+  url: "http://www.gstatic.com/generate_204"
+  interval: 300
+  tolerance: 50
+  proxies:
+    - "光速云-香港01-IEPL"
+    - "光速云-日本01-IEPL"
+    - "备用机场-香港01-中转"
+</pre>
+  </li>
+  <li><strong>第三步：将分流规则指向该容灾组：</strong> 将 <code>OpenAI</code>、<code>Google</code>、<code>GitHub</code> 等关键规则的出口由具体的单个节点改为绑定“生产力高可用容灾”策略组；</li>
+  <li><strong>第四步：断网容灾自愈全自动化：</strong> 日常状态下，内核永远优先选用排在第一位的光速云专线；一旦突发断缆或故障，内核探活失败后在毫秒级将连接自动漂移到备用节点，用户端视频会议甚至感觉不到任何丢包卡顿。</li>
+</ul>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            单机场 vs 主备双机场综合能力与抗风险度对照表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        不同容灾架构方案技术指标横向横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">容灾架构方案</th><th class="py-3 px-4">单点故障概率</th><th class="py-3 px-4">故障切换耗时</th><th class="py-3 px-4">运维复杂度</th><th class="py-3 px-4">平均每月成本</th><th class="py-3 px-4">适用业务场景</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">单一廉价公网机场</td><td class="py-3 px-4 ">极高 (> 30%)</td><td class="py-3 px-4 ">完全无法自愈 (靠人工折腾)</td><td class="py-3 px-4 ">低</td><td class="py-3 px-4 ">5 ~ 15 元</td><td class="py-3 px-4 ">轻量娱乐、玩具测试</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">单一高端专线机场</td><td class="py-3 px-4 ">低 (< 3%)</td><td class="py-3 px-4 ">依赖机房内部自愈 (数分钟)</td><td class="py-3 px-4 ">低</td><td class="py-3 px-4 ">20 ~ 50 元</td><td class="py-3 px-4 ">大众主流生产力日常</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">主备双机场 (冷备用-手动切)</td><td class="py-3 px-4 ">极低 (< 0.1%)</td><td class="py-3 px-4 ">1 ~ 3 分钟 (手动切换订阅)</td><td class="py-3 px-4 ">中等</td><td class="py-3 px-4 ">25 ~ 60 元</td><td class="py-3 px-4 ">外贸办公、远程科研</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">主备双机场 (热备用-Fallback)</td><td class="py-3 px-4 ">趋近于 0 (电信级)</td><td class="py-3 px-4 ">毫秒级 (全自动无感漂移)</td><td class="py-3 px-4 ">中等 (配置一次永久生效)</td><td class="py-3 px-4 ">30 ~ 70 元</td><td class="py-3 px-4 ">高频交易、跨国会议、开发 (强烈推荐)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        具备电信级多入口冗余、适合充当主力底座的专线品牌
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        容灾方案适配决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">跨国跨境办公族</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>经常需要参加 Zoom / Teams 视频跨国例会：</strong> 必须配置 Fallback 自动容灾组，将光速云作为主通道，保障会议全程稳定不掉线。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">外盘金融交易员</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>炒美股、做外盘期货，断网等于直接亏损：</strong> 建议部署香港与日本不同物理海缆走向的双专线热备，彻底规避单条海缆断裂带来的交易风险。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">高校科研研究生</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>深夜赶论文投递 Deadline，需要稳定查文献：</strong> 准备一条按量付费（不过期）的备用订阅，关键时刻随时顶上，确保学术网络畅通无阻。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">高可用容灾配置五大黄金原则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>主备两个机场的线路供应商与入口机房应尽量错开（如主力走深圳入口，备用走上海入口），避免同城机房断电连带失效；</li><li>备用机场建议优先选择“按量付费且流量不过期”的套餐，降低闲置时的维护成本；</li><li>定期手动触发一次容灾演练（手动禁用主力节点），检验备用节点的健康度与自动切换速度；</li><li>Fallback 探活 URL 必须选用轻量且高可靠的 204 无内容端点（如 Google gstatic）；</li><li>主力必须坚持选用具备物理级低抖动优势的 IEPL 专线（如光速云）。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        备用容灾高频技术疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 高可用架构与容灾深度长文推荐
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">架构设计</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              手把手实操教程，提供完整的 Clash 脚本配置范例。
+            </p>
+          </a>
+        
+          <a href="/articles/article-97/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">避坑指南</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              机场跑路五大经典预警征兆：看懂骨折促销背后的资金断裂陷阱 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              建立高可用体系防范机场跑路停摆风险。
+            </p>
+          </a>
+        
+          <a href="/articles/article-49/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">实操手册</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              Clash Verge Rev 完整图文教程：从安装配置到 TUN 全局模式全攻略 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              在现代客户端中管理多订阅与扩展脚本配置。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

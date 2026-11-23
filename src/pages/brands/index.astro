@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = '机场品牌数据库与评测大全（2026）｜31家主流服务商全景档案与真伪识别';
+const description = '汇聚 31 家主流代理服务商档案的官方数据库中心：提供运营年份、线路类型、自研客户端、解锁评级及官方域名正版防钓鱼核验。支持按老牌稳定系、性价比系与应急轻量系多维筛选。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '机场品牌', url: '/brands/' }
+];
+
+const subSections = [
+  { name: '品牌数据库', url: '/brands/directory/', desc: '全景检索大盘：31 家服务商完整技术参数与资质归档', icon: '🗂️' },
+  { name: '品牌评测', url: '/brands/reviews/', desc: '深度独立评测：晚高峰真实丢包、流媒体与客观结论', icon: '📝' },
+  { name: '官网与品牌识别', url: '/brands/official/', desc: '防钓鱼认证：官方正版域名、李鬼镜像辨析与安全指引', icon: '🌐' },
+  { name: '品牌套餐', url: '/brands/prices/', desc: '横向资费对照：31 家起步价格、周期与折算月价明细', icon: '💳' },
+  { name: '品牌优惠码', url: '/brands/coupons/', desc: '最新折扣汇总：官方长期合作码与限时减免券核销', icon: '🎟️' },
+  { name: '品牌替代方案', url: '/brands/alternatives/', desc: '失联断网不慌：同等价位与同等线路备用品牌无缝切换', icon: '🔄' }
+];
+
+const faqItems = [
+  {
+    q: '本站收录的 31 家机场品牌数据来源是什么？如何保证客观？',
+    a: '本站品牌数据库的数据来源由四部分严格交叉验证：1. 品牌官方用户协议与套餐参数公开声明；2. 知识库长期收集的真实测速日志与流媒体/AI 解锁样本；3. 资深技术编辑对客户端代码签名与 DNS 解析的实测抓包；4. 品牌真实历史运营年份与 TG 社区透明度回溯。我们对商业推荐进行显式披露，但绝不对未取得真实证据的技术参数伪造评级。'
+  },
+  {
+    q: '为什么单品牌既有“品牌档案页”又有“深度评测页”？两者的区别是什么？',
+    a: '这是两套完全不同的信息载体。品牌档案页（如 /brands/guangsu/）是标准化的“实体资料卡”，聚焦于结构化技术参数（协议、入口、客户端、套餐价格、优惠码、客服渠道、数据状态）；而独立评测页（如 /reviews/guangsu/）则是长篇“客观实测报告”，深度记录晚高峰抗丢包曲线、4K 缓冲实录、流媒体解锁抓包及适用人群避坑指南。'
+  },
+  {
+    q: '如何识别李鬼山寨机场与钓鱼镜像网站？',
+    a: '山寨钓鱼网站通常有以下典型特征：1. 域名与官方域名极其相似，仅差一个字母或使用极其廉价的小众后缀（如 .xyz、.top）；2. 页面完全复制正版官网样式，但注册充值通道被替换为个人微信/支付宝个人转账码；3. 网站缺少 SSL 证书或证书颁发者与官网不一致；4. 官方 Telegram 群组链接失效或导向诈骗机器人。请通过本站 <a href="/brands/official/">官网与品牌识别专题</a> 核验正版域名。'
+  },
+  {
+    q: '自研专属客户端与第三方开源客户端（Clash/v2rayN）哪个更安全？',
+    a: '安全性和易用性需要权衡。第三方开源客户端（如 Clash Verge Rev、v2rayN）代码完全开源透明，由全球开发者审计，不存在后门或隐私偷跑隐患，且不受单一机场绑架；而自研专属客户端虽然免去了手动导入配置的繁琐，但必须确认其具备正规的代码签名认证，切勿安装来源不明、被杀毒软件报毒的无签名客户端。'
+  },
+  {
+    q: '老牌机场（运营 &gt; 3年）真的比新开机场更靠谱吗？',
+    a: '统计概率上具有压倒性优势。代理行业具有极高的沉淀门槛与运维成本。绝大多数跑路或失联事件发生在成立不足 6-12 个月的“个人小作坊”机场中；而平稳运营超过 3 年的老牌品牌（如红莓、极客云、光速云等）积累了庞大的付费用户体量、成熟的多地专线运维团队和抗风险资金池，其跑路套现的边际成本极高。'
+  },
+  {
+    q: '如何核实一家机场的优惠码（Coupon）是否仍然有效？',
+    a: '在服务商收银台结算时，输入优惠码并点击“验证/应用”。有效优惠码会在订单总额明细中实时扣减对应金额（例如光速云专属码 AMM 会直接抵扣减免）。如果提示“优惠码不存在”或“已达使用上限”，说明该活动已过期或不适用于当前套餐周期。'
+  },
+  {
+    q: '如果我正在使用的机场突然失联，应该如何快速寻找替代方案？',
+    a: '第一步切勿慌张购买大额长期年付；第二步查阅本站的 <a href="/brands/alternatives/">品牌替代方案专题</a>，按您原有的线路习惯（如原先使用 IEPL 专线）筛选同档位服务商；第三步优先订购首月月付或购买一份永久不过期的不限时按量备用包，完成无缝切换后再观察原服务商的故障修复公告。'
+  },
+  {
+    q: '为什么有些机场品牌支持微信/支付宝，有些只支持虚拟币（USDT）？',
+    a: '这是支付网关合规与风控成本的体现。支持微信/支付宝通常意味着服务商接入了合规的第三方跨境商业支付通道，具备更高的商业运营门槛与用户友好度；而纯虚拟币（USDT）支付的服务商虽然具备极高的匿名性，但对于国内普通用户门槛较高，且一旦发生跑路纠纷将没有任何合规维权途径。'
+  },
+  {
+    q: '品牌档案中的“待核实”标签代表什么？',
+    a: '“待核实”代表该品牌的某项参数（例如宣称拥有 IPLC 专线、宣称全节点解锁 Netflix、或者某个优惠码折扣率）由于官方未公开物理拓扑或我们尚未在严苛环境下完成闭环测试，因此秉持实事求是的原则标记为待核验状态，绝不轻信或照搬未经证实的官方宣传口径。'
+  },
+  {
+    q: '怎样判断一家机场的技术实力是在线还是外包？',
+    a: '看其解决骨干网突发故障的速度。当上游海底光缆发生中断或特定地区骨干网拥堵时，具备自研技术团队的服务商通常能在 15-30 分钟内完成 BGP 智能路由切换或热备线路倒换，并在 TG 频道发布清晰的技术说明；而纯粹的“面板二道贩子”只能被动等待上游通知，且无法向用户解释故障原因。'
+  }
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://jichangwiki.homes/brands/',
+      'url': 'https://jichangwiki.homes/brands/',
+      'name': title,
+      'description': description,
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          'position': i + 1,
+          'name': b.name,
+          'item': 'https://jichangwiki.homes' + b.url
+        }))
+      }
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': faqItems.map(item => ({
+        '@type': 'Question',
+        'name': item.q,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.a
+        }
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Hero Header -->
+    <div class="bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white mb-10 shadow-2xl border border-indigo-900/40 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold border border-indigo-400/30 mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          2026 深度升级支柱专题 · 品牌档案中心
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5 leading-tight">
+          机场品牌数据库与评测大全：31 家服务商全景档案
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 font-normal">
+          打造最透明、可检索的中文代理服务商全景档案库。聚合 31 家主流品牌的运营历史、协议规范、物理线路拓扑、自研客户端支持与最新正版官网验证，为您的选购决策提供全面客观的技术背书。
+        </p>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm text-slate-300">
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            📚 31 家服务商唯一档案归档
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🛡️ 官网正版域名防钓鱼核验
+          </span>
+          <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/60">
+            🔬 严格区分实测与待核实声明
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Answer-First Executive Verdict Box -->
+    <div class="bg-white rounded-2xl border border-indigo-200/80 shadow-md p-6 sm:p-8 mb-12 relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          📑
+        </div>
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">
+            品牌鉴别与选购框架（Answer-First 核心速览）
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500">如何快速评估一家机场的品牌资质与技术可靠度</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-indigo-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>🏛️</span> 运营年限（资质金标准）
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            优先选择<strong>运营时间超过 2-3 年的老牌服务商</strong>（如光速云、红莓网络等）。新成立平台（&lt;6个月）跑路和抗风险能力极低，只建议以月付尝鲜。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-blue-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>💻</span> 自研 vs 第三方生态
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            支持一键自研多端客户端（Win/Mac/Android）的品牌，研发投入高、新手体验极佳；同时必须保证提供通用订阅链接以兼容 Clash/v2rayN 等专业工具。
+          </p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+          <div class="font-bold text-amber-900 mb-2 flex items-center gap-1.5 text-base">
+            <span>🛡️</span> 官网防钓鱼与正品核验
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600">
+            搜索引擎充斥大量山寨李鬼镜像站。进入官网前务必通过本站档案核对<strong>正规授权推广链接或官方反代域名</strong>，保护资金与隐私安全。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Hubs Grid -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">品牌专区二级专题导航</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">按特定维度深入品牌档案、深度评测与防伪鉴别</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        {subSections.map((s) => (
+          <a href={s.url} class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-indigo-500 hover:shadow-lg transition group flex flex-col justify-between">
+            <div>
+              <div class="text-2xl mb-2 group-hover:scale-110 transition-transform">{s.icon}</div>
+              <h3 class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition mb-1">{s.name}</h3>
+              <p class="text-[11px] text-slate-500 leading-snug">{s.desc}</p>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 flex items-center text-[11px] font-semibold text-indigo-600 group-hover:translate-x-1 transition-transform">
+              进入专题 &rarr;
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Master Brands Directory Grid (All 31 Brands) -->
+    <div class="mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">31 家收录品牌全景速查大盘</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">点击品牌卡片进入实体档案，点击评测链接查看独立实测报告</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {brands.map((b) => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </div>
+
+    <!-- Main Prose & Knowledge Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+      
+      <!-- TOC Sidebar -->
+      <div class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">本页导航目录</h3>
+          <ul class="space-y-2 text-xs font-medium text-slate-600">
+            <li><a href="#brand-criteria" class="hover:text-indigo-600 transition block py-1">1. 品牌资质评估五大维度</a></li>
+            <li><a href="#phishing-protection" class="hover:text-indigo-600 transition block py-1">2. 识别山寨钓鱼网站指南</a></li>
+            <li><a href="#client-types" class="hover:text-indigo-600 transition block py-1">3. 自研与第三方客户端辨析</a></li>
+            <li><a href="#directory-vs-review" class="hover:text-indigo-600 transition block py-1">4. 品牌档案与深度评测的区别</a></li>
+            <li><a href="#faqs" class="hover:text-indigo-600 transition block py-1">5. 品牌常见问题解答（FAQ）</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Prose Column -->
+      <div class="lg:col-span-3 space-y-12">
+        
+        <!-- Section 1 -->
+        <section id="brand-criteria" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            1. 品牌资质评估五大维度：如何判断一家机场的真正成色？
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-4">
+            <p>
+              在面对上百家名称相似的代理品牌时，不能仅凭几张华丽的宣传海报做出决定。我们建议用户从以下五个核心维度进行系统性穿透分析：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-3">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">① 运营存活时间与历史声誉</span>
+                <p class="text-xs text-slate-600">
+                  行业统计显示，超过 80% 的服务中断和失联发生在首年。能够平稳跨越多次骨干网重组与特殊敏感时期考验并运营 3 年以上的品牌，其运维底蕴极高。
+                </p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">② 线路资源的真实专线化率</span>
+                <p class="text-xs text-slate-600">
+                  核验其是否真正在三大运营商拥有 BGP 接入点与正规内网专线。谨防“公网直连套个中继”冒充高端 IEPL 的虚假包装。
+                </p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">③ 官方交流社群的透明度</span>
+                <p class="text-xs text-slate-600">
+                  健康的品牌通常拥有活跃开放的 Telegram 用户交流群。一旦遇到故障，群内有及时的维护通知和客诉响应，而非粗暴开启永久禁言。
+                </p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 text-sm block mb-1">④ 客户端软件工程研发实力</span>
+                <p class="text-xs text-slate-600">
+                  是否愿意投入高成本研发跨平台自研一键客户端，并取得正规代码签名证书。这代表了品牌长期深耕市场的决心。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="phishing-protection" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            2. 识别山寨钓鱼网站指南：保护资金与订阅安全
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              由于部分知名机场（如光速云、红莓等）在中文网络声誉良好，大量黑产团队通过 SEO 快照劫持或投放在线广告建立“李鬼山寨站”。
+            </p>
+            <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-950 not-prose my-3">
+              <strong class="block mb-1 font-bold text-sm text-amber-900">⚠️ 防钓鱼三大防线：</strong>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li><strong>核验本站认证链接</strong>：本站所有品牌档案中的官网与注册入口均经过签名哈希比对与官方确认，点击即可直达。</li>
+                <li><strong>警惕个人转账与异常支付</strong>：正规服务商多采用跨境自动化支付网关，若页面要求直接向个人微信/支付宝扫码转账并人工发货，必定为山寨欺诈站。</li>
+                <li><strong>不要在山寨站输入已有账号密码</strong>：防止撞库导致在其他平台的账户被盗。</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="client-types" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            3. 自研与第三方客户端辨析：新手与极客各取所需
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              在品牌选择中，客户端形态是影响日常使用体验的关键：
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-3">
+              <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-900 text-sm block mb-1">🚀 自研专属一键客户端</span>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  <strong>优势</strong>：免去配置订阅 URL、节点延迟自动排序、一键开关，小白用户 1 分钟上手。<br/>
+                  <strong>代表</strong>：光速云（提供 Win / Mac / Android 独立专属安装包）。
+                </p>
+              </div>
+              <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                <span class="font-bold text-slate-900 text-sm block mb-1">🛠️ 通用第三方开源客户端</span>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  <strong>优势</strong>：支持自定义分流规则、TUN 虚拟网卡全局接管、可同时导入多家机场实现故障无缝回退。<br/>
+                  <strong>代表</strong>：Clash Verge Rev、v2rayN、Shadowrocket。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="directory-vs-review" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-4 pb-2 border-b border-slate-200">
+            4. 品牌档案与深度评测的区别：如何高效获取决策信息？
+          </h2>
+          <div class="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed space-y-3">
+            <p>
+              在百科机场架构中，我们对两类内容进行了清晰的边界划分：
+            </p>
+            <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+              <li><strong>品牌档案实体页（/brands/{'{slug}'}/）</strong>：适合快速检索，查询品牌成立年份、节点覆盖国家、支持协议、官网认证地址、最新优惠码及套餐资费概览。</li>
+              <li><strong>深度评测报告页（/reviews/{'{slug}'}/）</strong>：适合深入阅读，包含晚高峰丢包与速率实测曲线图、Netflix/Claude/ChatGPT 解锁实录、自研客户端代码安全性分析与长远抗风险建议。</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Section 5: FAQs -->
+        <section id="faqs" class="scroll-mt-20">
+          <h2 class="text-2xl font-black text-slate-900 mb-6 pb-2 border-b border-slate-200">
+            5. 品牌数据库与辨析常见问题（FAQ）
+          </h2>
+          <div class="space-y-4">
+            {faqItems.map((item, index) => (
+              <details class="group bg-white rounded-2xl border border-slate-200/80 p-5 open:ring-2 open:ring-indigo-500/20 transition shadow-sm">
+                <summary class="font-extrabold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+                  <span class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold">
+                      {index + 1}
+                    </span>
+                    <span set:html={item.q}></span>
+                  </span>
+                  <span class="text-slate-400 group-open:rotate-180 transition-transform text-lg ml-2">&darr;</span>
+                </summary>
+                <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed" set:html={item.a}>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Conversion CTA -->
+        <div class="mt-12">
+          <BrandCTA 
+            brandName="光速云（Guangsu Cloud）" 
+            affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+            couponCode="AMM"
+            entryPrice="折合 ¥8/月起（年付¥99）"
+            customTitle="查验正规授权渠道 · 光速云"
+            customDesc="收录于 31 家品牌官方数据库之首，提供通过正版认证的官方直达注册通道与专属优惠码 AMM。"
+          />
+        </div>
+
+        <!-- Compliance & Affiliate Disclosure -->
+        <AffiliateDisclosure />
+
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

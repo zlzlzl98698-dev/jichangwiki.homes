@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = '404 页面未找到｜百科机场';
+const description = '您访问的页面可能已移动或链接地址发生变更。请通过全站导航或搜索框重新查找相关机场资料与教程。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '404 未找到', url: '/404.html' }
+];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} robots="noindex, nofollow">
+  <div class="max-w-2xl mx-auto px-4 py-20 text-center">
+    <div class="text-7xl font-black text-blue-600 mb-4 font-mono">404</div>
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
+      您访问的页面不存在或已被迁移
+    </h1>
+    <p class="text-slate-600 text-sm mb-8 leading-relaxed">
+      抱歉，该路径未匹配到对应的文档。百科机场所有内容均采用标准静态 URL 路径，您可以从下方推荐的常用核心入口重新进入：
+    </p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8 text-xs font-semibold">
+      <a href="/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        🏠 网站首页
+      </a>
+      <a href="/brands/guangsu/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        🏆 光速云详情
+      </a>
+      <a href="/airport/recommend/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        🚀 机场推荐总榜
+      </a>
+      <a href="/brands/directory/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        🏢 31+ 品牌数据库
+      </a>
+      <a href="/clients/clash-verge/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        💻 Clash 客户端
+      </a>
+      <a href="/search/" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:text-blue-600 transition shadow-sm">
+        🔍 全站智能搜索
+      </a>
+    </div>
+
+    <a href="/" class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 shadow-md transition">
+      返回百科机场首页 &rarr;
+    </a>
+  </div>
+</BaseLayout>

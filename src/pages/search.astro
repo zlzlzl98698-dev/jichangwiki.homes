@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import brands from '../data/brands.json';
+import keywords from '../data/keywords.json';
+
+const title = '全站知识与品牌智能搜索｜百科机场';
+const description = '实时搜索百科机场全部品牌、节点线路知识、客户端软件及常见故障排查教程。';
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '全站搜索', url: '/search/' }
+];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} robots="noindex, follow">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+        全站智能搜索中心
+      </h1>
+      <p class="text-slate-600 text-sm mt-2">
+        输入品牌名称（如光速云、飞猫云）、协议、客户端或故障关键词即时检索
+      </p>
+    </div>
+
+    <!-- Search Input -->
+    <div class="mb-8">
+      <div class="relative">
+        <input 
+          id="search-input" 
+          type="text" 
+          placeholder="搜索品牌、套餐、协议、Clash 教程或超时排查..." 
+          class="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 text-base"
+          autofocus
+        />
+        <svg class="w-6 h-6 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 mt-3 text-xs text-slate-500">
+        <span>热门搜索推荐：</span>
+        <button class="quick-tag px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-md transition" data-tag="光速云">光速云</button>
+        <button class="quick-tag px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-md transition" data-tag="IEPL专线">IEPL专线</button>
+        <button class="quick-tag px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-md transition" data-tag="Clash">Clash Verge</button>
+        <button class="quick-tag px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-md transition" data-tag="ChatGPT">ChatGPT解锁</button>
+        <button class="quick-tag px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-md transition" data-tag="超时">Timeout超时</button>
+      </div>
+    </div>
+
+    <!-- Live Search Results Container -->
+    <div id="results-count" class="text-xs text-slate-500 mb-4 hidden"></div>
+    <div id="results-container" class="space-y-4">
+      <!-- Default state: Popular directory -->
+      <div class="p-6 bg-white rounded-2xl border border-slate-200">
+        <h2 class="text-sm font-bold text-slate-900 mb-3">为您推荐的核心直达入口：</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <a href="/brands/guangsu/" class="p-3 bg-slate-50 rounded-xl hover:bg-blue-50 transition block">
+            <span class="font-bold text-slate-900 block">🏆 光速云官方品牌资料</span>
+            <span class="text-slate-500">2020年运营 · IEPL专线 · ¥8/月年付折算</span>
+          </a>
+          <a href="/airport/recommend/" class="p-3 bg-slate-50 rounded-xl hover:bg-blue-50 transition block">
+            <span class="font-bold text-slate-900 block">🚀 2026 机场推荐总榜</span>
+            <span class="text-slate-500">按新手、预算与稳定性分类精选</span>
+          </a>
+          <a href="/clients/clash-verge/" class="p-3 bg-slate-50 rounded-xl hover:bg-blue-50 transition block">
+            <span class="font-bold text-slate-900 block">💻 Clash Verge Rev 下载指南</span>
+            <span class="text-slate-500">Mihomo 跨平台最新官方版本</span>
+          </a>
+          <a href="/troubleshooting/timeout/" class="p-3 bg-slate-50 rounded-xl hover:bg-blue-50 transition block">
+            <span class="font-bold text-slate-900 block">🔧 节点 Timeout 超时排障</span>
+            <span class="text-slate-500">排查系统时间与端口冲突五步法</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<script define:vars={{ brandsData: brands, keywordsData: keywords }}>
+  const input = document.getElementById('search-input');
+  const resultsContainer = document.getElementById('results-container');
+  const resultsCount = document.getElementById('results-count');
+  const quickTags = document.querySelectorAll('.quick-tag');
+
+  const searchIndex = [];
+
+  brandsData.forEach(b => {
+    searchIndex.push({
+      title: b.name + ' (' + b.establishedYear + '年运营 · 品牌资料)',
+      url: '/brands/' + b.slug + '/',
+      category: '机场品牌',
+      desc: '资费起步 ' + b.entryPrice + '，采用 ' + b.protocols.join('/') + ' 协议与 ' + b.networkTypes.join('/') + '。适合：' + b.suitableFor,
+      keywords: [b.name, b.slug, ...(b.aliases || []), ...b.protocols, ...b.networkTypes].join(' ').toLowerCase()
+    });
+    searchIndex.push({
+      title: b.name + ' 深度客观评测报告',
+      url: '/reviews/' + b.slug + '/',
+      category: '品牌评测',
+      desc: '晚高峰测速、流媒体与 AI 解锁表现、全档位套餐资费拆解与同级替代方案分析。',
+      keywords: [b.name + '评测', b.name + '测评', b.name, b.slug, '测速', 'AI解锁'].join(' ').toLowerCase()
+    });
+  });
+
+  keywordsData.forEach(k => {
+    searchIndex.push({
+      title: k.keyword,
+      url: k.targetURL,
+      category: k.category,
+      desc: '所属专题：' + k.category + ' > ' + k.subcategory + '，意图分类：' + k.intent,
+      keywords: [k.keyword, k.normalizedKeyword, k.category, k.subcategory].join(' ').toLowerCase()
+    });
+  });
+
+  function performSearch(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      resultsCount.classList.add('hidden');
+      return;
+    }
+
+    const matches = searchIndex.filter(item => item.keywords.includes(q) || item.title.toLowerCase().includes(q));
+    resultsCount.textContent = '找到 ' + matches.length + ' 条与“' + query + '”相关的结果：';
+    resultsCount.classList.remove('hidden');
+
+    if (matches.length === 0) {
+      resultsContainer.innerHTML = '<div class="p-8 text-center bg-white rounded-2xl border border-slate-200"><p class="text-slate-500 text-sm">未找到与“' + query + '”直接匹配的内容。</p><p class="text-xs text-slate-400 mt-2">您可以尝试搜索：“光速云”、“专线”、“Clash”、“奈飞”或“超时”。</p></div>';
+      return;
+    }
+
+    resultsContainer.innerHTML = matches.slice(0, 15).map(m => (
+      '<div class="p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-sm transition">' +
+        '<div class="flex items-center justify-between mb-1">' +
+          '<span class="text-[10px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">' + m.category + '</span>' +
+          '<a href="' + m.url + '" class="text-xs text-blue-600 font-medium hover:underline">查看页面 &rarr;</a>' +
+        '</div>' +
+        '<h3 class="font-bold text-slate-900 text-sm">' +
+          '<a href="' + m.url + '" class="hover:text-blue-600 transition">' + m.title + '</a>' +
+        '</h3>' +
+        '<p class="text-xs text-slate-500 mt-1 line-clamp-2">' + m.desc + '</p>' +
+      '</div>'
+    )).join('');
+  }
+
+  input.addEventListener('input', (e) => {
+    performSearch(e.target.value);
+  });
+
+  quickTags.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.getAttribute('data-tag');
+      input.value = tag;
+      performSearch(tag);
+    });
+  });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const qParam = urlParams.get('q');
+  if (qParam) {
+    input.value = qParam;
+    performSearch(qParam);
+  }
+</script>

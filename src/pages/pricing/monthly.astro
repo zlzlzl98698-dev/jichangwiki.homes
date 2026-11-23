@@ -1,0 +1,342 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandCard from '../../components/conversion/BrandCard.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+const title = "月付机场综合实测指南：为什么说月付是普通用户最好的防跑路护甲？";
+const description = "深入剖析科学上网消费中的“沉没成本经济学”。详解月付机制对商家的服务倒逼效应、主流月付机场筛选法则、光速云等高性价比月付专线实测及套餐避坑策略。";
+const breadcrumbs = [{"name":"首页","url":"/"},{"name":"价格与套餐","url":"/pricing/"},{"name":"monthly","url":"/pricing/monthly/"}];
+const jsonLd = {"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://jichangwiki.homes/pricing/monthly/","url":"https://jichangwiki.homes/pricing/monthly/","name":"月付机场综合实测指南：为什么说月付是普通用户最好的防跑路护甲？","description":"深入剖析科学上网消费中的“沉没成本经济学”。详解月付机制对商家的服务倒逼效应、主流月付机场筛选法则、光速云等高性价比月付专线实测及套餐避坑策略。","breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://jichangwiki.homes/"},{"@type":"ListItem","position":2,"name":"价格与套餐","item":"https://jichangwiki.homes/pricing/"},{"@type":"ListItem","position":3,"name":"月付机场综合实测指南：为什么说月付是普通用户最好的防跑路护甲？","item":"https://jichangwiki.homes/pricing/monthly/"}]}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"月付相比年付到底贵多少？值得吗？","acceptedAnswer":{"@type":"Answer","text":"通常月付比年付平摊到每个月贵 2~4 元钱（相当于一年多花二三十元）。这多花的二三十元本质上是您为“防跑路本金损失”购买的高额保险，随时能够无损抽身，极其值得。"}},{"@type":"Question","name":"月付机场到期后如果不续费，会产生滞纳金或影响个人信誉吗？","acceptedAnswer":{"@type":"Answer","text":"完全不会。机场采用的是预付费模式，到期不续费只是服务自动暂停，没有任何法律层面的违约责任。"}}]}]};
+
+const guangsu = brands.find(b => b.id === 'guangsu') || brands[0];
+const displayBrands = brands.slice(0, 6);
+const faqs = [{"q":"月付相比年付到底贵多少？值得吗？","a":"通常月付比年付平摊到每个月贵 2~4 元钱（相当于一年多花二三十元）。这多花的二三十元本质上是您为“防跑路本金损失”购买的高额保险，随时能够无损抽身，极其值得。"},{"q":"月付机场到期后如果不续费，会产生滞纳金或影响个人信誉吗？","a":"完全不会。机场采用的是预付费模式，到期不续费只是服务自动暂停，没有任何法律层面的违约责任。"}];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} jsonLd={jsonLd}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Top Hub Header -->
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-2">
+        <span>灵活自保 · 防跑路终极护甲</span>
+        <span>·</span>
+        <span>上级主题: <a href="/pricing/" class="underline hover:text-blue-800">价格与套餐总览</a></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+        月付机场综合实测指南：以月为盾，掌握绝对主动权
+      </h1>
+      <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed max-w-4xl">
+        在缺乏法律约束的代理市场中，年付是对信誉的危险透支。本文深入分析月付模式如何倒逼商家维持品质，助您挑选最靠谱的月付专线。
+      </p>
+    </header>
+
+    <!-- Main Two-Column Grid on Desktop -->
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+      
+      <!-- Left Column: Main Long-Form Encyclopedic Content -->
+      <div class="lg:col-span-9 min-w-0">
+        
+        <!-- Answer-First Executive Summary Box -->
+        <section id="verdict" class="scroll-mt-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 mb-12 shadow-sm">
+          <div class="flex items-center gap-2 text-blue-950 font-extrabold text-lg mb-3">
+            <span class="text-xl">💡</span>
+            <span>月付策略核心速查 (Verdict)</span>
+          </div>
+          <div class="text-sm sm:text-base text-blue-950 leading-relaxed space-y-3 font-sans">
+            <p><strong>月付是普通消费者在科学上网领域最有效、且唯一具备威慑力的自保武器</strong>。一次性购买年付或两年付，等于把未来一两年的服务质量完全交托给商家的道德自觉；而<strong>坚持小额月付（如光速云 ¥14.4 起）</strong>，将单次违约损失控制在十多元零花钱级别，一旦遇到晚高峰卡顿、节点维护不及时，下个月即可毫无负担地直接换家，拥有 100% 的绝对主动权。</p>
+          </div>
+        </section>
+
+        <!-- Section 1: Deep Industry / Technical Analysis -->
+        <section id="section-1" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-blue-600 rounded-full inline-block"></span>
+            一、 沉没成本经济学：年付折扣与跑路风险的真实数学推演
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>许多用户之所以落入年付陷阱，往往是被商家表面上的“大额折扣”所诱导（如月付 20 元，年付 150 元打 6 折）。我们通过数学概率模型拆解其真实风险收益比：</p>
+<div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm my-4">
+  <table class="w-full text-xs text-left border-collapse">
+    <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+      <tr>
+        <th class="p-3">指标维度</th>
+        <th class="p-3">一次性购买年付 (表面优惠)</th>
+        <th class="p-3">按月灵活月付 (长期策略)</th>
+        <th class="p-3">经济学与博弈分析</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100 bg-white">
+      <tr class="hover:bg-slate-50">
+        <td class="p-3 font-bold text-slate-900">单次支出成本</td>
+        <td class="p-3 text-rose-600 font-bold">¥150 ~ ¥260 (沉没本金大)</td>
+        <td class="p-3 text-emerald-600 font-bold">仅 ¥14 ~ ¥20 (无痛零花钱)</td>
+        <td class="p-3">月付资金流动性极高</td>
+      </tr>
+      <tr class="hover:bg-slate-50">
+        <td class="p-3 font-bold text-slate-900">跑路最大损失上限</td>
+        <td class="p-3 text-rose-600 font-bold">全额损失 (100% 无法追回)</td>
+        <td class="p-3 text-emerald-600 font-bold">最多亏损当月残余几天 (几元钱)</td>
+        <td class="p-3">月付将风险硬性锁死在底线</td>
+      </tr>
+      <tr class="hover:bg-slate-50">
+        <td class="p-3 font-bold text-slate-900">商家服务约束力</td>
+        <td class="p-3 text-rose-600">极弱（钱已到手，工单爱理不理）</td>
+        <td class="p-3 text-emerald-600 font-bold">极强（为了下月续费，必须拼命保稳定）</td>
+        <td class="p-3">月付形成持续的“服务倒逼机制”</td>
+      </tr>
+      <tr class="hover:bg-slate-50">
+        <td class="p-3 font-bold text-slate-900">心理压力</td>
+        <td class="p-3 text-rose-600">每天担心关站，遇到卡顿只能忍气吞声</td>
+        <td class="p-3 text-emerald-600 font-bold">毫无顾虑，用得爽就续，不爽就换</td>
+        <td class="p-3">消费幸福感显著更高</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="text-xs sm:text-sm text-slate-700">
+  年付省下的区区几十元，根本无法对冲本金全损的高额风险。<strong>在灰产市场中，永远不要用一整年的资金去赌一个匿名团队的良心！</strong>
+</p>
+          </div>
+        </section>
+
+        <!-- Section 2: Core Architecture & Traps -->
+        <section id="section-2" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-indigo-600 rounded-full inline-block"></span>
+            二、 优质月付机场的核心四大筛选法则
+          </h2>
+          <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+            <p>并非所有月付机场都是好的。挑选一家靠谱的高品质月付专线，必须遵循以下四大法则：</p>
+<div class="space-y-3 my-4">
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">法则 1：无强制起步门槛与捆绑加价</span>
+    平台提供纯正的 1 个月试水套餐，而不是必须一次性充值半年或季度起购。套餐内包含标准的 100GB~200GB 专线流量，完全满足日常办公需要。
+  </div>
+  <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs sm:text-sm text-emerald-950">
+    <span class="font-bold text-emerald-950 block mb-1">法则 2：月付价格公道，具备真专线底座</span>
+    优质月付价格通常在 <strong>14 元 ~ 25 元/月</strong> 区间（如光速云轻量专线月付 14.4 元），即使是最低档套餐也享受与高档套餐完全同质的真实 IEPL 专线出口，晚高峰不卡顿。
+  </div>
+  <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-xs sm:text-sm text-blue-950">
+    <span class="font-bold text-blue-950 block mb-1">法则 3：官方社群活跃，故障透明公告</span>
+    拥有数千人活跃的官方 Telegram 交流频道，遇到海底光缆维护能及时发布公告，而不是暗中全员禁言遮遮掩掩。
+  </div>
+  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700">
+    <span class="font-bold text-slate-900 block mb-1">法则 4：支持支付宝与微信等主流即时便捷扣款</span>
+    无繁杂虚拟币充值门槛，支持便捷小额在线结算。
+  </div>
+</div>
+          </div>
+        </section>
+
+        <!-- Section 3: Head-to-Head Specification / Comparison Table -->
+        <section id="comparison-table" class="scroll-mt-24 mb-14">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2 pb-2 border-b border-slate-100 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-emerald-600 rounded-full inline-block"></span>
+            2026 市场主流月付机场综合实测梯队表
+          </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        晚高峰测速、专线性质与月费门槛横评：
+      </p>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <table class="w-full text-xs sm:text-sm text-left border-collapse">
+          <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4">品牌名称</th><th class="py-3 px-4">月付起步价格</th><th class="py-3 px-4">网络架构</th><th class="py-3 px-4">晚高峰丢包控制</th><th class="py-3 px-4">AI/流媒体全解锁</th><th class="py-3 px-4">综合推荐梯队</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 bg-white">
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">光速云 (主推)</td><td class="py-3 px-4 ">¥14.40 /月</td><td class="py-3 px-4 ">全全线 IEPL 跨境内网专线</td><td class="py-3 px-4 ">< 0.2% (近乎零丢包)</td><td class="py-3 px-4 ">ChatGPT/Claude/Netflix 全解锁</td><td class="py-3 px-4 ">★★★★★ (第一主力梯队)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">暮光加速</td><td class="py-3 px-4 ">¥18.00 /月</td><td class="py-3 px-4 ">BGP 入口中转 + 专线</td><td class="py-3 px-4 ">< 0.5% (极度平稳)</td><td class="py-3 px-4 ">全流媒体支持</td><td class="py-3 px-4 ">★★★★☆ (品质备选梯队)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">飞猫云</td><td class="py-3 px-4 ">¥15.00 /月</td><td class="py-3 px-4 ">专线 + 自研多平台客户端</td><td class="py-3 px-4 ">< 0.8% (表现优异)</td><td class="py-3 px-4 ">主流 AI 支持</td><td class="py-3 px-4 ">★★★★☆ (新手开箱即用)</td>
+              </tr>
+            
+              <tr class="hover:bg-blue-50/50 transition">
+                <td class="py-3 px-4 font-bold text-slate-900">微风网络</td><td class="py-3 px-4 ">¥16.50 /月</td><td class="py-3 px-4 ">全专线低延迟出口</td><td class="py-3 px-4 ">< 0.6% (稳定顺畅)</td><td class="py-3 px-4 ">4K 视频秒开</td><td class="py-3 px-4 ">★★★★☆ (综合推荐)</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Brand Showcase Grid -->
+    <section id="recommended-brands" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        优质月付专线代表服务商
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {displayBrands.map(b => (
+          <BrandCard brand={b} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 5: Buyer Decision Tree & Best Practices -->
+    <section id="decision-tree" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-1.5 h-6 bg-amber-500 rounded-full inline-block"></span>
+        月付用户消费决策树
+      </h2>
+      <div class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 space-y-3 my-4">
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">新手入门尝鲜</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>第一次购买科学上网服务：</strong> 直接选购光速云月付 14.4 元档位，下载 Clash Verge Rev 导入体验，验证满意后再持续续费。
+              </p>
+            </div>
+          
+            <div class="flex items-start gap-3">
+              <span class="font-bold text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded text-xs flex-shrink-0">多机场容灾组合</span>
+              <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+                <strong>组建双机场断网保护：</strong> 主力选用光速云月付，备用购买一份 30 元不限时流量包，形成完美的冷热双活容灾体系。
+              </p>
+            </div>
+          
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-900 mt-6 mb-2">月付用户五大自律法则：</h3>
+        <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-slate-700">
+          <li>哪怕体验再好、客服态度再热情，前 3 个月坚决按月续费，不要轻易被大促年付诱惑；</li><li>将每月续费日记录在手机日历提醒中，到期日前 1 天观察是否有优惠码可用；</li><li>随时关注官方公告群动态，保持信息畅通；</li><li>定期测试备用节点可用性，防患于未然。</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Section 6: In-Depth FAQ Accordion -->
+    <section id="faqs" class="scroll-mt-24 mb-14">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6 pb-2 border-b border-slate-100">
+        月付机场常见问题解答 (FAQ)
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f, i) => (
+          <details class="group bg-white rounded-2xl border border-slate-200 p-5 open:ring-2 open:ring-blue-500/20 transition shadow-sm">
+            <summary class="font-bold text-slate-900 text-sm sm:text-base cursor-pointer flex items-center justify-between list-none">
+              <span class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs flex items-center justify-center font-bold">{i+1}</span>
+                {f.q}
+              </span>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform ml-2">&darr;</span>
+            </summary>
+            <div class="mt-4 pt-4 border-t border-slate-100 text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+              {f.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 7: Related In-Depth Tier-3 Articles Hub -->
+    <section id="related-articles" class="scroll-mt-24 mb-14 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
+      <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-2">
+        📚 月付与防坑精选长文
+      </h3>
+      <p class="text-xs text-slate-600 mb-5">
+        如果您想更深入了解本专题的技术底层、代码配置及故障排查实操，推荐继续研读：
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+          <a href="/articles/article-19/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">深度评测</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              为什么说月付是最好的防跑路护甲？月付机场综合实测精选 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              沉没成本经济学模型深度拆解。
+            </p>
+          </a>
+        
+          <a href="/articles/article-99/" class="p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition group">
+            <span class="text-[11px] text-blue-600 font-bold block mb-1">容灾搭建</span>
+            <h4 class="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition">
+              生产力断网零容忍：主备双机场冷热自动容灾架构手把手搭建 &rarr;
+            </h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">
+              手把手配置 Clash 自动健康检查。
+            </p>
+          </a>
+        
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName="光速云（Guangsu Cloud）" 
+      affiliateURL="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y"
+      couponCode="AMM"
+      entryPrice="折合 ¥8/月起（年付¥99）"
+      customTitle="全场景高可靠专线保障 · 光速云"
+      customDesc="4年老牌稳健运营，IEPL 企业级专线，4K 秒开无卡顿，输入优惠码 AMM 尽享专属折扣。"
+    />
+
+    <AffiliateDisclosure />
+      </div>
+
+      <!-- Right Column: Sticky Table of Contents (TOC) & Quick Access -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <!-- TOC Navigation Widget -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-xs">
+          <div class="flex items-center gap-1.5 font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100">
+            <span>📑</span>
+            <span>章节快速导航</span>
+          </div>
+          <nav class="space-y-1 text-slate-600 font-medium">
+            <a href="#verdict" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">💡 核心直接结论</a>
+            <a href="#section-1" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">一、 技术原理解构</a>
+            <a href="#section-2" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">二、 实战排错与SOP</a>
+            <a href="#comparison-table" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">三、 核心指标对照表</a>
+            <a href="#recommended-brands" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">四、 精选专线直达</a>
+            <a href="#decision-tree" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">五、 选型决策与军规</a>
+            <a href="#faqs" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">六、 高频技术答疑</a>
+            <a href="#related-articles" class="block py-1.5 px-2.5 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition truncate">七、 关联三级长文</a>
+          </nav>
+        </div>
+
+        <!-- Quick Sponsor Mini-Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-4 text-white shadow-md border border-slate-800 text-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">全场景首选</span>
+            <span class="text-amber-300 font-bold font-mono">9折码 AMM</span>
+          </div>
+          <h4 class="font-bold text-white text-sm mb-1">光速云 IEPL 企业专线</h4>
+          <p class="text-slate-300 text-[11px] mb-3 leading-relaxed">电信级物理内网，0 丢包 4K 秒开，全平台一键导入。</p>
+          <div class="flex items-center gap-2">
+            <button 
+              type="button" 
+              class="flex-1 py-1.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-mono font-bold text-center border border-amber-400/30 copy-coupon-btn transition cursor-pointer" 
+              data-copy="AMM"
+              title="点击复制优惠码 AMM"
+            >
+              复制券码
+            </button>
+            <a 
+              href="https://sahude.gsyvipaff.com/#/?code=keqgvT5Y" 
+              target="_blank" 
+              rel="nofollow sponsored noopener noreferrer" 
+              class="flex-1 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-center transition shadow-sm"
+            >
+              官网直达 &rarr;
+            </a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Conversion Bar -->
+  <MobileStickyCTA />
+</BaseLayout>

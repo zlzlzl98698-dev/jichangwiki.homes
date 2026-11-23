@@ -1,0 +1,254 @@
+---
+const navItems = [
+  {
+    name: '机场推荐',
+    url: '/airport/',
+    children: [
+      { name: '机场推荐', url: '/airport/recommend/', desc: '按需求与场景精选主流服务' },
+      { name: '机场排行', url: '/airport/ranking/', desc: '统一指标下的综合评级梯队' },
+      { name: '靠谱机场', url: '/airport/reliable/', desc: '长期稳定运营老牌品牌' },
+      { name: '稳定机场', url: '/airport/stable/', desc: '晚高峰抗抖动专线精选' },
+      { name: '好用的机场', url: '/airport/best/', desc: '新手开箱即用优选' }
+    ]
+  },
+  {
+    name: '价格与套餐',
+    url: '/pricing/',
+    children: [
+      { name: '便宜机场', url: '/pricing/cheap/', desc: '平民低预算高性价比' },
+      { name: '一元机场', url: '/pricing/one-yuan/', desc: '极致低门槛试水' },
+      { name: '一分机场', url: '/pricing/one-cent/', desc: '微量测试与试用' },
+      { name: '月付机场', url: '/pricing/monthly/', desc: '无绑定月度灵活付费' },
+      { name: '不限时机场', url: '/pricing/lifetime/', desc: '流量不过期长效备用' },
+      { name: '性价比机场', url: '/pricing/value/', desc: '综合速率与单价优选' }
+    ]
+  },
+  {
+    name: '机场品牌',
+    url: '/brands/',
+    children: [
+      { name: '品牌数据库', url: '/brands/directory/', desc: '31+ 主流品牌档案库' },
+      { name: '品牌深度评测', url: '/brands/reviews/', desc: '万字级客观独立分析' },
+      { name: '官网与识别', url: '/brands/official/', desc: '正版官方入口防钓鱼' },
+      { name: '品牌套餐', url: '/brands/prices/', desc: '各品牌全档位资费对比' },
+      { name: '品牌优惠码', url: '/brands/coupons/', desc: '最新可用折扣券汇总' },
+      { name: '品牌替代方案', url: '/brands/alternatives/', desc: '同级备选与迁移方案' }
+    ]
+  },
+  {
+    name: 'VPN与加速器',
+    url: '/vpn/',
+    children: [
+      { name: 'VPN 推荐', url: '/vpn/recommend/', desc: '商业与自建 VPN 全解' },
+      { name: '免费 VPN', url: '/vpn/free/', desc: '免费方案限制与避坑' },
+      { name: '手机 VPN', url: '/vpn/mobile/', desc: '移动端代理与耗电优化' },
+      { name: '安卓 VPN', url: '/vpn/android/', desc: 'Android 平台主流选择' },
+      { name: '游戏加速器', url: '/vpn/gaming/', desc: '专线与游戏加速原理区别' }
+    ]
+  },
+  {
+    name: '客户端软件',
+    url: '/clients/',
+    children: [
+      { name: 'Clash Verge Rev', url: '/clients/clash-verge/', desc: '主流跨平台现代客户端' },
+      { name: 'Clash Meta / 内核', url: '/clients/clash-meta/', desc: 'Mihomo 核心技术文档' },
+      { name: 'v2rayN', url: '/clients/v2rayn/', desc: 'Windows 经典多协议神器' },
+      { name: 'Shadowrocket', url: '/clients/shadowrocket/', desc: 'iOS 小火箭安装与配置' },
+      { name: 'Mihomo', url: '/clients/mihomo/', desc: '跨平台内核与分流配置' },
+      { name: 'sing-box', url: '/clients/sing-box/', desc: '新一代高性能通用代理核心' }
+    ]
+  },
+  {
+    name: 'AI与流媒体',
+    url: '/streaming-ai/',
+    children: [
+      { name: 'ChatGPT 节点', url: '/streaming-ai/chatgpt/', desc: 'OpenAI 原生解锁与防封' },
+      { name: 'Claude 访问', url: '/streaming-ai/claude/', desc: 'Anthropic 纯净出口实测' },
+      { name: 'Gemini 节点', url: '/streaming-ai/gemini/', desc: 'Google AI 区域限制解除' },
+      { name: 'Netflix 奈飞', url: '/streaming-ai/netflix/', desc: '全区非自制剧解锁实测' },
+      { name: 'YouTube 4K', url: '/streaming-ai/youtube/', desc: '大带宽秒开与送中解决' }
+    ]
+  },
+  {
+    name: '线路与节点',
+    url: '/network/',
+    children: [
+      { name: 'IEPL 专线', url: '/network/iepl/', desc: '内网以太专线原理与体验' },
+      { name: 'IPLC 专线', url: '/network/iplc/', desc: '点对点私有物理专线解析' },
+      { name: '香港节点', url: '/network/hong-kong/', desc: '亚太超低延迟核心出口' },
+      { name: '日本节点', url: '/network/japan/', desc: '高带宽稳定流媒体首选' },
+      { name: '低延迟优化', url: '/network/low-latency/', desc: '网络抖动与路由优化' },
+      { name: '流量倍率', url: '/network/traffic-ratio/', desc: '倍率套路与流量真实消耗' }
+    ]
+  },
+  {
+    name: '使用教程',
+    url: '/tutorials/',
+    children: [
+      { name: '订阅导入指南', url: '/tutorials/subscription/', desc: '各客户端一键配置全流程' },
+      { name: 'Clash 配置详解', url: '/tutorials/clash-configuration/', desc: '配置文件修改与优化' },
+      { name: '分流规则设置', url: '/tutorials/routing-rules/', desc: '国内直连与海外分流' },
+      { name: 'TUN 虚拟网卡', url: '/tutorials/tun-mode/', desc: '接管全局流量与游戏支持' },
+      { name: '客户端安装', url: '/tutorials/client-installation/', desc: 'Windows/Mac/iOS/安卓指引' }
+    ]
+  },
+  {
+    name: '故障排查',
+    url: '/troubleshooting/',
+    children: [
+      { name: '连接超时', url: '/troubleshooting/timeout/', desc: '节点Timeout五步自愈法' },
+      { name: '订阅更新失败', url: '/troubleshooting/subscription-failed/', desc: '403/网络错误诊断' },
+      { name: '无法连接网络', url: '/troubleshooting/connection-failed/', desc: '连上节点但无网络排查' },
+      { name: 'DNS 污染与错误', url: '/troubleshooting/dns-error/', desc: 'DNS泄漏与劫持修复' },
+      { name: '客户端打不开', url: '/troubleshooting/client-startup/', desc: '闪退与端口冲突修复' }
+    ]
+  },
+  {
+    name: '风险与替代',
+    url: '/risk/',
+    children: [
+      { name: '停运与失联预警', url: '/risk/shutdown/', desc: '跑路特征识别与止损' },
+      { name: '机场避坑指南', url: '/risk/avoid-scams/', desc: '虚假宣传与退款陷阱' },
+      { name: '替代备选方案', url: '/risk/alternatives/', desc: '主力宕机后的应急备用' },
+      { name: '退款与售后规则', url: '/risk/refunds/', desc: '工单维权与服务协议' },
+      { name: '安全与隐私防范', url: '/risk/security/', desc: '数据审计与节点流量安全' }
+    ]
+  }
+];
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all">
+  <div class="max-w-[1600px] mx-auto px-2 sm:px-4 lg:px-6 2xl:px-8">
+    <div class="flex items-center justify-between h-16 gap-1 lg:gap-2">
+      
+      <!-- Brand Logo & Name -->
+      <div class="flex items-center gap-2 2xl:gap-3 flex-shrink-0">
+        <a href="/" class="flex items-center gap-2 group">
+          <img 
+            src="/images/avatar.webp" 
+            alt="百科机场 Logo" 
+            class="w-8 h-8 2xl:w-9 2xl:h-9 rounded-lg object-cover shadow-sm ring-1 ring-slate-200 group-hover:ring-blue-500 transition flex-shrink-0"
+            width="36"
+            height="36"
+          />
+          <div class="flex flex-col">
+            <span class="font-extrabold text-slate-900 text-base 2xl:text-lg leading-tight group-hover:text-blue-600 transition tracking-tight whitespace-nowrap">百科机场</span>
+            <span class="text-[9px] 2xl:text-[10px] text-slate-500 font-medium tracking-wide whitespace-nowrap">JICHANGWIKI.HOMES</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Mega Navigation (10 Categories) -->
+      <nav class="hidden xl:flex items-center space-x-0.5 2xl:space-x-1 flex-shrink-0">
+        {navItems.map((item, idx) => (
+          <div class="relative group flex-shrink-0">
+            <a 
+              href={item.url} 
+              class="px-1.5 2xl:px-2.5 py-1.5 text-xs 2xl:text-[13px] font-medium text-slate-700 hover:text-blue-600 rounded-md hover:bg-slate-50 transition-colors inline-flex items-center gap-0.5 2xl:gap-1 whitespace-nowrap flex-shrink-0"
+            >
+              <span class="whitespace-nowrap select-none">{item.name}</span>
+              <svg class="w-2.5 h-2.5 text-slate-400 group-hover:text-blue-600 transition-transform group-hover:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            
+            <!-- Dropdown Menu -->
+            <div class={`absolute top-full hidden group-hover:block w-64 pt-2 z-50 ${idx >= 7 ? 'right-0' : 'left-0'}`}>
+              <div class="bg-white rounded-xl shadow-xl border border-slate-100 p-2 overflow-hidden ring-1 ring-black/5 animate-in fade-in-50 duration-200">
+                <div class="px-3 py-1.5 border-b border-slate-100 mb-1">
+                  <a href={item.url} class="text-xs font-semibold text-blue-600 hover:underline flex items-center justify-between">
+                    <span>{item.name} 专题主页</span>
+                    <span>&rarr;</span>
+                  </a>
+                </div>
+                {item.children.map((sub) => (
+                  <a 
+                    href={sub.url} 
+                    class="block px-3 py-2 rounded-lg hover:bg-slate-50 transition group/sub"
+                  >
+                    <div class="text-[13px] font-medium text-slate-800 group-hover/sub:text-blue-600">
+                      {sub.name}
+                    </div>
+                    <div class="text-[11px] text-slate-500 line-clamp-1">
+                      {sub.desc}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      <!-- Right Search & CTA Action -->
+      <div class="flex items-center gap-1.5 2xl:gap-3 flex-shrink-0">
+        <a 
+          href="/search/" 
+          class="p-1.5 2xl:p-2 text-slate-500 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition"
+          aria-label="站内智能搜索"
+        >
+          <svg class="w-4 h-4 2xl:w-5 2xl:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </a>
+
+        <a 
+          href="/brands/guangsu/" 
+          class="hidden sm:inline-flex items-center justify-center px-2.5 2xl:px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition whitespace-nowrap flex-shrink-0"
+        >
+          主推·光速云
+        </a>
+
+        <!-- Mobile Drawer Button -->
+        <button 
+          id="mobile-menu-btn" 
+          type="button" 
+          class="xl:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+          aria-label="打开菜单"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div id="mobile-menu" class="hidden xl:hidden border-t border-slate-200 bg-white max-h-[80vh] overflow-y-auto px-4 py-4 space-y-3">
+    <div class="mb-2">
+      <a href="/search/" class="flex items-center gap-2 w-full px-3 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <span>搜索机场、协议、客户端或故障...</span>
+      </a>
+    </div>
+    {navItems.map((item) => (
+      <div class="border-b border-slate-100 pb-2">
+        <div class="flex items-center justify-between py-1">
+          <a href={item.url} class="font-bold text-slate-900 text-sm">{item.name}</a>
+          <a href={item.url} class="text-xs text-blue-600">专题主页</a>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5 mt-1">
+          {item.children.map((sub) => (
+            <a href={sub.url} class="px-2 py-1 text-xs text-slate-600 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 rounded">
+              {sub.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+</script>

@@ -1,0 +1,134 @@
+---
+export interface Props {
+  brandName: string;
+  lineType?: string;
+  ingressRegion?: string;
+  egressRegions?: string[];
+  protocol?: string;
+  isRealTopology?: boolean;
+}
+
+const {
+  brandName,
+  lineType = 'IEPL 内网专线',
+  ingressRegion = '华东 / 华南 多线 BGP 入口',
+  egressRegions = ['香港原生', '日本东京', '新加坡', '美西洛杉矶'],
+  protocol = 'VLESS / Shadowsocks',
+  isRealTopology = false
+} = Astro.props;
+---
+
+<div class="my-6 rounded-xl overflow-hidden border border-slate-800 bg-[#0b1120] text-slate-100 shadow-xl font-sans text-xs sm:text-sm">
+  <!-- Header -->
+  <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span class="text-base">🗺️</span>
+      <span class="font-bold text-white text-sm">Network Path Observatory｜{brandName} 网络拓扑观测</span>
+      <span class="text-[11px] px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800">
+        {lineType}
+      </span>
+    </div>
+    <div class="text-[11px] text-slate-400 font-sans">
+      {isRealTopology ? (
+        <span class="text-emerald-400 font-semibold">● 经核实拓扑</span>
+      ) : (
+        <span class="text-slate-400">● 示意拓扑 (非物理探针勘测)</span>
+      )}
+    </div>
+  </div>
+
+  <!-- Flow Visualizer -->
+  <div class="p-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+      
+      <!-- Stage 1: Client Device -->
+      <div class="rounded-xl p-4 bg-slate-900 border border-slate-800 flex flex-col items-center text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center text-lg">
+          💻
+        </div>
+        <div class="font-bold text-slate-200">用户终端设备</div>
+        <div class="text-[11px] text-slate-400">手机 / PC / 软路由</div>
+        <div class="text-[10px] px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-800">
+          加密传输: {protocol}
+        </div>
+      </div>
+
+      <!-- Connector 1 -->
+      <div class="hidden md:flex items-center justify-center">
+        <div class="w-full flex flex-col items-center">
+          <span class="text-[10px] text-slate-400 mb-1">公网就近接入</span>
+          <div class="w-full h-0.5 bg-slate-700 relative">
+            <span class="absolute right-0 top-1/2 -translate-y-1/2 border-solid border-l-slate-400 border-l-4 border-y-transparent border-y-4 border-r-0"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 2: Domestic Ingress -->
+      <div class="rounded-xl p-4 bg-slate-900 border border-slate-800 flex flex-col items-center text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-slate-800 text-blue-400 flex items-center justify-center text-lg">
+          🏢
+        </div>
+        <div class="font-bold text-slate-200">国内智能中转入口</div>
+        <div class="text-[11px] text-slate-400">{ingressRegion}</div>
+        <div class="text-[10px] px-2 py-0.5 rounded bg-blue-950/80 text-blue-300 border border-blue-800">
+          BGP 优化 · 隐藏真实 IP
+        </div>
+      </div>
+
+      <!-- Connector 2 (High-priority Dedicated Tunnel) -->
+      <div class="hidden md:flex items-center justify-center">
+        <div class="w-full flex flex-col items-center">
+          <span class="text-[10px] text-emerald-400 font-bold mb-1">跨境专线直连</span>
+          <div class="w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full shadow-sm shadow-emerald-500/50"></div>
+          <span class="text-[9px] text-slate-400 mt-1">抗 QoS 封锁 · 低抖动</span>
+        </div>
+      </div>
+
+      <!-- Stage 3: Overseas Egress -->
+      <div class="rounded-xl p-4 bg-slate-900 border border-emerald-900/60 flex flex-col items-center text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-slate-800 text-emerald-400 flex items-center justify-center text-lg">
+          🌐
+        </div>
+        <div class="font-bold text-emerald-300">海外落地出口</div>
+        <div class="text-[11px] text-slate-300">{egressRegions.slice(0, 3).join(' / ')}</div>
+        <div class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">
+          原生住宅 / 纯净机房 IP
+        </div>
+      </div>
+
+      <!-- Connector 3 -->
+      <div class="hidden md:flex items-center justify-center">
+        <div class="w-full flex flex-col items-center">
+          <span class="text-[10px] text-slate-400 mb-1">本地局域分流</span>
+          <div class="w-full h-0.5 bg-slate-700 relative">
+            <span class="absolute right-0 top-1/2 -translate-y-1/2 border-solid border-l-slate-400 border-l-4 border-y-transparent border-y-4 border-r-0"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 4: Target Services -->
+      <div class="rounded-xl p-4 bg-slate-900 border border-slate-800 flex flex-col items-center text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center text-lg">
+          🚀
+        </div>
+        <div class="font-bold text-slate-200">目标访问服务</div>
+        <div class="text-[11px] text-slate-400">ChatGPT · Claude · Netflix</div>
+        <div class="text-[10px] px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800">
+          高速无阻访问
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Specification -->
+  <div class="px-4 py-2.5 bg-slate-950/70 border-t border-slate-800 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2">
+    <div>
+      <span class="text-slate-300 font-semibold">架构特点:</span>
+      全程由专线中转内网传输，避免直连公网发生的数据包深度探测（DPI）与 QoS 丢包限制。
+    </div>
+    <div class="text-[10px] opacity-60">
+      [jichangwiki.homes 拓扑说明]
+    </div>
+  </div>
+</div>

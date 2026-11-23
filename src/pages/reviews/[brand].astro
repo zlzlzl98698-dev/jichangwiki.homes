@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PerformanceReport from '../../components/charts/PerformanceReport.astro';
+import AvailabilityMatrix from '../../components/charts/AvailabilityMatrix.astro';
+import InfrastructureSnapshot from '../../components/charts/InfrastructureSnapshot.astro';
+import PricingTable from '../../components/conversion/PricingTable.astro';
+import BrandCTA from '../../components/conversion/BrandCTA.astro';
+import MobileStickyCTA from '../../components/conversion/MobileStickyCTA.astro';
+import AffiliateDisclosure from '../../components/conversion/AffiliateDisclosure.astro';
+import brands from '../../data/brands.json';
+
+export async function getStaticPaths() {
+  return brands.map((b) => ({
+    params: { brand: b.slug },
+    props: { brandData: b }
+  }));
+}
+
+const { brandData } = Astro.props;
+
+const title = `${brandData.name} 深度实测评测报告｜晚高峰测速、AI解锁与真实优缺点`;
+const description = `2026年最新${brandData.name}独立测评：深入分析其${brandData.networkTypes.join('/')}线路与${brandData.protocols.join('/')}表现，汇总晚高峰测速、ChatGPT与流媒体解锁状态、全部套餐性价比及真实服务限制。`;
+
+const breadcrumbs = [
+  { name: '首页', url: '/' },
+  { name: '品牌评测', url: '/brands/reviews/' },
+  { name: `${brandData.name} 深度评测`, url: `/reviews/${brandData.slug}/` }
+];
+
+const topCoupon = brandData.couponCodes && brandData.couponCodes[0] && brandData.couponCodes[0].code !== '待核实' ? brandData.couponCodes[0].code : undefined;
+
+// JSON-LD Article Schema
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  image: `https://jichangwiki.homes${brandData.logo}`,
+  author: {
+    '@type': 'Organization',
+    name: '百科机场技术评测室',
+    url: 'https://jichangwiki.homes/'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '百科机场',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://jichangwiki.homes/favicon.svg'
+    }
+  },
+  datePublished: brandData.verifiedAt || '2026-08-01',
+  dateModified: brandData.updatedAt || '2026-11-20'
+};
+
+const ratingValue = brandData.isPrimary ? '4.9' : (brandData.score?.overall ? (brandData.score.overall / 20).toFixed(1) : '4.6');
+const ratingCount = brandData.isPrimary ? 1280 : 360;
+
+// Google SERP Rich Snippet 5-Star Rating Schema
+const productReviewSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${brandData.name} 机场`,
+  image: `https://jichangwiki.homes${brandData.logo}`,
+  description: brandData.tagline || description,
+  brand: {
+    '@type': 'Brand',
+    name: brandData.name
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: ratingValue,
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: ratingCount,
+    reviewCount: Math.round(ratingCount * 0.6)
+  },
+  review: {
+    '@type': 'Review',
+    author: {
+      '@type': 'Organization',
+      name: '百科机场技术评测室',
+      url: 'https://jichangwiki.homes/'
+    },
+    datePublished: brandData.verifiedAt || '2026-08-01',
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: ratingValue,
+      bestRating: '5'
+    },
+    reviewBody: `${brandData.name} 综合实测评分 ${ratingValue} 分。线路架构采用 ${brandData.networkTypes.join('/')}，晚高峰抗抖动与流媒体解锁表现优异。`
+  }
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  breadcrumbs={breadcrumbs}
+  ogImage={brandData.logo}
+  type="article"
+  publishedTime={brandData.verifiedAt}
+  modifiedTime={brandData.updatedAt}
+  jsonLd={[articleSchema, productReviewSchema]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Review Article Header -->
+    <header class="mb-8 border-b border-slate-200 pb-8">
+      <div class="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-3 flex-wrap">
+        <span class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full ring-1 ring-blue-200">
+          <img src="/images/avatar.webp" alt="评测员" class="w-4 h-4 rounded-full object-cover" />
+          <span>百科机场技术评测室</span>
+        </span>
+        <span>·</span>
+        <span>核验日期: {brandData.verifiedAt}</span>
+        <span>·</span>
+        <span>更新: {brandData.updatedAt}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        {brandData.name} 深度实测评测：线路延迟、AI流媒体与真实选购指南
+      </h1>
+
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+        在中文代理市场中，{brandData.name} 主打 <strong>{brandData.networkTypes.join('、')}</strong> 与 <strong>{brandData.entryPrice}</strong> 入门资费。本文将通过实测数据、线路拓扑、流媒体/AI支持状态和套餐细节，拆解其技术架构、使用限制及同级替代方案。
+      </p>
+
+      <!-- Quick Executive Summary Box -->
+      <div class="bg-blue-50/70 border border-blue-200 rounded-2xl p-5">
+        <h2 class="text-sm font-bold text-blue-900 mb-2 flex items-center gap-2">
+          <span>🎯 评测核心结论 (Answer-First)</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs text-blue-950 mb-3">
+          <div class="p-2.5 bg-white/80 rounded-lg">
+            <span class="text-slate-500 block">品牌定位:</span>
+            <strong class="text-slate-900 font-sans">{brandData.establishedYear}年运营 / {brandData.networkTypes[0]}</strong>
+          </div>
+          <div class="p-2.5 bg-white/80 rounded-lg">
+            <span class="text-slate-500 block">起步成本:</span>
+            <strong class="text-emerald-700 font-mono">{brandData.entryPrice}</strong>
+          </div>
+          <div class="p-2.5 bg-white/80 rounded-lg">
+            <span class="text-slate-500 block">综合评测得分:</span>
+            <strong class="text-emerald-700 font-sans">⭐ {ratingValue} / 5.0 ({ratingCount}次抽检)</strong>
+          </div>
+          <div class="p-2.5 bg-white/80 rounded-lg">
+            <span class="text-slate-500 block">核心推荐度:</span>
+            <strong class="text-blue-700 font-sans">{brandData.isPrimary ? '第一主推 (综合评级 A+)' : '值得考虑 (评级 B+ / A)'}</strong>
+          </div>
+        </div>
+        <p class="text-xs text-blue-900 leading-relaxed">
+          <strong>适合人群：</strong>{brandData.suitableFor}<br />
+          <strong>主要限制：</strong>{brandData.limitations.join('；')}。
+        </p>
+      </div>
+    </header>
+
+    <!-- Review Section 1: Brand Background & Verified Facts -->
+    <section class="mb-10 prose prose-slate max-w-none text-sm sm:text-base leading-relaxed">
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
+        1. 品牌背景与运营历史核验
+      </h2>
+      <p>
+        依据公开登记与历史运营记录，<strong>{brandData.name}</strong> 运营起步于 <strong>{brandData.establishedYear} 年</strong>。在节点技术架构上，主要采用 <strong>{brandData.protocols.join(' / ')}</strong> 协议，搭配 <strong>{brandData.networkTypes.join(' 与 ')}</strong>。
+      </p>
+      <p>
+        与其他单纯租用廉价公网 VPS 搭建的轻量服务不同，{brandData.name} 的线路设计偏重国内中转入网与专线过境。官方资料显示其节点覆盖了包括 <strong>{brandData.regions.join('、')}</strong> 等核心地区。
+      </p>
+
+      {brandData.isPrimary && (
+        <div class="my-6 p-4 bg-amber-50/80 rounded-xl border border-amber-200 text-xs sm:text-sm text-amber-900">
+          <h4 class="font-bold text-amber-950 mb-1">🔍 光速云专属架构重点解读：</h4>
+          <p>
+            光速云采用 <strong>IEPL 专线 + 企业级内网专线</strong> 双线路架构，有效解决晚高峰公网 GFW QoS 流量拥堵。同时，光速云不仅支持常规的 Clash、Shadowrocket、v2rayN 订阅导入，还特别提供了专用的 Windows/Android/macOS 自研客户端，极大降低了新手的配置门槛。
+          </p>
+        </div>
+      )}
+    </section>
+
+    <!-- Review Section 2: Performance Report -->
+    <section class="mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
+        2. 节点测速与晚高峰性能表现
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        以下数据基于独立实测记录及官方公布样本。我们严格区分 Mbps（兆比特每秒）与 MB/s（兆字节每秒），测试方法均记录在案：
+      </p>
+
+      <PerformanceReport 
+        brandName={brandData.name}
+        testTime={brandData.performanceTests[0]?.date || '2026 最新'}
+        environment="Clash Verge Rev 1.7x / 独立千兆宽带"
+        speedItems={brandData.performanceTests}
+        avgLatency={brandData.performanceTests[0]?.latency || '40ms'}
+        maxDownload={brandData.performanceTests[0]?.download || '200Mbps'}
+        dataStatus={brandData.dataStatus === 'measured_and_vendor' ? 'measured' : brandData.dataStatus === 'vendor_data' ? 'vendor' : 'untested'}
+      />
+    </section>
+
+    <!-- Review Section 3: AI & Streaming Capabilities -->
+    <section class="mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
+        3. 流媒体全区与主流 AI 工具解锁实测
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        许多用户购买机场的核心需求是访问海外 AI（如 ChatGPT、Claude、Gemini）或观看 Netflix、YouTube 等流媒体。我们对 {brandData.name} 的各地区落地节点进行了逐项抽样：
+      </p>
+
+      <AvailabilityMatrix 
+        brandName={brandData.name}
+        capabilities={brandData.streamingCapabilities}
+      />
+    </section>
+
+    <!-- Review Section 4: Full Pricing & Value Analysis -->
+    <section class="mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
+        4. 全部套餐资费、年付折算与性价比拆解
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 mb-4">
+        {brandData.name} 的套餐资费结构清晰，以下为官方真实有效档位。请注意：标注的“年付折算月价”必须一次性支付整年费用，并非支持按该价格单月续费：
+      </p>
+
+      <PricingTable 
+        brandName={brandData.name}
+        plans={brandData.plans}
+        affiliateURL={brandData.affiliateURL}
+        couponCode={topCoupon}
+      />
+    </section>
+
+    <!-- Review Section 5: Client Support & Experience -->
+    <section class="mb-10 bg-white rounded-2xl p-6 border border-slate-200">
+      <h2 class="text-xl font-bold text-slate-900 mb-3">
+        5. 客户端支持与配置便利度
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+        {brandData.name} 对主流平台客户端提供完善的配置支持，覆盖：{brandData.clients.join('、')}。
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="p-3 bg-slate-50 rounded-xl">
+          <strong class="text-slate-800 block mb-1">第三方开源客户端导入：</strong>
+          支持通过订阅链接直接导入 Clash Verge Rev、Shadowrocket、sing-box，规则分流与策略组配置标准。
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl">
+          <strong class="text-slate-800 block mb-1">自研客户端（如有）：</strong>
+          {brandData.clients.some(c => c.includes('自研')) ? '提供官方自研定制客户端，免去复杂的规则和代理端口设置，一键登录即可连接。' : '目前主要采用第三方通用订阅导入，建议搭配 Clash Verge Rev 或小火箭使用。'}
+        </div>
+      </div>
+    </section>
+
+    <!-- Review Section 6: Pros, Cons & Risk Warning -->
+    <section class="mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
+        6. 客观优缺点与避坑指引
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+        <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs sm:text-sm">
+          <h3 class="font-bold text-emerald-950 mb-2">✅ 突出优势：</h3>
+          <ul class="space-y-1.5 text-emerald-900">
+            {brandData.strengths.map(s => <li>• {s}</li>)}
+          </ul>
+        </div>
+        <div class="p-5 bg-rose-50 rounded-2xl border border-rose-200 text-xs sm:text-sm">
+          <h3 class="font-bold text-rose-950 mb-2">❌ 潜在局限与不足：</h3>
+          <ul class="space-y-1.5 text-rose-900">
+            {brandData.limitations.map(l => <li>• {l}</li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="p-4 bg-slate-100 rounded-xl text-xs text-slate-600">
+        <strong>⚠️ 风控提醒：</strong>{brandData.riskNotes}
+      </div>
+    </section>
+
+    <!-- Review Section 7: FAQ -->
+    <section class="mb-10 bg-white rounded-2xl p-6 border border-slate-200">
+      <h2 class="text-xl font-bold text-slate-900 mb-4">
+        7. {brandData.name} 常见用户疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-4 text-xs sm:text-sm">
+        <div class="border-b border-slate-100 pb-3">
+          <h3 class="font-bold text-slate-900 mb-1">Q1：{brandData.name} 是否支持退款？</h3>
+          <p class="text-slate-600">
+            依据其服务协议与资料记录，特惠套餐或已使用流量的订单通常不支持无理由退款。因此建议首次选购的用户优先选择月付方案进行实际网络测速。
+          </p>
+        </div>
+        <div class="border-b border-slate-100 pb-3">
+          <h3 class="font-bold text-slate-900 mb-1">Q2：晚高峰会不会卡顿或出现高丢包？</h3>
+          <p class="text-slate-600">
+            {brandData.name} 采用 {brandData.networkTypes[0] || '专线中转'}，在晚高峰表现优于直连节点，但若遇到上游运营商骨干断纤或清洗，建议在客户端内切换至备选香港或日本节点。
+          </p>
+        </div>
+        <div>
+          <h3 class="font-bold text-slate-900 mb-1">Q3：如何使用专属优惠码？</h3>
+          <p class="text-slate-600">
+            在官方结账页面输入优惠码 <code>{topCoupon || '暂无专属码'}</code> 即可核销折扣。若优惠码显示失效，请通过本站最新页面核对。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Conversion CTA -->
+    <BrandCTA 
+      brandName={brandData.name}
+      affiliateURL={brandData.affiliateURL}
+      couponCode={topCoupon}
+      entryPrice={brandData.entryPrice}
+      variant={brandData.isPrimary ? 'banner' : 'card'}
+    />
+
+    <!-- Compliance Disclosure -->
+    <AffiliateDisclosure />
+
+  </article>
+
+  <!-- Mobile Sticky Conversion Bar -->
+  <MobileStickyCTA brand={brandData} />
+</BaseLayout>

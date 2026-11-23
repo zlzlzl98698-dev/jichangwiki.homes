@@ -1,0 +1,45 @@
+{
+  "Informational": {
+    "description": "获取知识、原理、概念定义或排查指南",
+    "funnelStage": "TOFU (Top of Funnel)",
+    "primaryPageTypes": [
+      "Tutorial",
+      "Encyclopedia",
+      "Troubleshooting"
+    ]
+  },
+  "Navigational": {
+    "description": "寻找特定机场品牌官网、客户端下载页或入口",
+    "funnelStage": "MOFU / BOFU",
+    "primaryPageTypes": [
+      "Brand Entity",
+      "Client Download"
+    ]
+  },
+  "Commercial Investigation": {
+    "description": "对比多个品牌、查看排行榜、寻找性价比或评测",
+    "funnelStage": "MOFU (Middle of Funnel)",
+    "primaryPageTypes": [
+      "Comparison",
+      "Review",
+      "Ranking",
+      "Category Hub"
+    ]
+  },
+  "Transactional": {
+    "description": "购买套餐、获取优惠码、注册转化",
+    "funnelStage": "BOFU (Bottom of Funnel)",
+    "primaryPageTypes": [
+      "Pricing",
+      "Coupon",
+      "Brand CTA"
+    ]
+  },
+  "Troubleshooting": {
+    "description": "排查连接失败、订阅报错、超时等具体问题",
+    "funnelStage": "TOFU / Retention",
+    "primaryPageTypes": [
+      "Troubleshooting Step-by-Step"
+    ]
+  }
+}

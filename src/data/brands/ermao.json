@@ -1,0 +1,117 @@
+{
+  "id": "ermao",
+  "slug": "ermao",
+  "name": "二猫云",
+  "aliases": [
+    "2Mao Cloud",
+    "二猫机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 7,
+  "establishedYear": 2022,
+  "affiliateURL": "https://guangs.2maoyunaff.cc/#/?code=7mjvgGbW",
+  "couponCodes": [
+    {
+      "code": "ermao5555",
+      "discount": "常规优惠码",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "中转专线",
+    "优化BGP"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "40+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "FlClash",
+    "v2rayN"
+  ],
+  "entryPrice": "¥20/月 (130GB)",
+  "minMonthlyPrice": 20,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "二猫畅游版",
+      "billing": "月付",
+      "price": 20,
+      "traffic": "130GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "130GB流量，支持常规流媒体"
+    },
+    {
+      "name": "二猫豪华版",
+      "billing": "月付",
+      "price": 38,
+      "traffic": "300GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 38,
+      "notes": "高带宽专线"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 中转",
+      "latency": "42ms",
+      "download": "150Mbps",
+      "upload": "35Mbps",
+      "date": "2026-08-15",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "20元130GB充足月度流量",
+    "VLESS轻量低开销协议",
+    "优化中转节点"
+  ],
+  "verifiedFeatures": [
+    "套餐流量与定价清晰，主流客户端订阅导入正常"
+  ],
+  "strengths": [
+    "20元档流量达到130GB，相比同价位竞品更充裕",
+    "节点稳定性较好，配置容易上手"
+  ],
+  "limitations": [
+    "节点地区偏常规，缺少拉美或中东等边缘区域",
+    "无自研客户端"
+  ],
+  "riskNotes": "常规中转机场，建议按月体验。",
+  "suitableFor": "需要中等流量（100-150GB）、预算20元左右的上班族。",
+  "unsuitableFor": "极高定制化需求或专属原生IP业务。",
+  "sources": [
+    "二猫云官方记录",
+    "32家清单"
+  ],
+  "verifiedAt": "2026-08-15",
+  "updatedAt": "2026-11-10",
+  "logo": "/images/logos/2mao_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

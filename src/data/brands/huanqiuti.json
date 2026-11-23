@@ -1,0 +1,100 @@
+{
+  "id": "huanqiuti",
+  "slug": "huanqiuti",
+  "name": "环球梯",
+  "aliases": [
+    "Huanqiuti"
+  ],
+  "isPrimary": false,
+  "displayOrder": 26,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.huanqiutiaff.com/?code=9I4KRNPH",
+  "couponCodes": [
+    {
+      "code": "HQ66",
+      "discount": "常规优惠码",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS"
+  ],
+  "networkTypes": [
+    "公网隧道中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "25+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥5.6/月 (60GB)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "环球轻便版",
+      "billing": "月付",
+      "price": 5.6,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 5.6,
+      "notes": "5.6元/月，60GB流量"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "52ms",
+      "download": "70Mbps",
+      "upload": "15Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分",
+    "claude": "部分",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "高清流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "5.6元/月入门套餐",
+    "60GB实用配给"
+  ],
+  "verifiedFeatures": [
+    "月付资费超低"
+  ],
+  "strengths": [
+    "5.6元极低月成本，适合应急备用备灾"
+  ],
+  "limitations": [
+    "资料记录提示推广链接结构参数特殊，需注意跳转正常性",
+    "峰值速率一般"
+  ],
+  "riskNotes": "官方链接格式略有异常，建议仅作为低价备选并坚持月付。",
+  "suitableFor": "低频查阅、临时应急备用的超低预算用户。",
+  "unsuitableFor": "需要高速看4K大码率原画视频的用户。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/flyv机场256x256.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

@@ -1,0 +1,99 @@
+{
+  "id": "liulianyun",
+  "slug": "liulianyun",
+  "name": "榴莲云",
+  "aliases": [
+    "Liulian Cloud"
+  ],
+  "isPrimary": false,
+  "displayOrder": 24,
+  "establishedYear": 2023,
+  "affiliateURL": "https://qwerty.liulianyunaff.com#/?code=hS5pvbfE",
+  "couponCodes": [
+    {
+      "code": "ll88",
+      "discount": "特惠折扣",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "Shadowsocks",
+    "VLESS (待核实)"
+  ],
+  "networkTypes": [
+    "公网隧道"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "25+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN"
+  ],
+  "entryPrice": "¥5.6/月 (60GB)",
+  "minMonthlyPrice": 5.6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "榴莲尝鲜版",
+      "billing": "月付",
+      "price": 5.6,
+      "traffic": "60GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 5.6,
+      "notes": "5.6元/月，60GB流量（协议未明）"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 节点",
+      "latency": "50ms",
+      "download": "75Mbps",
+      "upload": "15Mbps",
+      "date": "2026-08-01",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "部分",
+    "claude": "部分",
+    "gemini": "未测",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "高清流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "5.6元/月 + 60GB超低价格"
+  ],
+  "verifiedFeatures": [
+    "低价月付特点鲜明"
+  ],
+  "strengths": [
+    "月付5.6元极低投入，临时使用划算"
+  ],
+  "limitations": [
+    "协议细节在原始资料中未明确标出，需实测确认",
+    "节点规模小"
+  ],
+  "riskNotes": "资料标注部分协议未明，选购建议先以月付验证客户端兼容性。",
+  "suitableFor": "低成本短期应急使用的用户。",
+  "unsuitableFor": "需要确定性高保密协议或跨境专业机构。",
+  "sources": [
+    "32家品牌清单数据表"
+  ],
+  "verifiedAt": "2026-08-01",
+  "updatedAt": "2026-11-01",
+  "logo": "/images/logos/yinyun_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

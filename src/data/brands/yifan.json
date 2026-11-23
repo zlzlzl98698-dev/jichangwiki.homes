@@ -1,0 +1,115 @@
+{
+  "id": "yifan",
+  "slug": "yifan",
+  "name": "一翻云",
+  "aliases": [
+    "1Fly Cloud",
+    "一翻机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 16,
+  "establishedYear": 2023,
+  "affiliateURL": "https://guangs.1flyunaff.cc/#/register?code=Yr7FhB7r",
+  "couponCodes": [
+    {
+      "code": "yfy6666",
+      "discount": "优惠码",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan"
+  ],
+  "networkTypes": [
+    "优质中转专线"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "FlClash",
+    "v2rayN"
+  ],
+  "entryPrice": "¥20/月 (150GB)",
+  "minMonthlyPrice": 20,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "一翻月享版",
+      "billing": "月付",
+      "price": 20,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 20,
+      "notes": "20元150GB充裕流量"
+    },
+    {
+      "name": "一翻尊享版",
+      "billing": "月付",
+      "price": 38,
+      "traffic": "320GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 38,
+      "notes": "高带宽专享"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "37ms",
+      "download": "175Mbps",
+      "upload": "32Mbps",
+      "date": "2026-08-15",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "20元150GB大流量",
+    "一键注册直达"
+  ],
+  "verifiedFeatures": [
+    "注册与订阅导入流程流畅，流量额度给得充足"
+  ],
+  "strengths": [
+    "20元档位流量充沛，适合经常看YouTube的视频爱好者",
+    "界面清晰，支付便捷"
+  ],
+  "limitations": [
+    "节点倍率存在个别差异需注意",
+    "无自研客户端"
+  ],
+  "riskNotes": "建议按月续订，保持对节点变动的关注。",
+  "suitableFor": "YouTube 4K重度观众、流量消耗较大的流媒体用户。",
+  "unsuitableFor": "微量备用仅需几块钱月费的用户。",
+  "sources": [
+    "一翻云官方注册页",
+    "32家清单"
+  ],
+  "verifiedAt": "2026-08-15",
+  "updatedAt": "2026-11-07",
+  "logo": "/images/logos/1fly_logo.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

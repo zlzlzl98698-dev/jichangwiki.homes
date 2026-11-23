@@ -1,0 +1,115 @@
+{
+  "id": "tiziyun",
+  "slug": "tiziyun",
+  "name": "梯子云",
+  "aliases": [
+    "Ladder Cloud",
+    "梯子云机场"
+  ],
+  "isPrimary": false,
+  "displayOrder": 28,
+  "establishedYear": 2022,
+  "affiliateURL": "https://tiziyun3.ladderaff.com/#/?code=7EmnpHs0",
+  "couponCodes": [
+    {
+      "code": "tiziyun",
+      "discount": "特惠优惠码",
+      "condition": "全场可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Shadowsocks",
+    "自研专有接入"
+  ],
+  "networkTypes": [
+    "IEPL专线",
+    "多线优化中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "45+",
+  "clients": [
+    "官方自研客户端 (全平台一键登录)",
+    "同时支持Clash/Shadowrocket通用订阅"
+  ],
+  "entryPrice": "¥22/月 (140GB)",
+  "minMonthlyPrice": 22,
+  "paymentMethods": [
+    "支付宝",
+    "微信支付"
+  ],
+  "plans": [
+    {
+      "name": "梯子云月享版",
+      "billing": "月付",
+      "price": 22,
+      "traffic": "140GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 22,
+      "notes": "支持自研客户端一键登录及通用订阅"
+    },
+    {
+      "name": "梯子云旗舰版",
+      "billing": "月付",
+      "price": 40,
+      "traffic": "300GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 40,
+      "notes": "多端不限速"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 优化",
+      "latency": "35ms",
+      "download": "190Mbps",
+      "upload": "38Mbps",
+      "date": "2026-08-22",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持 (品牌宣称完美解锁)",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "全平台自研客户端一键登录",
+    "同时开放第三方开源客户端（Clash/Shadowrocket）订阅导入",
+    "品牌宣称完美解锁流媒体与AI"
+  ],
+  "verifiedFeatures": [
+    "双通道模式属实：既有自研免配置客户端，也提供通用Clash订阅链接"
+  ],
+  "strengths": [
+    "兼顾小白用户与极客用户，既有一键登录客户端，也可导入软路由/Clash",
+    "22元140GB配比合理"
+  ],
+  "limitations": [
+    "“完美解锁”为商家营销宣称，实际仍需根据节点状态适配"
+  ],
+  "riskNotes": "宣称词需理性看待，服务按月体验更安全。",
+  "suitableFor": "家里既有小白需要一键客户端，也有人需要把订阅导入Clash/软路由的混合使用场景。",
+  "unsuitableFor": "只找5元以下超低价套餐的用户。",
+  "sources": [
+    "梯子云官方发布资料",
+    "32家清单整理"
+  ],
+  "verifiedAt": "2026-08-22",
+  "updatedAt": "2026-11-15",
+  "logo": "/images/logos/梯子云256x256.png",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

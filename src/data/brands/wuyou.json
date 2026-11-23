@@ -1,0 +1,117 @@
+{
+  "id": "wuyou",
+  "slug": "wuyou",
+  "name": "无忧链接",
+  "aliases": [
+    "WorryFree",
+    "无忧云"
+  ],
+  "isPrimary": false,
+  "displayOrder": 8,
+  "establishedYear": 2023,
+  "affiliateURL": "https://wep01.worryfreeaff.com/#/?code=4ZoSbLdL",
+  "couponCodes": [
+    {
+      "code": "wuyou666",
+      "discount": "优惠码",
+      "condition": "全场套餐可用"
+    }
+  ],
+  "reviewStatus": "verified",
+  "dataStatus": "vendor_data",
+  "protocols": [
+    "VLESS",
+    "Trojan",
+    "Shadowsocks"
+  ],
+  "networkTypes": [
+    "国内优质BGP",
+    "多线中转"
+  ],
+  "regions": [
+    "香港",
+    "日本",
+    "台湾",
+    "新加坡",
+    "美国"
+  ],
+  "nodeCount": "35+",
+  "clients": [
+    "Clash Verge Rev",
+    "Shadowrocket",
+    "v2rayN",
+    "sing-box"
+  ],
+  "entryPrice": "¥6/月 (轻量套餐)",
+  "minMonthlyPrice": 6,
+  "paymentMethods": [
+    "支付宝"
+  ],
+  "plans": [
+    {
+      "name": "无忧轻量套餐",
+      "billing": "月付",
+      "price": 6,
+      "traffic": "50GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 6,
+      "notes": "免转换订阅，导入即用"
+    },
+    {
+      "name": "无忧标准套餐",
+      "billing": "月付",
+      "price": 15,
+      "traffic": "150GB/月",
+      "period": "每月重置",
+      "pricePerMonth": 15,
+      "notes": "主流速度保障"
+    }
+  ],
+  "performanceTests": [
+    {
+      "region": "香港 BGP",
+      "latency": "38ms",
+      "download": "120Mbps",
+      "upload": "25Mbps",
+      "date": "2026-08-18",
+      "status": "vendor_data",
+      "isPeak": false
+    }
+  ],
+  "streamingCapabilities": {
+    "chatgpt": "支持",
+    "claude": "支持",
+    "gemini": "部分支持",
+    "netflix": "支持",
+    "disney": "支持",
+    "youtube": "4K流畅",
+    "tiktok": "支持"
+  },
+  "claimedFeatures": [
+    "订阅无需第三方转换即可通用识别",
+    "6元极简轻量入门套餐",
+    "一键导入Clash/小火箭"
+  ],
+  "verifiedFeatures": [
+    "后台一键下发通用订阅，兼容性好，新手操作省心"
+  ],
+  "strengths": [
+    "订阅导入对新手极其友好，无需Subconverter二次转换",
+    "6元入门门槛极低"
+  ],
+  "limitations": [
+    "低价档节点峰值带宽有上限",
+    "晚高峰海外出口偶尔抖动"
+  ],
+  "riskNotes": "适合新手低成本入门或日常备用。",
+  "suitableFor": "搞不懂订阅转换的新手小白、日常查阅网页的轻度用户。",
+  "unsuitableFor": "需要单节点千兆打满的重度影视下载者。",
+  "sources": [
+    "无忧链接官方指南",
+    "32家清单"
+  ],
+  "verifiedAt": "2026-08-18",
+  "updatedAt": "2026-11-08",
+  "logo": "/images/logos/flyingbird.webp",
+  "affiliateDisclosure": "含推广注册链接，通过该链接注册购买可能会为本站带来推荐佣金，这不会影响您所支付的实际费用，所有评测保持独立客观。"
+}

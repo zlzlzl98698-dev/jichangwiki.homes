@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-light: #f8fafc;
+    --color-noc-bg: #0b1120;
+    --color-noc-card: #0f172a;
+    --color-noc-border: #1e293b;
+    --color-noc-cyan: #06b6d4;
+    --color-noc-green: #10b981;
+    --color-noc-amber: #f59e0b;
+    --color-noc-red: #ef4444;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #1e293b;
+    line-height: 1.6;
+  }
+}
+
+/* Custom technical observatory theme */
+.noc-dashboard {
+  background-color: #0b1120;
+  border-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.noc-card {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+.noc-tag-operational {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.noc-tag-vendor {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.noc-tag-untested {
+  background-color: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}

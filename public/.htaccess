@@ -1,0 +1,67 @@
+# Apache Configuration for https://jichangwiki.homes/
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Canonical domain: redirect www to non-www
+  RewriteCond %{HTTP_HOST} ^www\.jichangwiki\.homes$ [NC]
+  RewriteRule ^(.*)$ https://jichangwiki.homes/$1 [L,R=301]
+
+  # 3. Enforce trailing slash for directories
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !(.[a-zA-Z0-9]{1,5})$
+  RewriteCond %{REQUEST_URI} !(/$)
+  RewriteRule ^(.*)$ https://jichangwiki.homes/$1/ [L,R=301]
+</IfModule>
+
+# 4. Custom 404 Error Page
+ErrorDocument 404 /404.html
+
+# 5. Compression (mod_deflate)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# 6. Browser Caching (mod_expires)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML documents (short cache for freshness)
+  ExpiresByType text/html "access plus 1 hour"
+
+  # Data JSON
+  ExpiresByType application/json "access plus 1 hour"
+
+  # CSS, JavaScript
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+
+  # Images and WebP
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# 7. Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# 8. Correct MIME Types
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType application/json .json
+</IfModule>
